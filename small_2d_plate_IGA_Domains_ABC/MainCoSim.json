@@ -1,0 +1,193 @@
+{
+    "problem_data": {
+        "start_time": 0.0,
+        "end_time": 1.0,
+        "echo_level": 4,
+        "print_colors": true,
+        "parallel_type": "OpenMP"
+    },
+    "solver_settings": {
+        "type": "coupled_solvers.gauss_seidel_strong",
+        "echo_level": 3,
+        "num_coupling_iterations": 40,
+        "convergence_accelerators": [
+            {
+                "type": "mvqn",
+                "solver": "fem_fem_test_domainA",
+                "data_name": "load_from_b"
+            },
+            {
+                "type": "mvqn",
+                "solver": "fem_fem_test_domainB",
+                "data_name": "load_from_c"
+            }
+        ],
+        "convergence_criteria": [
+            {
+                "type": "relative_norm_previous_residual",
+                "solver": "fem_fem_test_domainA",
+                "data_name": "disp_to_b",
+                "abs_tolerance": 1e-6,
+                "rel_tolerance": 1e-6
+            },
+            {
+                "type": "relative_norm_previous_residual",
+                "solver": "fem_fem_test_domainB",
+                "data_name": "disp_to_c",
+                "abs_tolerance": 1e-6,
+                "rel_tolerance": 1e-6
+            }
+        ],
+        "data_transfer_operators": {
+            "mapperAB": {
+                "type": "kratos_mapping",
+                "mapper_settings": {
+                    "mapper_type": "coupling_geometry",
+                    "echo_level": 0,
+                    "dual_mortar": false,
+                    "consistency_scaling": true,
+                    "modeler_name": "IgaMappingGeometriesModeler",
+                    "modeler_parameters": {
+                        "origin_model_part_name": "origin",
+                        "destination_model_part_name": "destination",
+                        "is_interface_sub_model_parts_specified": true,
+                        "origin_interface_sub_model_part_name": "IgaModelPart.Load_5",
+                        "destination_interface_sub_model_part_name": "IgaModelPart.Support_2"
+                    }
+                }
+            },
+            "mapperBC": {
+                "type": "kratos_mapping",
+                "mapper_settings": {
+                    "mapper_type": "coupling_geometry",
+                    "echo_level": 0,
+                    "dual_mortar": false,
+                    "consistency_scaling": true,
+                    "modeler_name": "IgaMappingGeometriesModeler",
+                    "modeler_parameters": {
+                        "origin_model_part_name": "origin_2",
+                        "destination_model_part_name": "destination_2",
+                        "is_interface_sub_model_parts_specified": true,
+                        "origin_interface_sub_model_part_name": "IgaModelPart.Load_4",
+                        "destination_interface_sub_model_part_name": "IgaModelPartC.Support_3"
+                    }
+                }
+            }
+        },
+        "coupling_sequence": [
+            {
+                "name": "fem_fem_test_domainA",
+                "input_data_list": [],
+                "output_data_list": []
+            },
+            {
+                "name": "fem_fem_test_domainC",
+                "input_data_list": [{
+                    "data": "disp_from_b",
+                    "from_solver": "fem_fem_test_domainB",
+                    "from_solver_data": "disp_to_c",
+                    "data_transfer_operator": "mapperBC"
+                }],
+                "output_data_list": [
+                {
+                    "data": "load_to_b",
+                    "to_solver": "fem_fem_test_domainB",
+                    "to_solver_data": "load_from_c",
+                    "data_transfer_operator": "mapperBC",
+                     "data_transfer_operator_options": [
+                        "swap_sign",
+                        "use_transpose"
+                    ]
+                }]
+            },
+            {
+                "name": "fem_fem_test_domainB",
+                "input_data_list": [{
+                    "data": "disp_from_a",
+                    "from_solver": "fem_fem_test_domainA",
+                    "from_solver_data": "disp_to_b",
+                    "data_transfer_operator": "mapperAB"
+                }
+                ],
+                "output_data_list": [
+                {
+                    "data": "load_to_a",
+                    "to_solver": "fem_fem_test_domainA",
+                    "to_solver_data": "load_from_b",
+                    "data_transfer_operator": "mapperAB",
+                     "data_transfer_operator_options": [
+                        "swap_sign",
+                        "use_transpose"
+                    ]
+                }
+                ]
+            }
+        ],
+        "solvers": {
+            "fem_fem_test_domainC": {
+                "type": "solver_wrappers.kratos.structural_mechanics_wrapper",
+                "solver_wrapper_settings": {
+                    "input_file": "DomainC/ProjectParameters"
+                },
+                "data": {
+                    "disp_from_b": {
+                        "model_part_name": "IgaModelPartC.Support_3",
+                        "dimension": 2,
+                        "variable_name": "DISPLACEMENT"
+                    },
+                    "load_to_b": {
+                        "model_part_name": "IgaModelPartC.Support_3",
+                        "dimension": 2,
+                        "variable_name": "REACTION"
+                    }
+                }
+            },
+            "fem_fem_test_domainB": {
+                "type": "solver_wrappers.kratos.structural_mechanics_wrapper",
+                "solver_wrapper_settings": {
+                    "input_file": "DomainAB/ProjectParametersB"
+                },
+                "data": {
+                    "disp_to_c": {
+                        "model_part_name": "IgaModelPart.Load_4",
+                        "dimension": 2,
+                        "variable_name": "DISPLACEMENT"
+                    },
+                    "load_from_c": {
+                        "model_part_name": "IgaModelPart.Load_4",
+                        "dimension": 2,
+                        "variable_name": "POINT_LOAD"
+                    },
+                    "disp_from_a": {
+                        "model_part_name": "IgaModelPart.Support_2",
+                        "dimension": 2,
+                        "variable_name": "DISPLACEMENT"
+                    },
+                    "load_to_a": {
+                        "model_part_name": "IgaModelPart.Support_2",
+                        "dimension": 2,
+                        "variable_name": "REACTION"
+                    }
+                }
+            },
+            "fem_fem_test_domainA": {
+                "type": "solver_wrappers.kratos.structural_mechanics_wrapper",
+                "solver_wrapper_settings": {
+                    "input_file": "DomainAB/ProjectParametersA"
+                },
+                "data": {
+                    "disp_to_b": {
+                        "model_part_name": "IgaModelPart.Load_5",
+                        "dimension": 2,
+                        "variable_name": "DISPLACEMENT"
+                    },
+                    "load_from_b": {
+                        "model_part_name": "IgaModelPart.Load_5",
+                        "dimension": 2,
+                        "variable_name": "POINT_LOAD"
+                    }
+                }
+            }
+        }
+    }
+}

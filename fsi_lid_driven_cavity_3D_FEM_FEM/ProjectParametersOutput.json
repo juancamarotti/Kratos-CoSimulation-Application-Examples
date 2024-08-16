@@ -1,0 +1,485 @@
+{
+    "output_processes": {
+        "vtk_output": [
+            {
+                "Parameters": {
+                    "condition_data_value_variables": [],
+                    "condition_flags": [],
+                    "custom_name_postfix": "",
+                    "custom_name_prefix": "",
+                    "element_data_value_variables": [],
+                    "element_flags": [],
+                    "entity_type": "automatic",
+                    "file_format": "binary",
+                    "gauss_point_variables_extrapolated_to_nodes": [],
+                    "gauss_point_variables_in_elements": [],
+                    "model_part_name": "FluidModelPart.FluidParts_Fluid",
+                    "nodal_data_value_variables": [],
+                    "nodal_flags": [],
+                    "nodal_solution_step_data_variables": [
+                        "VELOCITY",
+                        "PRESSURE",
+                        "MESH_DISPLACEMENT",
+                        "MESH_VELOCITY"
+                    ],
+                    "output_control_type": "step",
+                    "output_interval": 1,
+                    "output_path": "vtk_output_mok_fsi_cfd",
+                    "output_precision": 7,
+                    "output_sub_model_parts": false,
+                    "save_output_files_in_folder": true,
+                    "write_deformed_configuration": false,
+                    "write_ids": false
+                },
+                "help": "This process writes postprocessing files for Paraview",
+                "kratos_module": "KratosMultiphysics",
+                "process_name": "VtkOutputProcess",
+                "python_module": "vtk_output_process"
+            }
+        ]
+    },
+    "problem_data": {
+        "echo_level": 2,
+        "end_time": 70.0,
+        "parallel_type": "OpenMP",
+        "problem_name": "fsi_lid_driven_cavity_CFD",
+        "start_time": 0.0
+    },
+    "processes": {
+        "ale_boundary_conditions": [
+            {
+                "Parameters": {
+                    "constrained": [
+                        true,
+                        true,
+                        true
+                    ],
+                    "interval": [
+                        0.0,
+                        "End"
+                    ],
+                    "model_part_name": "FluidModelPart.ALEMeshDisplacementBC3D_Inlet",
+                    "variable_name": "MESH_DISPLACEMENT"
+                },
+                "kratos_module": "KratosMultiphysics",
+                "process_name": "AssignVectorVariableProcess",
+                "python_module": "fix_vector_variable_process"
+            },
+            {
+                "Parameters": {
+                    "constrained": [
+                        true,
+                        true,
+                        true
+                    ],
+                    "interval": [
+                        0.0,
+                        "End"
+                    ],
+                    "model_part_name": "FluidModelPart.ALEMeshDisplacementBC3D_InletWalls",
+                    "variable_name": "MESH_DISPLACEMENT"
+                },
+                "kratos_module": "KratosMultiphysics",
+                "process_name": "AssignVectorVariableProcess",
+                "python_module": "fix_vector_variable_process"
+            },
+            {
+                "Parameters": {
+                    "constrained": [
+                        true,
+                        true,
+                        true
+                    ],
+                    "interval": [
+                        0.0,
+                        "End"
+                    ],
+                    "model_part_name": "FluidModelPart.ALEMeshDisplacementBC3D_Outlet",
+                    "variable_name": "MESH_DISPLACEMENT"
+                },
+                "kratos_module": "KratosMultiphysics",
+                "process_name": "AssignVectorVariableProcess",
+                "python_module": "fix_vector_variable_process"
+            },
+            {
+                "Parameters": {
+                    "constrained": [
+                        true,
+                        true,
+                        true
+                    ],
+                    "interval": [
+                        0.0,
+                        "End"
+                    ],
+                    "model_part_name": "FluidModelPart.ALEMeshDisplacementBC3D_Walls",
+                    "variable_name": "MESH_DISPLACEMENT"
+                },
+                "kratos_module": "KratosMultiphysics",
+                "process_name": "AssignVectorVariableProcess",
+                "python_module": "fix_vector_variable_process"
+            },
+            {
+                "Parameters": {
+                    "constrained": [
+                        true,
+                        true,
+                        true
+                    ],
+                    "interval": [
+                        0.0,
+                        "End"
+                    ],
+                    "model_part_name": "FluidModelPart.FluidNoSlipInterface3D_FluidInterface",
+                    "variable_name": "MESH_DISPLACEMENT"
+                },
+                "kratos_module": "KratosMultiphysics",
+                "process_name": "AssignVectorVariableProcess",
+                "python_module": "fix_vector_variable_process"
+            },
+            {
+                "Parameters": {
+                    "constrained": [
+                        true,
+                        true,
+                        true
+                    ],
+                    "interval": [
+                        0.0,
+                        "End"
+                    ],
+                    "model_part_name": "FluidModelPart.Outlet3D_Outlet",
+                    "variable_name": "MESH_DISPLACEMENT"
+                },
+                "kratos_module": "KratosMultiphysics",
+                "process_name": "AssignVectorVariableProcess",
+                "python_module": "fix_vector_variable_process"
+            },
+            {
+                "Parameters": {
+                    "constrained": [
+                        true,
+                        true,
+                        true
+                    ],
+                    "interval": [
+                        0.0,
+                        "End"
+                    ],
+                    "model_part_name": "FluidModelPart.VelocityConstraints3D_Inlet",
+                    "variable_name": "MESH_DISPLACEMENT"
+                },
+                "kratos_module": "KratosMultiphysics",
+                "process_name": "AssignVectorVariableProcess",
+                "python_module": "fix_vector_variable_process"
+            },
+            {
+                "Parameters": {
+                    "constrained": [
+                        true,
+                        true,
+                        true
+                    ],
+                    "interval": [
+                        0.0,
+                        "End"
+                    ],
+                    "model_part_name": "FluidModelPart.VelocityConstraints3D_InletWalls",
+                    "variable_name": "MESH_DISPLACEMENT"
+                },
+                "kratos_module": "KratosMultiphysics",
+                "process_name": "AssignVectorVariableProcess",
+                "python_module": "fix_vector_variable_process"
+            }
+        ],
+        "boundary_conditions_process_list": [
+            {
+                "Parameters": {
+                    "constrained": true,
+                    "h_top": 0.0,
+                    "hydrostatic_outlet": false,
+                    "interval": [
+                        0.0,
+                        "End"
+                    ],
+                    "mesh_id": 0,
+                    "model_part_name": "FluidModelPart.Outlet3D_Outlet",
+                    "outlet_inflow_contribution": false,
+                    "outlet_inflow_contribution_characteristic_velocity_calculation": "outlet_average",
+                    "outlet_inflow_contribution_characteristic_velocity_value": 0.0,
+                    "value": 0.0,
+                    "variable_name": "PRESSURE"
+                },
+                "kratos_module": "KratosMultiphysics.FluidDynamicsApplication",
+                "process_name": "ApplyOutletProcess",
+                "python_module": "apply_outlet_process"
+            },
+            {
+                "Parameters": {
+                    "constrained": [
+                        true,
+                        true,
+                        true
+                    ],
+                    "help": "This process assigns a given value (vector) to the nodes belonging a certain submodelpart",
+                    "interval": [
+                        0.0,
+                        1e+30
+                    ],
+                    "local_axes": {},
+                    "mesh_id": 0,
+                    "model_part_name": "FluidModelPart.NoSlip3D_Walls",
+                    "value": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "variable_name": "VELOCITY"
+                },
+                "kratos_module": "KratosMultiphysics.FluidDynamicsApplication",
+                "process_name": "ApplyNoSlipProcess",
+                "python_module": "apply_noslip_process"
+            },
+            {
+                "Parameters": {
+                    "constrained": [
+                        true,
+                        true,
+                        true
+                    ],
+                    "help": "This process assigns a given value (vector) to the nodes belonging a certain submodelpart",
+                    "interval": [
+                        0.0,
+                        "End"
+                    ],
+                    "local_axes": {},
+                    "mesh_id": 0,
+                    "model_part_name": "FluidModelPart.VelocityConstraints3D_Inlet",
+                    "value": [
+                        "((z-0.875)/0.125)*(1-cos(0.4*pi*t))",
+                        0.0,
+                        0.0
+                    ],
+                    "variable_name": "VELOCITY"
+                },
+                "kratos_module": "KratosMultiphysics",
+                "process_name": "AssignVectorVariableProcess",
+                "python_module": "assign_vector_variable_process"
+            },
+            {
+                "Parameters": {
+                    "constrained": [
+                        true,
+                        true,
+                        true
+                    ],
+                    "help": "This process assigns a given value (vector) to the nodes belonging a certain submodelpart",
+                    "interval": [
+                        0.0,
+                        "End"
+                    ],
+                    "local_axes": {},
+                    "mesh_id": 0,
+                    "model_part_name": "FluidModelPart.VelocityConstraints3D_InletWalls",
+                    "value": [
+                        "((z-0.875)/0.125)*(1-cos(0.4*pi*t))",
+                        0.0,
+                        0.0
+                    ],
+                    "variable_name": "VELOCITY"
+                },
+                "kratos_module": "KratosMultiphysics",
+                "process_name": "AssignVectorVariableProcess",
+                "python_module": "assign_vector_variable_process"
+            },
+            {
+                "Parameters": {
+                    "constrained": [
+                        true,
+                        true,
+                        true
+                    ],
+                    "help": "This process assigns a given value (vector) to the nodes belonging a certain submodelpart",
+                    "interval": [
+                        0.0,
+                        1e+30
+                    ],
+                    "local_axes": {},
+                    "mesh_id": 0,
+                    "model_part_name": "FluidModelPart.FluidNoSlipInterface3D_FluidInterface",
+                    "value": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "variable_name": "VELOCITY"
+                },
+                "kratos_module": "KratosMultiphysics.FluidDynamicsApplication",
+                "process_name": "ApplyNoSlipProcess",
+                "python_module": "apply_noslip_process"
+            }
+        ],
+        "fluid_gravity": [
+            {
+                "Parameters": {
+                    "constrained": false,
+                    "direction": [
+                        0.0,
+                        -1.0,
+                        0.0
+                    ],
+                    "help": "This process sets a variable a certain scalar value in a given direction, for all the nodes belonging to a submodelpart. Uses assign_scalar_variable_to_conditions_process for each component",
+                    "interval": [
+                        0.0,
+                        1e+30
+                    ],
+                    "local_axes": {},
+                    "model_part_name": "FluidModelPart.FluidParts_Fluid",
+                    "modulus": 0.0,
+                    "variable_name": "BODY_FORCE"
+                },
+                "kratos_module": "KratosMultiphysics",
+                "process_name": "AssignVectorByDirectionProcess",
+                "python_module": "assign_vector_by_direction_process"
+            }
+        ],
+        "initial_conditions_process_list": []
+    },
+    "solver_settings": {
+        "ale_boundary_parts": [
+            "FluidNoSlipInterface3D_FluidInterface"
+        ],
+        "echo_level": 0,
+        "fluid_solver_settings": {
+            "absolute_pressure_tolerance": 1e-10,
+            "absolute_velocity_tolerance": 1e-10,
+            "alpha": -0.3,
+            "analysis_type": "non_linear",
+            "assign_neighbour_elements_to_conditions": true,
+            "compute_reactions": true,
+            "consider_periodic_conditions": false,
+            "domain_size": 3,
+            "echo_level": 2,
+            "element_replace_settings": {
+                "condition_name": "MonolithicWallCondition3D3N",
+                "element_name": "VMS3D4N"
+            },
+            "formulation": {
+                "dynamic_tau": 1.0,
+                "element_type": "vms",
+                "use_orthogonal_subscales": false
+            },
+            "linear_solver_settings": {
+                "block_size": 1,
+                "coarse_enough": 1000,
+                "coarsening_type": "aggregation",
+                "gmres_krylov_space_dimension": 100,
+                "krylov_type": "gmres",
+                "max_iteration": 100,
+                "max_levels": -1,
+                "post_sweeps": 1,
+                "pre_sweeps": 1,
+                "preconditioner_type": "amg",
+                "provide_coordinates": false,
+                "scaling": false,
+                "smoother_type": "ilu0",
+                "solver_type": "amgcl",
+                "tolerance": 1e-06,
+                "use_block_matrices_if_possible": true,
+                "use_gpgpu": false,
+                "verbosity": 1
+            },
+            "material_import_settings": {
+                "materials_filename": "FluidMaterials.json"
+            },
+            "maximum_iterations": 10,
+            "model_import_settings": {
+                "ignore_variables_not_in_solution_step_data": false,
+                "input_filename": "lid_driven_emb_ref_0_Fluid",
+                "input_type": "mdpa",
+                "reorder": false,
+                "reorder_consecutive": false,
+                "skip_timer": true
+            },
+            "model_part_name": "FluidModelPart",
+            "move_mesh_flag": false,
+            "move_mesh_strategy": 0,
+            "no_skin_parts": [
+                "VelocityConstraints3D_Inlet",
+                "VelocityConstraints3D_InletWalls",
+                "ALEMeshDisplacementBC3D_Inlet",
+                "ALEMeshDisplacementBC3D_InletWalls",
+                "ALEMeshDisplacementBC3D_Outlet",
+                "ALEMeshDisplacementBC3D_Walls"
+            ],
+            "periodic": "periodic",
+            "pressure_relaxation": 0.9,
+            "reform_dofs_at_each_step": true,
+            "relative_pressure_tolerance": 1e-08,
+            "relative_velocity_tolerance": 1e-08,
+            "skin_parts": [
+                "Outlet3D_Outlet",
+                "NoSlip3D_Walls",
+                "FluidNoSlipInterface3D_FluidInterface"
+            ],
+            "solver_type": "Monolithic",
+            "time_scheme": "bossak",
+            "time_stepping": {
+                "automatic_time_step": false,
+                "time_step": 0.025
+            },
+            "velocity_relaxation": 0.9,
+            "volume_model_part_name": "FluidParts_Fluid"
+        },
+        "mesh_motion_parts": [],
+        "mesh_motion_solver_settings": {
+            "buffer_size": 1,
+            "calculate_mesh_velocity": true,
+            "compute_reactions": false,
+            "domain_size": 3,
+            "echo_level": 0,
+            "linear_solver_settings": {
+                "block_size": 1,
+                "coarse_enough": 5000,
+                "coarsening_type": "aggregation",
+                "gmres_krylov_space_dimension": 100,
+                "krylov_type": "gmres",
+                "max_iteration": 200,
+                "max_levels": -1,
+                "post_sweeps": 1,
+                "pre_sweeps": 1,
+                "preconditioner_type": "amg",
+                "provide_coordinates": false,
+                "scaling": false,
+                "smoother_type": "ilu0",
+                "solver_type": "amgcl",
+                "tolerance": 1e-07,
+                "use_block_matrices_if_possible": true,
+                "use_gpgpu": false,
+                "verbosity": 0
+            },
+            "mesh_velocity_calculation": {
+                "alpha_f": 0.0,
+                "alpha_m": -0.3,
+                "time_scheme": "bossak"
+            },
+            "model_import_settings": {
+                "input_filename": "unknown_name",
+                "input_type": "mdpa"
+            },
+            "model_part_name": "FluidModelPart",
+            "poisson_ratio": 0.3,
+            "reform_dofs_each_step": false,
+            "reinitialize_model_part_each_step": false,
+            "solver_type": "structural_similarity",
+            "superimpose_mesh_disp_with": [],
+            "superimpose_mesh_velocity_with": [],
+            "time_stepping": {}
+        },
+        "model_import_settings": {
+            "input_type": "use_input_model_part"
+        },
+        "solver_type": "ale_fluid",
+        "start_fluid_solution_time": 0.0
+    }
+}

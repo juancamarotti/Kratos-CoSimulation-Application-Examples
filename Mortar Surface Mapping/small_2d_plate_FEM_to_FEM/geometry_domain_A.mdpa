@@ -1,0 +1,84 @@
+Begin ModelPartData
+//  VARIABLE_NAME value
+End ModelPartData
+
+Begin Properties 0
+End Properties
+Begin Nodes
+    1   0.0000000000   1.0000000000   0.0000000000
+    2   0.0000000000   0.5000000000   0.0000000000
+    3   0.6666666667   1.0000000000   0.0000000000
+    4   0.0000000000   0.0000000000   0.0000000000
+    5   1.0000000000   0.5000000000   0.0000000000
+    6   0.6666666667   0.0000000000   0.0000000000
+    7   1.3333333333   1.0000000000   0.0000000000
+    8   1.3333333333   0.0000000000   0.0000000000
+    9   2.0000000000   1.0000000000   0.0000000000
+   10   2.0000000000   0.5000000000   0.0000000000
+   11   2.0000000000   0.0000000000   0.0000000000
+End Nodes
+
+
+Begin Elements SmallDisplacementElement2D3N// GUI group identifier: Structure
+        1          0    11    10     8 
+        2          0    10     9     7 
+        3          0     1     2     3 
+        4          0     2     4     6 
+        5          0     7     3     5 
+        6          0     5     3     2 
+        7          0     7     5    10 
+        8          0     6     8     5 
+        9          0     5     8    10 
+       10          0     6     5     2 
+End Elements
+
+Begin Conditions SmallDisplacementLineLoadCondition2D2N// GUI group identifier: Neumann_BC
+    2 0 11 10
+    3 0 10 9
+End Conditions
+
+Begin SubModelPart Parts_Solid_Structure // Group Structure // Subtree Parts_Solid
+    Begin SubModelPartNodes
+            1
+            2
+            3
+            4
+            5
+            6
+            7
+            8
+            9
+           10
+           11
+    End SubModelPartNodes
+    Begin SubModelPartElements
+            1
+            2
+            3
+            4
+            5
+            6
+            7
+            8
+            9
+           10
+    End SubModelPartElements
+End SubModelPart
+Begin SubModelPart DISPLACEMENT_Displacement_BC // Group Displacement_BC // Subtree DISPLACEMENT
+    Begin SubModelPartNodes
+            1
+            2
+            4
+    End SubModelPartNodes
+End SubModelPart
+Begin SubModelPart LineLoad2D_Neumann_BC // Group Neumann_BC // Subtree LineLoad2D
+    Begin SubModelPartNodes
+            9
+           10
+           11
+    End SubModelPartNodes
+    Begin SubModelPartConditions
+            2
+            3
+    End SubModelPartConditions
+End SubModelPart

@@ -1,0 +1,74 @@
+{
+    "problem_data"     : {
+        "problem_name"  : "femB",
+        "parallel_type" : "OpenMP",
+        "echo_level"    : 0,
+        "start_time"    : 0.0,
+        "end_time"      : 0.25
+    },
+    "solver_settings"  : {
+        "solver_type"                        : "Dynamic",
+        "model_part_name"                    : "Structure",
+        "domain_size"                        : 2,
+        "echo_level"                         : 0,
+        "analysis_type"                      : "linear",
+        "time_integration_method"         : "implicit",
+		"scheme_type"                     : "newmark",
+        "compute_reactions": true,
+        "model_import_settings"              : {
+            "input_type"     : "mdpa",
+            "input_filename" : "femB"
+        },
+        "material_import_settings"           : {
+            "materials_filename" : "StructuralMaterials.json"
+        },
+        "time_stepping"                      : {
+            "time_step" : 0.025
+        },
+        "line_search"                        : false,
+        "move_mesh_flag"                     : true,
+        "convergence_criterion"              : "residual_criterion",
+        "displacement_relative_tolerance"    : 0.0001,
+        "displacement_absolute_tolerance"    : 1e-9,
+        "residual_relative_tolerance"        : 0.0001,
+        "residual_absolute_tolerance"        : 1e-9,
+        "max_iteration"                      : 10,
+        "rotation_dofs"                      : false
+    },
+    "processes"        : {
+        "constraints_process_list" : [],
+        "loads_process_list"       : [{
+            "python_module" : "assign_vector_by_direction_to_condition_process",
+            "kratos_module" : "KratosMultiphysics",
+            "check"         : "DirectorVectorNonZero direction",
+            "Parameters"    : {
+                "model_part_name" : "Structure.PointLoad2D_load",
+                "variable_name"   : "POINT_LOAD",
+                "modulus"         : 1.0,
+                "direction"       : [0.0,-1.0,0.0],
+                "interval"        : [0.0,"End"]
+            }
+        }],
+        "list_other_processes"     : []
+    },
+    "print_output_process" : [],
+    "output_processes" : {
+        "vtk_output" : [{
+            "python_module" : "vtk_output_process",
+            "kratos_module" : "KratosMultiphysics",
+            "process_name"  : "VtkOutputProcess",
+            "help"          : "This process writes postprocessing files for Paraview",
+            "Parameters"    : {
+                "model_part_name"                    : "Structure",
+                "output_control_type"                : "step",
+                "output_interval"                    : 1,
+                "file_format"                        : "ascii",
+                "output_precision"                   : 7,
+                "output_sub_model_parts"             : false,
+                "output_path"                        : "fem_fem_test_domainB_results",
+                "save_output_files_in_folder"        : true,
+                "nodal_solution_step_data_variables" : ["DISPLACEMENT", "POINT_LOAD","REACTION"]
+            }
+        }]
+     }
+}

@@ -1,0 +1,210 @@
+{
+    "analysis_stage": "KratosMultiphysics.StructuralMechanicsApplication.structural_mechanics_analysis",
+    "output_processes": {
+        "gid_output": [
+            {
+                "Parameters": {
+                    "model_part_name": "Structure",
+                    "output_name": "gid_output/Complete_Domain_Dynamics",
+                    "postprocess_parameters": {
+                        "point_data_configuration": [],
+                        "result_file_configuration": {
+                            "additional_list_files": [],
+                            "body_output": true,
+                            "elemental_conditional_flags_results": [],
+                            "file_label": "step",
+                            "flush_after_output": false,
+                            "gauss_point_results": [
+                                "VON_MISES_STRESS"
+                            ],
+                            "gidpost_flags": {
+                                "GiDPostMode": "GiD_PostBinary",
+                                "MultiFileFlag": "SingleFile",
+                                "WriteConditionsFlag": "WriteConditions",
+                                "WriteDeformedMeshFlag": "WriteDeformed"
+                            },
+                            "nodal_flags_results": [],
+                            "nodal_nonhistorical_results": [],
+                            "nodal_results": [
+                                "DISPLACEMENT",
+                                "REACTION"
+                            ],
+                            "node_output": false,
+                            "output_control_type": "step",
+                            "output_interval": 1,
+                            "plane_output": [],
+                            "skin_output": false,
+                            "time_label_format": "{:.12f}"
+                        }
+                    }
+                },
+                "kratos_module": "KratosMultiphysics",
+                "process_name": "GiDOutputProcess",
+                "python_module": "gid_output_process"
+            }
+        ],
+        "vtk_output": [
+            {
+                "Parameters": {
+                    "condition_data_value_variables": [],
+                    "condition_flags": [],
+                    "custom_name_postfix": "",
+                    "custom_name_prefix": "",
+                    "element_data_value_variables": [],
+                    "element_flags": [],
+                    "entity_type": "automatic",
+                    "file_format": "ascii",
+                    "gauss_point_variables_extrapolated_to_nodes": [
+                        "VON_MISES_STRESS"
+                    ],
+                    "gauss_point_variables_in_elements": [],
+                    "model_part_name": "Structure",
+                    "nodal_data_value_variables": [
+                        "VON_MISES_STRESS"
+                    ],
+                    "nodal_flags": [],
+                    "nodal_solution_step_data_variables": [
+                        "DISPLACEMENT",
+                        "REACTION"
+                    ],
+                    "output_control_type": "step",
+                    "output_interval": 10,
+                    "output_path": "vtk_output",
+                    "output_precision": 7,
+                    "output_sub_model_parts": false,
+                    "save_output_files_in_folder": true,
+                    "write_deformed_configuration": false,
+                    "write_ids": false
+                },
+                "kratos_module": "KratosMultiphysics",
+                "process_name": "VtkOutputProcess",
+                "python_module": "vtk_output_process"
+            }
+        ]
+    },
+    "problem_data": {
+        "echo_level": 4,
+        "end_time": 20.0,
+        "parallel_type": "OpenMP",
+        "problem_name": "Complete_Domain_Dynamics",
+        "start_time": 0.0
+    },
+    "processes": {
+        "constraints_process_list": [
+            {
+                "Parameters": {
+                    "constrained": [
+                        true,
+                        true,
+                        true
+                    ],
+                    "help": "This process assigns a given value (vector) to the nodes belonging a certain submodelpart",
+                    "interval": [
+                        0.0,
+                        "End"
+                    ],
+                    "local_axes": {},
+                    "mesh_id": 0,
+                    "model_part_name": "Structure.DISPLACEMENT_Dirichlet_BC",
+                    "value": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "variable_name": "DISPLACEMENT"
+                },
+                "kratos_module": "KratosMultiphysics",
+                "process_name": "AssignVectorVariableProcess",
+                "python_module": "assign_vector_variable_process"
+            }
+        ],
+        "list_other_processes": [],
+        "loads_process_list": [
+            {
+                "Parameters": {
+                    "direction": [
+                        1.0,
+                        0.0,
+                        0.0
+                    ],
+                    "entities": [
+                        "conditions"
+                    ],
+                    "help": "This process sets a variable a certain scalar value in a given direction, for all the conditions belonging to a submodelpart. Uses assign_scalar_variable_to_conditions_process for each component",
+                    "interval": [
+                        0.0,
+                        1e+30
+                    ],
+                    "local_axes": {},
+                    "model_part_name": "Structure.LineLoad2D_Load_BC",
+                    "modulus": 1.0,
+                    "variable_name": "LINE_LOAD"
+                },
+                "check": "DirectorVectorNonZero direction",
+                "kratos_module": "KratosMultiphysics",
+                "process_name": "AssignVectorByDirectionToConditionProcess",
+                "python_module": "assign_vector_by_direction_to_condition_process"
+            }
+        ]
+    },
+    "solver_settings": {
+        "analysis_type": "non_linear",
+        "auxiliary_dofs_list": [],
+        "auxiliary_reaction_list": [],
+        "auxiliary_variables_list": [],
+        "buffer_size": 2,
+        "builder_and_solver_settings": {
+            "advanced_settings": {},
+            "use_block_builder": true,
+            "use_lagrange_BS": false
+        },
+        "clear_storage": false,
+        "compute_reactions": true,
+        "computing_sub_model_part_name": "",
+        "convergence_criterion": "residual_criterion",
+        "delta_time_refresh": 1000,
+        "displacement_absolute_tolerance": 1e-09,
+        "displacement_control": false,
+        "displacement_relative_tolerance": 0.0001,
+        "domain_size": 2,
+        "echo_level": 4,
+        "fraction_delta_time": 0.3333333333333333,
+        "linear_solver_settings": {},
+        "material_import_settings": {
+            "materials_filename": "StructuralMaterials.json"
+        },
+        "max_delta_time": 1.0,
+        "max_iteration": 10,
+        "model_import_settings": {
+            "ignore_variables_not_in_solution_step_data": false,
+            "input_filename": "fem_domain",
+            "input_type": "mdpa",
+            "reorder": false,
+            "reorder_consecutive": false,
+            "skip_timer": true
+        },
+        "model_part_name": "Structure",
+        "move_mesh_flag": false,
+        "multi_point_constraints_used": true,
+        "pressure_dofs": false,
+        "rayleigh_alpha": 0.0,
+        "rayleigh_beta": 0.0,
+        "reform_dofs_at_each_step": false,
+        "residual_absolute_tolerance": 1e-09,
+        "residual_relative_tolerance": 0.0001,
+        "rotation_dofs": false,
+        "scheme_type": "central_differences",
+        "solver_type": "Dynamic",
+        "solving_strategy_settings": {
+            "advanced_settings": {},
+            "type": "newton_raphson"
+        },
+        "time_integration_method": "explicit",
+        "time_step_prediction_level": 0,
+        "time_stepping": {
+            "time_step": 0.01
+        },
+        "use_old_stiffness_in_first_iteration": false,
+        "volumetric_strain_dofs": false
+    }
+}

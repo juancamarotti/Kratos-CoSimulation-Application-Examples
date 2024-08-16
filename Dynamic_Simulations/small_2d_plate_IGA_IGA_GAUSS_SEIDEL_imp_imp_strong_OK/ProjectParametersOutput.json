@@ -1,0 +1,215 @@
+{
+    "modelers": [
+        {
+            "Parameters": {
+                "cad_model_part_name": "IgaModelPart",
+                "echo_level": 0,
+                "geometry_file_name": "DomainB_IGA/geometry_domainB.cad.json",
+                "output_geometry_file_name": "small_2d_plate_B_kratos_0.georhino.json"
+            },
+            "modeler_name": "CadIoModeler"
+        },
+        {
+            "Parameters": {
+                "echo_level": 4,
+                "refinements_file_name": "DomainB_IGA/refinementsB.iga.json"
+            },
+            "modeler_name": "RefinementModeler"
+        },
+        {
+            "Parameters": {
+                "analysis_model_part_name": "IgaModelPart",
+                "cad_model_part_name": "IgaModelPart",
+                "echo_level": 0,
+                "physics_file_name": "DomainB_IGA/physics_domainB.iga.json"
+            },
+            "modeler_name": "IgaModeler"
+        }
+    ],
+    "output_processes": {
+        "output_process_list": [
+            {
+                "Parameters": {
+                    "file_label": "step",
+                    "integration_point_results": [],
+                    "model_part_name": "IgaModelPart.StructuralAnalysis_2",
+                    "nodal_results": [
+                        "DISPLACEMENT",
+                        "REACTION"
+                    ],
+                    "output_control_type": "time",
+                    "output_file_name": "small_2d_plate_B_kratos_shell_2.post.res",
+                    "output_frequency": 0.0
+                },
+                "kratos_module": "IgaApplication",
+                "python_module": "iga_output_process"
+            },
+            {
+                "Parameters": {
+                    "file_label": "step",
+                    "integration_point_results": [],
+                    "model_part_name": "IgaModelPart.Support_3",
+                    "nodal_results": [],
+                    "output_control_type": "time",
+                    "output_file_name": "small_2d_plate_B_kratos_support_3.post.res",
+                    "output_frequency": 0.0
+                },
+                "kratos_module": "IgaApplication",
+                "python_module": "iga_output_process"
+            },
+            {
+                "Parameters": {
+                    "file_label": "step",
+                    "integration_point_results": [
+                        "DISPLACEMENT"
+                    ],
+                    "model_part_name": "IgaModelPart.Output_10",
+                    "nodal_results": [],
+                    "output_control_type": "time",
+                    "output_file_name": "output.txt",
+                    "output_frequency": 0.0
+                },
+                "kratos_module": "IgaApplication",
+                "python_module": "iga_output_process"
+            },
+            {
+                "Parameters": {
+                    "file_label": "step",
+                    "integration_point_results": [
+                        "REACTION"
+                    ],
+                    "model_part_name": "IgaModelPart.Output_11",
+                    "nodal_results": [],
+                    "output_control_type": "time",
+                    "output_file_name": "output_reaction.txt",
+                    "output_frequency": 0.0
+                },
+                "kratos_module": "IgaApplication",
+                "python_module": "iga_output_process"
+            }
+        ]
+    },
+    "problem_data": {
+        "echo_level": 2,
+        "end_time": 1.0,
+        "parallel_type": "OpenMP",
+        "problem_name": "small_2d_plate_B_kratos",
+        "start_time": 0
+    },
+    "processes": {
+        "additional_processes": [
+            {
+                "Parameters": {
+                    "model_part_name": "IgaModelPart.StructuralAnalysis_2",
+                    "output_coupling_geometry_conditions": false,
+                    "output_file_name": "small_2d_plate_B_kratos_shell_2_integrationdomain.json",
+                    "output_geometry_conditions": false,
+                    "output_geometry_elements": true
+                },
+                "kratos_module": "IgaApplication",
+                "python_module": "output_quadrature_domain_process"
+            },
+            {
+                "Parameters": {
+                    "model_part_name": "IgaModelPart.Support_3",
+                    "output_coupling_geometry_conditions": false,
+                    "output_file_name": "small_2d_plate_B_kratos_support_3_integrationdomain.json",
+                    "output_geometry_conditions": true,
+                    "output_geometry_elements": false
+                },
+                "kratos_module": "IgaApplication",
+                "python_module": "output_quadrature_domain_process"
+            }
+        ],
+        "neumann_process_list": [
+            {
+                "Parameters": {
+                    "entities": [
+                        "conditions"
+                    ],
+                    "help": "This process assigns a given value (vector) to the conditions belonging a certain submodelpart",
+                    "interval": [
+                        0,
+                        1e+30
+                    ],
+                    "local_axes": {},
+                    "mesh_id": 0,
+                    "model_part_name": "IgaModelPart.Load_5",
+                    "value": [
+                        1,
+                        0,
+                        0
+                    ],
+                    "variable_name": "LINE_LOAD"
+                },
+                "kratos_module": "KratosMultiphysics",
+                "python_module": "assign_vector_variable_to_conditions_process"
+            }
+        ]
+    },
+    "solver_settings": {
+        "analysis_type": "non_linear",
+        "auxiliary_dofs_list": [],
+        "auxiliary_reaction_list": [],
+        "auxiliary_variables_list": [],
+        "buffer_size": 2,
+        "builder_and_solver_settings": {
+            "advanced_settings": {
+                "block_builder": true,
+                "diagonal_values_for_dirichlet_dofs": "use_max_diagonal",
+                "echo_level": 1,
+                "name": "block_builder_and_solver",
+                "silent_warnings": false
+            },
+            "use_block_builder": true,
+            "use_lagrange_BS": false
+        },
+        "clear_storage": false,
+        "compute_reactions": true,
+        "computing_sub_model_part_name": "",
+        "convergence_criterion": "residual_criterion",
+        "damp_factor_m": -0.3,
+        "displacement_absolute_tolerance": 1e-09,
+        "displacement_control": false,
+        "displacement_relative_tolerance": 0.0001,
+        "domain_size": 1,
+        "echo_level": 0,
+        "linear_solver_settings": {
+            "max_iteration": 500,
+            "scaling": false,
+            "solver_type": "LinearSolversApplication.sparse_lu",
+            "tolerance": 1e-09,
+            "verbosity": 1
+        },
+        "material_import_settings": {
+            "materials_filename": "DomainB_IGA/materials.json"
+        },
+        "max_iteration": 100,
+        "model_import_settings": {
+            "input_type": "use_input_model_part"
+        },
+        "model_part_name": "IgaModelPart",
+        "move_mesh_flag": true,
+        "multi_point_constraints_used": true,
+        "newmark_beta": 0.25,
+        "pressure_dofs": false,
+        "rayleigh_alpha": 0.0,
+        "rayleigh_beta": 0.0,
+        "reform_dofs_at_each_step": false,
+        "residual_absolute_tolerance": 1e-09,
+        "residual_relative_tolerance": 0.0001,
+        "rotation_dofs": false,
+        "scheme_type": "newmark",
+        "solver_type": "Dynamic",
+        "solving_strategy_settings": {
+            "advanced_settings": {},
+            "type": "newton_raphson"
+        },
+        "time_integration_method": "implicit",
+        "time_stepping": {
+            "time_step": 0.01
+        },
+        "use_old_stiffness_in_first_iteration": false,
+        "volumetric_strain_dofs": false
+    }
+}

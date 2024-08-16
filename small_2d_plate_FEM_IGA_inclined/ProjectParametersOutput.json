@@ -1,0 +1,171 @@
+{
+    "output_processes": {
+        "vtk_output": [
+            {
+                "Parameters": {
+                    "condition_data_value_variables": [],
+                    "condition_flags": [],
+                    "custom_name_postfix": "",
+                    "custom_name_prefix": "",
+                    "element_data_value_variables": [],
+                    "element_flags": [],
+                    "entity_type": "automatic",
+                    "file_format": "ascii",
+                    "gauss_point_variables_extrapolated_to_nodes": [],
+                    "gauss_point_variables_in_elements": [],
+                    "model_part_name": "Structure",
+                    "nodal_data_value_variables": [],
+                    "nodal_flags": [],
+                    "nodal_solution_step_data_variables": [
+                        "DISPLACEMENT",
+                        "POINT_LOAD",
+                        "REACTION"
+                    ],
+                    "output_control_type": "step",
+                    "output_interval": 1,
+                    "output_path": "fem_fem_test_domainA_results_1",
+                    "output_precision": 7,
+                    "output_sub_model_parts": false,
+                    "save_output_files_in_folder": true,
+                    "write_deformed_configuration": false,
+                    "write_ids": false
+                },
+                "help": "This process writes postprocessing files for Paraview",
+                "kratos_module": "KratosMultiphysics",
+                "process_name": "VtkOutputProcess",
+                "python_module": "vtk_output_process"
+            }
+        ]
+    },
+    "print_output_process": [
+        {
+            "Parameters": {
+                "model_part_name": "Structure",
+                "output_file_name": "fem_fem_test_domainA_results_1.json",
+                "output_variables": [
+                    "DISPLACEMENT",
+                    "POINT_LOAD",
+                    "REACTION"
+                ],
+                "time_frequency": 1.0
+            },
+            "help": "",
+            "kratos_module": "KratosMultiphysics",
+            "process_name": "JsonOutputProcess",
+            "python_module": "json_output_process"
+        }
+    ],
+    "problem_data": {
+        "echo_level": 3,
+        "end_time": 1.0,
+        "parallel_type": "OpenMP",
+        "problem_name": "fem_fem_test_domainA",
+        "start_time": 0.0
+    },
+    "processes": {
+        "constraints_process_list": [
+            {
+                "Parameters": {
+                    "constrained": [
+                        true,
+                        true,
+                        true
+                    ],
+                    "help": "This process assigns a given value (vector) to the nodes belonging a certain submodelpart",
+                    "interval": [
+                        0.0,
+                        "End"
+                    ],
+                    "local_axes": {},
+                    "mesh_id": 0,
+                    "model_part_name": "Structure.DISPLACEMENT_left_edge",
+                    "value": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "variable_name": "DISPLACEMENT"
+                },
+                "kratos_module": "KratosMultiphysics",
+                "python_module": "assign_vector_variable_process"
+            }
+        ],
+        "list_other_processes": [],
+        "loads_process_list": [
+            {
+                "Parameters": {
+                    "entity_name": "PointLoadCondition3D1N",
+                    "entity_type": "condition",
+                    "initialize_communicators": false,
+                    "kratos_application": "",
+                    "model_part_name": "Structure.LineLoad2D_right_edge",
+                    "new_sub_model_part_name": "PLEASE_SPECIFY",
+                    "properties_id": 0,
+                    "sub_model_part_names": []
+                },
+                "kratos_module": "KratosMultiphysics.CoSimulationApplication.processes",
+                "python_module": "create_point_based_entites_process"
+            }
+        ]
+    },
+    "solver_settings": {
+        "analysis_type": "non_linear",
+        "auxiliary_dofs_list": [],
+        "auxiliary_reaction_list": [],
+        "auxiliary_variables_list": [],
+        "buffer_size": 2,
+        "builder_and_solver_settings": {
+            "advanced_settings": {
+                "block_builder": true,
+                "diagonal_values_for_dirichlet_dofs": "use_max_diagonal",
+                "echo_level": 1,
+                "name": "block_builder_and_solver",
+                "silent_warnings": false
+            },
+            "use_block_builder": true,
+            "use_lagrange_BS": false
+        },
+        "clear_storage": false,
+        "compute_reactions": true,
+        "computing_sub_model_part_name": "",
+        "convergence_criterion": "residual_criterion",
+        "displacement_absolute_tolerance": 1e-09,
+        "displacement_control": false,
+        "displacement_relative_tolerance": 0.0001,
+        "domain_size": 3,
+        "echo_level": 0,
+        "linear_solver_settings": {
+            "solver_type": "LinearSolversApplication.sparse_qr"
+        },
+        "material_import_settings": {
+            "materials_filename": "test2A/StructuralMaterialsA.json"
+        },
+        "max_iteration": 10,
+        "model_import_settings": {
+            "ignore_variables_not_in_solution_step_data": false,
+            "input_filename": "test2A/fem_fem_test_domainA",
+            "input_type": "mdpa",
+            "reorder": false,
+            "reorder_consecutive": false,
+            "skip_timer": true
+        },
+        "model_part_name": "Structure",
+        "move_mesh_flag": true,
+        "multi_point_constraints_used": true,
+        "pressure_dofs": false,
+        "reform_dofs_at_each_step": false,
+        "residual_absolute_tolerance": 1e-09,
+        "residual_relative_tolerance": 0.0001,
+        "rotation_dofs": false,
+        "solver_type": "Static",
+        "solving_strategy_settings": {
+            "advanced_settings": {},
+            "type": "newton_raphson"
+        },
+        "time_stepping": {
+            "time_step": 1.1
+        },
+        "use_old_stiffness_in_first_iteration": false,
+        "volumetric_strain_dofs": false
+    }
+}

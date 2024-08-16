@@ -1,0 +1,175 @@
+{
+  "problem_data": {
+    "problem_name": "DomainB_kratos",
+    "echo_level": 0,
+    "parallel_type": "OpenMP",
+    "start_time": 0,
+    "end_time": 9.1
+  },
+  "solver_settings": {
+    "model_part_name": "IgaModelPart",
+    "domain_size": 1,
+    "echo_level": 1,
+    "buffer_size": 2,
+    "analysis_type": "non_linear",
+    "model_import_settings": { "input_type": "use_input_model_part" },
+    "material_import_settings": { "materials_filename": "materials.json" },
+    "time_stepping": { "time_step": 1 },
+    "rotation_dofs": false,
+    "reform_dofs_at_each_step": true,
+    "line_search": false,
+    "compute_reactions": false,
+    "block_builder": true,
+    "clear_storage": false,
+    "move_mesh_flag": true,
+    "convergence_criterion": "residual_criterion",
+    "displacement_relative_tolerance": 0.0001,
+    "displacement_absolute_tolerance": 0.001,
+    "residual_relative_tolerance": 0.0001,
+    "residual_absolute_tolerance": 0.001,
+    "max_iteration": 1,
+    "solver_type": "formfinding",
+    "linear_solver_settings": {
+      "solver_type": "LinearSolversApplication.sparse_lu",
+      "max_iteration": 500,
+      "tolerance": 1E-09,
+      "scaling": false,
+      "verbosity": 1
+    },
+    "projection_settings": {
+      "model_part_name": "IgaModelPart",
+      "echo_level": 1,
+      "projection_type": "planar",
+      "global_direction": [ 1, 0, 0 ],
+      "variable_name": "LOCAL_PRESTRESS_AXIS_1",
+      "method_specific_settings": {},
+      "check_local_space_dimension": false
+    },
+    "printing_format": "gid",
+    "write_formfound_geometry_file": true,
+    "auxiliary_variables_list": [],
+    "auxiliary_dofs_list": [],
+    "auxiliary_reaction_list": []
+  },
+  "modelers": [
+    {
+      "modeler_name": "CadIoModeler",
+      "Parameters": {
+        "echo_level": 0,
+        "cad_model_part_name": "IgaModelPart",
+        "geometry_file_name": "geometry.cad.json",
+        "output_geometry_file_name": "DomainB_kratos_0.georhino.json"
+      }
+    },
+    {
+      "modeler_name": "RefinementModeler",
+      "Parameters": {
+        "echo_level": 0,
+        "physics_file_name": "refinements.iga.json"
+      }
+    },
+    {
+      "modeler_name": "IgaModeler",
+      "Parameters": {
+        "echo_level": 0,
+        "cad_model_part_name": "IgaModelPart",
+        "analysis_model_part_name": "IgaModelPart",
+        "physics_file_name": "physics.iga.json"
+      }
+    }
+  ],
+  "processes": {
+    "additional_processes": [
+      {
+        "kratos_module": "IgaApplication",
+        "python_module": "output_quadrature_domain_process",
+        "Parameters": {
+          "output_file_name": "DomainB_kratos_shell_1_integrationdomain.json",
+          "model_part_name": "IgaModelPart.StructuralAnalysis_1",
+          "output_geometry_elements": true,
+          "output_geometry_conditions": false
+        }
+      },
+      {
+        "kratos_module": "IgaApplication",
+        "python_module": "output_quadrature_domain_process",
+        "Parameters": {
+          "output_file_name": "DomainB_kratos_support_4_integrationdomain.json",
+          "model_part_name": "IgaModelPart.Support_4",
+          "output_geometry_elements": false,
+          "output_geometry_conditions": true
+        }
+      }
+    ],
+    "dirichlet_process_list": [
+      {
+        "kratos_module": "KratosMultiphysics",
+        "python_module": "assign_vector_variable_process",
+        "Parameters": {
+          "mesh_id": 0,
+          "model_part_name": "IgaModelPart.Support_4",
+          "variable_name": "DISPLACEMENT",
+          "value": [ 0, 0, 0 ],
+          "interval": [ 0, "End" ]
+        }
+      }
+    ],
+    "neumann_process_list": [
+      {
+        "kratos_module": "KratosMultiphysics",
+        "python_module": "assign_vector_variable_to_conditions_process",
+        "Parameters": {
+          "mesh_id": 0,
+          "model_part_name": "IgaModelPart.Load_5",
+          "variable_name": "DEAD_LOAD",
+          "value": [ 1, 0, 0 ],
+          "interval": [ 0, "End" ]
+        }
+      },
+      {
+        "kratos_module": "KratosMultiphysics",
+        "python_module": "assign_vector_variable_to_conditions_process",
+        "Parameters": {
+          "mesh_id": 0,
+          "model_part_name": "IgaModelPart.Load_6",
+          "variable_name": "DEAD_LOAD",
+          "value": [ 0, 0, 0 ],
+          "interval": [ 0, "End" ]
+        }
+      }
+    ]
+  },
+  "output_processes": {
+    "output_process_list": [
+      {
+        "kratos_module": "IgaApplication",
+        "python_module": "iga_output_process",
+        "Parameters": {
+          "nodal_results": [ "DISPLACEMENT" ],
+          "integration_point_results": [ "CAUCHY_STRESS", "PK2_STRESS", "INTERNAL_MOMENT" ],
+          "output_file_name": "DomainB_kratos_shell_1.post.res",
+          "model_part_name": "IgaModelPart.StructuralAnalysis_1",
+          "file_label": "step",
+          "output_control_type": "time",
+          "output_frequency": 0.1,
+          "is_formfinding": true,
+          "form_finding": true
+        }
+      },
+      {
+        "kratos_module": "IgaApplication",
+        "python_module": "iga_output_process",
+        "Parameters": {
+          "nodal_results": [],
+          "integration_point_results": [ "REACTION" ],
+          "output_file_name": "DomainB_kratos_support_4.post.res",
+          "model_part_name": "IgaModelPart.Support_4",
+          "file_label": "step",
+          "output_control_type": "time",
+          "output_frequency": 0.1,
+          "form_finding": true
+        }
+      }
+    ]
+  }
+}
