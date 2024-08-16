@@ -2,59 +2,46 @@
     "problem_data" :
     {
         "start_time" : 0.0,
-        "end_time" : 1.0,
-        "echo_level" : 0,
+        "end_time" : 20.0,
+        "echo_level" : 4,
         "print_colors" : true,
         "parallel_type" : "OpenMP"
     },
     "solver_settings" :
     {
-        "type" : "coupled_solvers.gauss_seidel_strong",
-        "echo_level" : 3,
-        "num_coupling_iterations" : 40,
-        "convergence_accelerators" : [
+         "type" : "coupled_solvers.gauss_seidel_strong",
+        "echo_level" : 4,
+        "num_coupling_iterations" : 20,
+       "convergence_accelerators" : [
             {
                 "type"      : "mvqn",
                 "solver"    : "fem_fem_test_domainA",
                 "data_name" : "load"
             }
         ],
-        "convergence_criteria" : [
-	{
-		"type": "relative_norm_previous_residual",
-		"solver": "fem_fem_test_domainB",
-		"data_name": "load",
-		"abs_tolerance": 1e-6,
-		"rel_tolerance": 1e-6
-	      },
-            {
-                "type"          : "absolute_norm_energy_conjugate",
-                "solver"        : "fem_fem_test_domainA",
-                "criteria_composition" : "energy_conjugate",
-                "criteria_options" : ["domain_difference","swap_second_domain_data_sign"],
-                "data_name"     : "disp",
-                "conjugate_data_name" : "load",
-                "solver_domain_two" : "fem_fem_test_domainB",
-                "abs_tolerance" : 1e-10,
-                "ignore_first_convergence" : true,
-                "use_wrapper" : false
-            }
-        ],
+        "convergence_criteria": [
+      {
+        "type": "relative_norm_previous_residual",
+        "solver": "fem_fem_test_domainA",
+        "data_name": "load",
+        "abs_tolerance": 1e-3,
+        "rel_tolerance": 1e-3
+      }],
         "data_transfer_operators" : {
             "mapper" : {
                 "type" : "kratos_mapping",
 					"mapper_settings" : {
 					"mapper_type": "coupling_geometry",
-					"echo_level" : 0,
-					"dual_mortar": true,
+					"echo_level" : 4,
+					"dual_mortar": false,
 					"consistency_scaling" : true,
-					"modeler_name" : "IgaMappingGeometriesModeler",
+					"modeler_name" : "MappingGeometriesModeler",
 					"modeler_parameters":{
 						"origin_model_part_name" : "origin",
 						"destination_model_part_name" : "destination",
 						"is_interface_sub_model_parts_specified" : true,
-						"origin_interface_sub_model_part_name" : "IgaModelPart.Load_3",
-						"destination_interface_sub_model_part_name" : "IgaModelPart.Support_2"
+						"origin_interface_sub_model_part_name" : "Structure.LineLoad2D_right_edge",
+						"destination_interface_sub_model_part_name" : "Structure.DISPLACEMENT_left_edge"
 					}
 				}
             }
@@ -93,16 +80,16 @@
             {
                 "type" : "solver_wrappers.kratos.structural_mechanics_wrapper",
                 "solver_wrapper_settings" : {
-                    "input_file"  : "DomainB/ProjectParameters"
+                    "input_file"  : "DomainB/ProjectParametersB"
                 },
                 "data" : {
                     "disp" : {
-                        "model_part_name"   : "IgaModelPart.Support_2",
+                        "model_part_name"   : "Structure.DISPLACEMENT_left_edge",
                         "dimension" : 2,
                         "variable_name" : "DISPLACEMENT"
                     },
                     "load" : {
-                        "model_part_name"   : "IgaModelPart.Support_2",
+                        "model_part_name"   : "Structure.DISPLACEMENT_left_edge",
                         "dimension" : 2,
                         "variable_name" : "REACTION"
                     }
@@ -112,16 +99,16 @@
             {
                 "type" : "solver_wrappers.kratos.structural_mechanics_wrapper",
                 "solver_wrapper_settings" : {
-                    "input_file"  : "DomainA/ProjectParameters"
+                    "input_file"  : "DomainA/ProjectParametersA"
                 },
                 "data" : {
                     "disp" : {
-                        "model_part_name"   : "IgaModelPart.Load_3",
+                        "model_part_name"   : "Structure.LineLoad2D_right_edge",
                         "dimension" : 2,
                         "variable_name" : "DISPLACEMENT"
                     },
                     "load" : {
-                        "model_part_name"   : "IgaModelPart.Load_3",
+                        "model_part_name"   : "Structure.LineLoad2D_right_edge",
                         "dimension" : 2,
                         "variable_name" : "POINT_LOAD"
                     }
