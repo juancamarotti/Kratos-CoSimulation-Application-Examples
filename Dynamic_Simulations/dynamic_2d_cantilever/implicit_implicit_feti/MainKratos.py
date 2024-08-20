@@ -7,7 +7,7 @@ from CoSimulationAnalysis to do modifications
 Check also "kratos/python_scripts/analysis_stage.py" for available methods that can be overridden
 """
 
-parameter_file_name = "fem_fem_dynamic_2d_cantilever_nonconforming_parameters.json"
+parameter_file_name = "fem_fem_dynamic_2d_cantilever_parameters.json"
 with open(parameter_file_name,'r') as parameter_file:
     parameters = KM.Parameters(parameter_file.read())
     

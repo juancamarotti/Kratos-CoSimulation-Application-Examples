@@ -1,0 +1,1400 @@
+<?xml version="1.0" encoding="utf-8"?><!-- -*- coding: utf-8; mode: SGML -*- -->
+<Kratos_data version="9.4.3">
+  <style show_menubutton_about="0" show_menubutton_search="1"/>
+  <groups>
+    <group n="Shell" onoff="1" color="#ffaaaa" type=""/>
+    <group n="DC_BC" onoff="1" color="#0000ff" type=""/>
+    <group n="DC_BC//Initial" onoff="1" color="#ff00ff" type=""/>
+    <group n="DC_BC//Total" onoff="1" color="#00ffff" type=""/>
+    <group n="End_Load" onoff="1" color="#a60021" type=""/>
+    <group n="End_Load//Total" onoff="1" color="#00ff00" type=""/>
+  </groups>
+  <units/>
+  <!-- Fill this fields to automatically active an App without the init window -->
+  <hiddenfield n="activeapp" active="0" v="Structural" state="disabled"/>
+  <value n="nDim" pn="Dimension" un="nDim" v="2D" state="disabled" values="undefined,2D,2Da,3D" dict="undefined,Undefined,2D,2D,2Da,2D axisymmetric,3D,3D" tree_state="selected,close"/>
+  <appLink n="ThermicLauncher" public="1" pn="Thermic" active="0" appid="ThermicLauncher" prefix="ThermicLauncher"/>
+  <appLink n="ConvectionDiffusion" public="0" pn="Convection-diffusion" active="0" appid="ConvectionDiffusion" prefix="CNVDFF"/>
+  <container n="Structural" pn="Structural" icon="app" prefix="ST" tree_state="open" open_window="0">
+    <container n="StageInfo" pn="Model information" help="Stage information" icon="analysis" state="normal" open_window="0" tree_state="open">
+      <value n="SolutionType" pn="Solver Type" un="STSoluType" v="Dynamic" values="Static,Quasi-static,Dynamic,eigen_value,formfinding" dict="Static,Static,Quasi-static,Quasi-static,Dynamic,Dynamic,eigen_value,Eigenvalue,formfinding,Formfinding" help="Solution type" actualize_tree="1" actualize="1" tree_state="open">
+        <dependencies value="formfinding" node="../value[@n='AnalysisType']" att1="values" v1="non_linear"/>
+        <dependencies condition="@v!='formfinding'" node="../value[@n='AnalysisType']" att1="values" v1="linear,non_linear"/>
+      </value>
+      <value n="SolStratCombo" pn="Time integration method" un="STSolStrat" v="implicit" values="implicit" dict="[GetSolutionStrategiesStructural]" actualize_tree="1" state="[getStateFromXPathValue {string(../value[@n='SolutionType']/@v)} Dynamic]" tree_state="close"/>
+      <value n="Scheme" pn="Scheme" un="STScheme" v="newmark" values="newmark,bossak" dict="[GetSchemes]" state="[getStateFromXPathValue {string(../value[@n='SolutionType']/@v)} Dynamic,eigen_value]" actualize_tree="1" tree_state="close"/>
+      <value n="AnalysisType" pn="Analysis type" un="STAnalysisType" v="non_linear" values="linear,non_linear" dict="linear,Linear,non_linear,Nonlinear" help="Analysis type" state="[getStateFromXPathValue {string(../value[@n='SolutionType']/@v)} Static,Quasi-static,Dynamic,formfinding]" tree_state="close"/>
+    </container>
+    <container n="Parts" pn="Parts" un="STParts" icon="shells16" update_proc="UpdateParts" tree_state="open">
+      <condition n="Parts_Solid" pn="Solid" ov="surface" ovm="node,element" icon="shells16" help="Select your group" update_proc="UpdateParts" tree_state="open">
+        <value n="Element" pn="Element" actualize_tree="1" values="SmallDisplacementElement2D,SmallDisplacementBbarElement2D,TotalLagrangianElement2D,UpdatedLagrangianElement2D" v="SmallDisplacementElement2D" dict="[GetElements ElementType Solid]" state="normal">
+          <dependencies node="../value[@n!='Material']" actualize="1"/>
+        </value>
+        <value n="ConstitutiveLaw" pn="Constitutive law" v="LinearElasticPlaneStrain2DLaw" actualize_tree="1" values="[GetConstitutiveLaws]" dict="[GetAllConstitutiveLaws]" state="">
+          <dependencies node="../value[@n!='Material']" actualize="1"/>
+        </value>
+        <value n="Material" pn="Material" editable="0" help="Choose a material from the database" values="[GetMaterialsList]" v="Steel" state="disabled">
+          <edit_command n="Update material data" pn="Update material data" icon="refresh" proc="EditDatabaseList"/>
+        </value>
+        <value n="DENSITY" pn="Density" v="7850" units="kg/m^3" unit_magnitude="Density" help="Density" string_is="double" state="[PartParamState]" show_in_window="1"/>
+        <value n="YOUNG_MODULUS" pn="Young Modulus" v="206.9e9" units="Pa" unit_magnitude="P" help="Young Modulus" string_is="double" state="[PartParamState]" show_in_window="1"/>
+        <value n="POISSON_RATIO" pn="Poisson Ratio" v="0.29" help="Poisson Ratio" string_is="double" state="[PartParamState]" show_in_window="1"/>
+        <value n="THICKNESS" pn="Thickness" v="1.0" units="m" unit_magnitude="L" help="Thickness" string_is="double" state="[PartParamState]" show_in_window="1"/>
+        <value n="YIELD_STRESS" pn="Yield stress" v="5.5e6" units="Pa" unit_magnitude="P" help="Yield stress" string_is="double" state="[PartParamState]" show_in_window="1"/>
+        <value n="REFERENCE_HARDENING_MODULUS" pn="Kinematic hardening modulus" v="1.0" help="Kinematic hardening modulus" string_is="double" state="[PartParamState]" show_in_window="1"/>
+        <value n="ISOTROPIC_HARDENING_MODULUS" pn="Isotropic hardening modulus" v="0.12924" help="Isotropic hardening modulus" string_is="double" state="[PartParamState]" show_in_window="1"/>
+        <value n="INFINITY_HARDENING_MODULUS" pn="Saturation hardening modulus" v="0.0" help="Saturation hardening modulus" string_is="double" state="[PartParamState]" show_in_window="1"/>
+        <value n="HARDENING_EXPONENT" pn="Hardening exponent" v="1.0" help="Hardening exponent" string_is="double" state="[PartParamState]" show_in_window="1"/>
+        <value n="CROSS_AREA" pn="Cross area" v="1.0" units="m^2" unit_magnitude="Area" help="Cross area" string_is="double" state="[PartParamState]" show_in_window="1"/>
+        <value n="TRUSS_PRESTRESS_PK2" pn="Prestress" v="0.0" units="Pa" unit_magnitude="P" help="Prestress" string_is="double" state="[PartParamState]" show_in_window="1"/>
+        <value n="I33" pn="Inertia 33" v="1.0" units="m^4" unit_magnitude="L^4" help="Inertia 33" string_is="double" state="[PartParamState]" show_in_window="1"/>
+        <value n="FRACTURE_ENERGY" pn="Fracture energy" v="100" units="J/m^2" unit_magnitude="Energy/L^2" help="Fracture energy" string_is="double" state="[PartParamState]" show_in_window="1"/>
+        <value n="SOFTENING_TYPE" pn="Softening type" v="0" help="Defines the softening type (linear softening=0, exponential softening=1)" string_is="double" state="[PartParamState]" show_in_window="1"/>
+        <group n="Shell" ov="surface" tree_state="close">
+          <value n="Element" pn="Element" actualize_tree="1" values="SmallDisplacementElement2D,SmallDisplacementBbarElement2D,TotalLagrangianElement2D,UpdatedLagrangianElement2D" dict="[GetElements ElementType Solid]" state="normal" v="SmallDisplacementElement2D" tree_state="close"/>
+          <value n="ConstitutiveLaw" pn="Constitutive law" actualize_tree="1" values="[GetConstitutiveLaws]" dict="[GetAllConstitutiveLaws]" state="" v="LinearElasticPlaneStrain2DLaw" tree_state="close"/>
+          <value n="Material" pn="Material" editable="0" help="Choose a material from the database" values="[GetMaterialsList]" state="disabled" v="Steel" tree_state="close"/>
+          <value n="DENSITY" pn="Density" unit_magnitude="Density" help="Density" string_is="double" state="[PartParamState]" show_in_window="1" v="7850" units="kg/m^3" tree_state="close"/>
+          <value n="YOUNG_MODULUS" pn="Young Modulus" unit_magnitude="P" help="Young Modulus" string_is="double" state="[PartParamState]" show_in_window="1" v="4e9" units="Pa" tree_state="close"/>
+          <value n="POISSON_RATIO" pn="Poisson Ratio" help="Poisson Ratio" string_is="double" state="[PartParamState]" show_in_window="1" v="0.3" tree_state="close"/>
+          <value n="THICKNESS" pn="Thickness" unit_magnitude="L" help="Thickness" string_is="double" state="[PartParamState]" show_in_window="1" v="1.0" units="m"/>
+          <value n="YIELD_STRESS" pn="Yield stress" unit_magnitude="P" help="Yield stress" string_is="double" state="[PartParamState]" show_in_window="1" v="5.5e6" units="Pa"/>
+          <value n="REFERENCE_HARDENING_MODULUS" pn="Kinematic hardening modulus" help="Kinematic hardening modulus" string_is="double" state="[PartParamState]" show_in_window="1" v="1.0"/>
+          <value n="ISOTROPIC_HARDENING_MODULUS" pn="Isotropic hardening modulus" help="Isotropic hardening modulus" string_is="double" state="[PartParamState]" show_in_window="1" v="0.12924"/>
+          <value n="INFINITY_HARDENING_MODULUS" pn="Saturation hardening modulus" help="Saturation hardening modulus" string_is="double" state="[PartParamState]" show_in_window="1" v="0.0"/>
+          <value n="HARDENING_EXPONENT" pn="Hardening exponent" help="Hardening exponent" string_is="double" state="[PartParamState]" show_in_window="1" v="1.0"/>
+          <value n="CROSS_AREA" pn="Cross area" unit_magnitude="Area" help="Cross area" string_is="double" state="[PartParamState]" show_in_window="1" v="1.0" units="m^2"/>
+          <value n="TRUSS_PRESTRESS_PK2" pn="Prestress" unit_magnitude="P" help="Prestress" string_is="double" state="[PartParamState]" show_in_window="1" v="0.0" units="Pa"/>
+          <value n="I33" pn="Inertia 33" unit_magnitude="L^4" help="Inertia 33" string_is="double" state="[PartParamState]" show_in_window="1" v="1.0" units="m^4"/>
+          <value n="FRACTURE_ENERGY" pn="Fracture energy" unit_magnitude="Energy/L^2" help="Fracture energy" string_is="double" state="[PartParamState]" show_in_window="1" v="100" units="J/m^2"/>
+          <value n="SOFTENING_TYPE" pn="Softening type" help="Defines the softening type (linear softening=0, exponential softening=1)" string_is="double" state="[PartParamState]" show_in_window="1" v="0"/>
+        </group>
+      </condition>
+      <condition n="Parts_Beam" pn="Beam" ov="line" ovm="node,element" icon="shells16" help="Select your group" update_proc="UpdateParts" tree_state="close">
+        <value n="Element" pn="Element" actualize_tree="1" values="" v="" dict="[GetElements ElementType Beam]" state="normal">
+          <dependencies node="../value[@n!='Material']" actualize="1"/>
+        </value>
+        <value n="ConstitutiveLaw" pn="Constitutive law" v="LinearElasticPlaneStrain2DLaw" actualize_tree="1" values="[GetConstitutiveLaws]" dict="[GetAllConstitutiveLaws]">
+          <dependencies node="../value[@n!='Material']" actualize="1"/>
+        </value>
+        <value n="Material" pn="Material" editable="0" help="Choose a material from the database" values="[GetMaterialsList]" v="Steel" state="disabled">
+          <edit_command n="Update material data" pn="Update material data" icon="refresh" proc="EditDatabaseList"/>
+        </value>
+        <value n="DENSITY" pn="Density" v="7850" units="kg/m^3" unit_magnitude="Density" help="Density" string_is="double" state="[PartParamState]" show_in_window="1"/>
+        <value n="YOUNG_MODULUS" pn="Young Modulus" v="206.9e9" units="Pa" unit_magnitude="P" help="Young Modulus" string_is="double" state="[PartParamState]" show_in_window="1"/>
+        <value n="POISSON_RATIO" pn="Poisson Ratio" v="0.29" help="Poisson Ratio" string_is="double" state="[PartParamState]" show_in_window="1"/>
+        <value n="THICKNESS" pn="Thickness" v="1.0" units="m" unit_magnitude="L" help="Thickness" string_is="double" state="[PartParamState]" show_in_window="1"/>
+        <value n="YIELD_STRESS" pn="Yield stress" v="5.5e6" units="Pa" unit_magnitude="P" help="Yield stress" string_is="double" state="[PartParamState]" show_in_window="1"/>
+        <value n="REFERENCE_HARDENING_MODULUS" pn="Kinematic hardening modulus" v="1.0" help="Kinematic hardening modulus" string_is="double" state="[PartParamState]" show_in_window="1"/>
+        <value n="ISOTROPIC_HARDENING_MODULUS" pn="Isotropic hardening modulus" v="0.12924" help="Isotropic hardening modulus" string_is="double" state="[PartParamState]" show_in_window="1"/>
+        <value n="INFINITY_HARDENING_MODULUS" pn="Saturation hardening modulus" v="0.0" help="Saturation hardening modulus" string_is="double" state="[PartParamState]" show_in_window="1"/>
+        <value n="HARDENING_EXPONENT" pn="Hardening exponent" v="1.0" help="Hardening exponent" string_is="double" state="[PartParamState]" show_in_window="1"/>
+        <value n="CROSS_AREA" pn="Cross area" v="1.0" units="m^2" unit_magnitude="Area" help="Cross area" string_is="double" state="[PartParamState]" show_in_window="1"/>
+        <value n="TRUSS_PRESTRESS_PK2" pn="Prestress" v="0.0" units="Pa" unit_magnitude="P" help="Prestress" string_is="double" state="[PartParamState]" show_in_window="1"/>
+        <value n="I33" pn="Inertia 33" v="1.0" units="m^4" unit_magnitude="L^4" help="Inertia 33" string_is="double" state="[PartParamState]" show_in_window="1"/>
+        <value n="FRACTURE_ENERGY" pn="Fracture energy" v="100" units="J/m^2" unit_magnitude="Energy/L^2" help="Fracture energy" string_is="double" state="[PartParamState]" show_in_window="1"/>
+        <value n="SOFTENING_TYPE" pn="Softening type" v="0" help="Defines the softening type (linear softening=0, exponential softening=1)" string_is="double" state="[PartParamState]" show_in_window="1"/>
+      </condition>
+      <condition n="Parts_Truss" pn="Truss" ov="line" ovm="node,element" icon="shells16" help="Select your group" update_proc="UpdateParts" tree_state="close">
+        <value n="Element" pn="Element" actualize_tree="1" values="" v="" dict="[GetElements ElementType Truss]" state="normal">
+          <dependencies node="../value[@n!='Material']" actualize="1"/>
+        </value>
+        <value n="ConstitutiveLaw" pn="Constitutive law" v="LinearElasticPlaneStrain2DLaw" actualize_tree="1" values="[GetConstitutiveLaws]" dict="[GetAllConstitutiveLaws]">
+          <dependencies node="../value[@n!='Material']" actualize="1"/>
+        </value>
+        <value n="Material" pn="Material" editable="0" help="Choose a material from the database" values="[GetMaterialsList]" v="Steel" state="disabled">
+          <edit_command n="Update material data" pn="Update material data" icon="refresh" proc="EditDatabaseList"/>
+        </value>
+        <value n="DENSITY" pn="Density" v="7850" units="kg/m^3" unit_magnitude="Density" help="Density" string_is="double" state="[PartParamState]" show_in_window="1"/>
+        <value n="YOUNG_MODULUS" pn="Young Modulus" v="206.9e9" units="Pa" unit_magnitude="P" help="Young Modulus" string_is="double" state="[PartParamState]" show_in_window="1"/>
+        <value n="POISSON_RATIO" pn="Poisson Ratio" v="0.29" help="Poisson Ratio" string_is="double" state="[PartParamState]" show_in_window="1"/>
+        <value n="THICKNESS" pn="Thickness" v="1.0" units="m" unit_magnitude="L" help="Thickness" string_is="double" state="[PartParamState]" show_in_window="1"/>
+        <value n="YIELD_STRESS" pn="Yield stress" v="5.5e6" units="Pa" unit_magnitude="P" help="Yield stress" string_is="double" state="[PartParamState]" show_in_window="1"/>
+        <value n="REFERENCE_HARDENING_MODULUS" pn="Kinematic hardening modulus" v="1.0" help="Kinematic hardening modulus" string_is="double" state="[PartParamState]" show_in_window="1"/>
+        <value n="ISOTROPIC_HARDENING_MODULUS" pn="Isotropic hardening modulus" v="0.12924" help="Isotropic hardening modulus" string_is="double" state="[PartParamState]" show_in_window="1"/>
+        <value n="INFINITY_HARDENING_MODULUS" pn="Saturation hardening modulus" v="0.0" help="Saturation hardening modulus" string_is="double" state="[PartParamState]" show_in_window="1"/>
+        <value n="HARDENING_EXPONENT" pn="Hardening exponent" v="1.0" help="Hardening exponent" string_is="double" state="[PartParamState]" show_in_window="1"/>
+        <value n="CROSS_AREA" pn="Cross area" v="1.0" units="m^2" unit_magnitude="Area" help="Cross area" string_is="double" state="[PartParamState]" show_in_window="1"/>
+        <value n="TRUSS_PRESTRESS_PK2" pn="Prestress" v="0.0" units="Pa" unit_magnitude="P" help="Prestress" string_is="double" state="[PartParamState]" show_in_window="1"/>
+        <value n="I33" pn="Inertia 33" v="1.0" units="m^4" unit_magnitude="L^4" help="Inertia 33" string_is="double" state="[PartParamState]" show_in_window="1"/>
+        <value n="FRACTURE_ENERGY" pn="Fracture energy" v="100" units="J/m^2" unit_magnitude="Energy/L^2" help="Fracture energy" string_is="double" state="[PartParamState]" show_in_window="1"/>
+        <value n="SOFTENING_TYPE" pn="Softening type" v="0" help="Defines the softening type (linear softening=0, exponential softening=1)" string_is="double" state="[PartParamState]" show_in_window="1"/>
+      </condition>
+      <condition n="Parts_Cable" pn="Cable" ov="line" ovm="node,element" icon="shells16" help="Select your group" update_proc="UpdateParts" tree_state="close">
+        <value n="Element" pn="Element" actualize_tree="1" values="" v="" dict="[GetElements ElementType Cable]" state="normal">
+          <dependencies node="../value[@n!='Material']" actualize="1"/>
+        </value>
+        <value n="ConstitutiveLaw" pn="Constitutive law" v="LinearElasticPlaneStrain2DLaw" actualize_tree="1" values="[GetConstitutiveLaws]" dict="[GetAllConstitutiveLaws]">
+          <dependencies node="../value[@n!='Material']" actualize="1"/>
+        </value>
+        <value n="Material" pn="Material" editable="0" help="Choose a material from the database" values="[GetMaterialsList]" v="Steel" state="disabled">
+          <edit_command n="Update material data" pn="Update material data" icon="refresh" proc="EditDatabaseList"/>
+        </value>
+        <value n="DENSITY" pn="Density" v="7850" units="kg/m^3" unit_magnitude="Density" help="Density" string_is="double" state="[PartParamState]" show_in_window="1"/>
+        <value n="YOUNG_MODULUS" pn="Young Modulus" v="206.9e9" units="Pa" unit_magnitude="P" help="Young Modulus" string_is="double" state="[PartParamState]" show_in_window="1"/>
+        <value n="POISSON_RATIO" pn="Poisson Ratio" v="0.29" help="Poisson Ratio" string_is="double" state="[PartParamState]" show_in_window="1"/>
+        <value n="THICKNESS" pn="Thickness" v="1.0" units="m" unit_magnitude="L" help="Thickness" string_is="double" state="[PartParamState]" show_in_window="1"/>
+        <value n="YIELD_STRESS" pn="Yield stress" v="5.5e6" units="Pa" unit_magnitude="P" help="Yield stress" string_is="double" state="[PartParamState]" show_in_window="1"/>
+        <value n="REFERENCE_HARDENING_MODULUS" pn="Kinematic hardening modulus" v="1.0" help="Kinematic hardening modulus" string_is="double" state="[PartParamState]" show_in_window="1"/>
+        <value n="ISOTROPIC_HARDENING_MODULUS" pn="Isotropic hardening modulus" v="0.12924" help="Isotropic hardening modulus" string_is="double" state="[PartParamState]" show_in_window="1"/>
+        <value n="INFINITY_HARDENING_MODULUS" pn="Saturation hardening modulus" v="0.0" help="Saturation hardening modulus" string_is="double" state="[PartParamState]" show_in_window="1"/>
+        <value n="HARDENING_EXPONENT" pn="Hardening exponent" v="1.0" help="Hardening exponent" string_is="double" state="[PartParamState]" show_in_window="1"/>
+        <value n="CROSS_AREA" pn="Cross area" v="1.0" units="m^2" unit_magnitude="Area" help="Cross area" string_is="double" state="[PartParamState]" show_in_window="1"/>
+        <value n="TRUSS_PRESTRESS_PK2" pn="Prestress" v="0.0" units="Pa" unit_magnitude="P" help="Prestress" string_is="double" state="[PartParamState]" show_in_window="1"/>
+        <value n="I33" pn="Inertia 33" v="1.0" units="m^4" unit_magnitude="L^4" help="Inertia 33" string_is="double" state="[PartParamState]" show_in_window="1"/>
+        <value n="FRACTURE_ENERGY" pn="Fracture energy" v="100" units="J/m^2" unit_magnitude="Energy/L^2" help="Fracture energy" string_is="double" state="[PartParamState]" show_in_window="1"/>
+        <value n="SOFTENING_TYPE" pn="Softening type" v="0" help="Defines the softening type (linear softening=0, exponential softening=1)" string_is="double" state="[PartParamState]" show_in_window="1"/>
+      </condition>
+    </container>
+    <container n="Intervals" pn="Time intervals" un="Intervals" icon="time2" open_window="0" tree_state="open">
+      <blockdata n="Interval" pn="Interval" name="Initial" sequence="1" icon="time3" editable_name="unique" sequence_type="non_void_disabled" help="Interval" tree_state="close">
+        <value n="IniTime" pn="Start time" v="0.0" state="disabled" help="When do the interval starts?"/>
+        <value n="EndTime" pn="End time" v="0.0" state="disabled" help="When do the interval ends?"/>
+      </blockdata>
+      <blockdata n="Interval" pn="Interval" name="Total" sequence="1" icon="time3" editable_name="unique" sequence_type="non_void_disabled" help="Interval" tree_state="close">
+        <value n="IniTime" pn="Start time" v="0.0" state="disabled" help="When do the interval starts?"/>
+        <value n="EndTime" pn="End time" v="End" state="disabled" help="When do the interval ends?"/>
+      </blockdata>
+      <blockdata n="Interval" pn="Interval" name="Custom1" sequence="1" icon="time3" editable_name="unique" sequence_type="non_void_disabled" help="Interval" tree_state="close">
+        <value n="IniTime" pn="Start time" v="0.0" help="When do the interval starts?"/>
+        <value n="EndTime" pn="End time" v="0.5" help="When do the interval ends?"/>
+      </blockdata>
+    </container>
+    <container n="InitialConditions" pn="Initial conditions" un="STInitialConditions" icon="nodal" open_window="0" tree_state="close">
+      <condition n="DISPLACEMENT" pn="Displacement" ov="point,line,surface" ovm="" icon="shells16" help="Displacement" state="[CheckNodalConditionStateStructural]" update_proc="[OkNewCondition]" check="UpdateTree" tree_state="open">
+        <value n="selector_component_X" pn="Component X" v="ByValue" values="ByFunction,ByValue,Not" dict="ByFunction,By function,ByValue,By value,Not,Not set" state="[ConditionParameterState]" help="Component" show_in_window="1" cal_state="normal">
+          <dependencies value="Not" node="../value[@n='value_component_X']" att1="state" v1="hidden"/>
+          <dependencies value="Not" node="../value[@n='function_component_X']" att1="state" v1="hidden"/>
+          <dependencies value="ByValue" node="../value[@n='value_component_X']" att1="state" v1="normal"/>
+          <dependencies value="ByFunction" node="../value[@n='value_component_X']" att1="state" v1="hidden"/>
+          <dependencies value="ByValue" node="../value[@n='function_component_X']" att1="state" v1="hidden"/>
+          <dependencies value="ByFunction" node="../value[@n='function_component_X']" att1="state" v1="normal"/>
+        </value>
+        <value n="function_component_X" pn="Function X (x,y,z,t)" v="2*x" help="Component" state="hidden"/>
+        <value n="value_component_X" wn="DISPLACEMENT _X" pn="Value X" v="0.0" units="m" unit_magnitude="L" help="Component" show_in_window="1" state="normal"/>
+        <value n="selector_component_Y" pn="Component Y" v="ByValue" values="ByFunction,ByValue,Not" dict="ByFunction,By function,ByValue,By value,Not,Not set" state="[ConditionParameterState]" help="Component" show_in_window="1" cal_state="normal">
+          <dependencies value="Not" node="../value[@n='value_component_Y']" att1="state" v1="hidden"/>
+          <dependencies value="Not" node="../value[@n='function_component_Y']" att1="state" v1="hidden"/>
+          <dependencies value="ByValue" node="../value[@n='value_component_Y']" att1="state" v1="normal"/>
+          <dependencies value="ByFunction" node="../value[@n='value_component_Y']" att1="state" v1="hidden"/>
+          <dependencies value="ByValue" node="../value[@n='function_component_Y']" att1="state" v1="hidden"/>
+          <dependencies value="ByFunction" node="../value[@n='function_component_Y']" att1="state" v1="normal"/>
+        </value>
+        <value n="function_component_Y" pn="Function Y (x,y,z,t)" v="2*x" help="Component" state="hidden"/>
+        <value n="value_component_Y" wn="DISPLACEMENT _Y" pn="Value Y" v="0.0" units="m" unit_magnitude="L" help="Component" show_in_window="1" state="normal"/>
+        <value n="selector_component_Z" pn="Component Z" v="ByValue" values="ByFunction,ByValue,Not" dict="ByFunction,By function,ByValue,By value,Not,Not set" state="[CheckDimension 3D]" help="Component" show_in_window="1">
+          <dependencies value="Not" node="../value[@n='value_component_Z']" att1="state" v1="hidden"/>
+          <dependencies value="Not" node="../value[@n='function_component_Z']" att1="state" v1="hidden"/>
+          <dependencies value="ByValue" node="../value[@n='value_component_Z']" att1="state" v1="normal"/>
+          <dependencies value="ByFunction" node="../value[@n='value_component_Z']" att1="state" v1="hidden"/>
+          <dependencies value="ByValue" node="../value[@n='function_component_Z']" att1="state" v1="hidden"/>
+          <dependencies value="ByFunction" node="../value[@n='function_component_Z']" att1="state" v1="normal"/>
+        </value>
+        <value n="function_component_Z" pn="Function Z (x,y,z,t)" v="2*x" help="Component" state="[CheckDimension 3D]"/>
+        <value n="value_component_Z" wn="DISPLACEMENT _Z" pn="Value Z" v="0.0" units="m" unit_magnitude="L" help="Component" state="[CheckDimension 3D]" show_in_window="1"/>
+        <value n="Interval" pn="Time interval" v="Initial" values="[getIntervals]" help="Displacement" state="hidden"/>
+      </condition>
+      <condition n="VOLUMETRIC_STRAIN" pn="Volumetric strain" ov="point,line,surface" ovm="" icon="shells16" help="Volumetric strain" state="[CheckNodalConditionStateStructural]" update_proc="[OkNewCondition]" check="UpdateTree">
+        <value n="constrained" pn="Imposed" v="true" values="true,false" help="Imposed" state="[ConditionParameterState]" show_in_window="1"/>
+        <value n="ByFunction" pn="by function -&gt; f(x,y,z,t)" v="No" values="Yes,No" actualize_tree="1" state="[ConditionParameterState]" show_in_window="1" cal_state="normal">
+          <dependencies value="No" node="../value[@n='value']" att1="state" v1="normal"/>
+          <dependencies value="Yes" node="../value[@n='value']" att1="state" v1="hidden"/>
+          <dependencies value="No" node="../value[@n='function_value']" att1="state" v1="hidden"/>
+          <dependencies value="Yes" node="../value[@n='function_value']" att1="state" v1="normal"/>
+        </value>
+        <value n="function_value" pn="Function" v="" help="Value" state="hidden" show_in_window="1" cal_state="normal"/>
+        <value n="value" pn="Value" v="0.0" units="" unit_magnitude="" help="Value" string_is="double" state="[ConditionParameterState]" show_in_window="1" cal_state="normal"/>
+        <value n="Interval" pn="Time interval" v="Initial" values="[getIntervals]" help="Volumetric strain" state="hidden"/>
+      </condition>
+      <condition n="VELOCITY" pn="Velocity" ov="point,line,surface" ovm="" icon="shells16" help="Velocity" state="[CheckNodalConditionStateStructural]" update_proc="[OkNewCondition]" check="UpdateTree" tree_state="close">
+        <value n="selector_component_X" pn="Component X" v="ByValue" values="ByFunction,ByValue,Not" dict="ByFunction,By function,ByValue,By value,Not,Not set" state="[ConditionParameterState]" help="Component" show_in_window="1" cal_state="normal">
+          <dependencies value="Not" node="../value[@n='value_component_X']" att1="state" v1="hidden"/>
+          <dependencies value="Not" node="../value[@n='function_component_X']" att1="state" v1="hidden"/>
+          <dependencies value="ByValue" node="../value[@n='value_component_X']" att1="state" v1="normal"/>
+          <dependencies value="ByFunction" node="../value[@n='value_component_X']" att1="state" v1="hidden"/>
+          <dependencies value="ByValue" node="../value[@n='function_component_X']" att1="state" v1="hidden"/>
+          <dependencies value="ByFunction" node="../value[@n='function_component_X']" att1="state" v1="normal"/>
+        </value>
+        <value n="function_component_X" pn="Function X (x,y,z,t)" v="2*x" help="Component" state="hidden"/>
+        <value n="value_component_X" wn="VELOCITY _X" pn="Value X" v="0.0" units="m/s" unit_magnitude="Velocity" help="Component" show_in_window="1"/>
+        <value n="selector_component_Y" pn="Component Y" v="ByValue" values="ByFunction,ByValue,Not" dict="ByFunction,By function,ByValue,By value,Not,Not set" state="[ConditionParameterState]" help="Component" show_in_window="1" cal_state="normal">
+          <dependencies value="Not" node="../value[@n='value_component_Y']" att1="state" v1="hidden"/>
+          <dependencies value="Not" node="../value[@n='function_component_Y']" att1="state" v1="hidden"/>
+          <dependencies value="ByValue" node="../value[@n='value_component_Y']" att1="state" v1="normal"/>
+          <dependencies value="ByFunction" node="../value[@n='value_component_Y']" att1="state" v1="hidden"/>
+          <dependencies value="ByValue" node="../value[@n='function_component_Y']" att1="state" v1="hidden"/>
+          <dependencies value="ByFunction" node="../value[@n='function_component_Y']" att1="state" v1="normal"/>
+        </value>
+        <value n="function_component_Y" pn="Function Y (x,y,z,t)" v="2*x" help="Component" state="hidden"/>
+        <value n="value_component_Y" wn="VELOCITY _Y" pn="Value Y" v="0.0" units="m/s" unit_magnitude="Velocity" help="Component" show_in_window="1"/>
+        <value n="selector_component_Z" pn="Component Z" v="ByValue" values="ByFunction,ByValue,Not" dict="ByFunction,By function,ByValue,By value,Not,Not set" state="[CheckDimension 3D]" help="Component" show_in_window="1">
+          <dependencies value="Not" node="../value[@n='value_component_Z']" att1="state" v1="hidden"/>
+          <dependencies value="Not" node="../value[@n='function_component_Z']" att1="state" v1="hidden"/>
+          <dependencies value="ByValue" node="../value[@n='value_component_Z']" att1="state" v1="normal"/>
+          <dependencies value="ByFunction" node="../value[@n='value_component_Z']" att1="state" v1="hidden"/>
+          <dependencies value="ByValue" node="../value[@n='function_component_Z']" att1="state" v1="hidden"/>
+          <dependencies value="ByFunction" node="../value[@n='function_component_Z']" att1="state" v1="normal"/>
+        </value>
+        <value n="function_component_Z" pn="Function Z (x,y,z,t)" v="2*x" help="Component" state="[CheckDimension 3D]"/>
+        <value n="value_component_Z" wn="VELOCITY _Z" pn="Value Z" v="0.0" units="m/s" unit_magnitude="Velocity" help="Component" state="[CheckDimension 3D]" show_in_window="1"/>
+        <value n="Interval" pn="Time interval" v="Initial" values="[getIntervals]" help="Velocity" state="hidden"/>
+      </condition>
+      <condition n="ACCELERATION" pn="Acceleration" ov="point,line,surface" ovm="" icon="shells16" help="Acceleration" state="[CheckNodalConditionStateStructural]" update_proc="[OkNewCondition]" check="UpdateTree" tree_state="close">
+        <value n="selector_component_X" pn="Component X" v="ByValue" values="ByFunction,ByValue,Not" dict="ByFunction,By function,ByValue,By value,Not,Not set" state="[ConditionParameterState]" help="Component" show_in_window="1" cal_state="normal">
+          <dependencies value="Not" node="../value[@n='value_component_X']" att1="state" v1="hidden"/>
+          <dependencies value="Not" node="../value[@n='function_component_X']" att1="state" v1="hidden"/>
+          <dependencies value="ByValue" node="../value[@n='value_component_X']" att1="state" v1="normal"/>
+          <dependencies value="ByFunction" node="../value[@n='value_component_X']" att1="state" v1="hidden"/>
+          <dependencies value="ByValue" node="../value[@n='function_component_X']" att1="state" v1="hidden"/>
+          <dependencies value="ByFunction" node="../value[@n='function_component_X']" att1="state" v1="normal"/>
+        </value>
+        <value n="function_component_X" pn="Function X (x,y,z,t)" v="2*x" help="Component" state="hidden"/>
+        <value n="value_component_X" wn="ACCELERATION _X" pn="Value X" v="0.0" units="m/s^2" unit_magnitude="Acceleration" help="Component" show_in_window="1"/>
+        <value n="selector_component_Y" pn="Component Y" v="ByValue" values="ByFunction,ByValue,Not" dict="ByFunction,By function,ByValue,By value,Not,Not set" state="[ConditionParameterState]" help="Component" show_in_window="1" cal_state="normal">
+          <dependencies value="Not" node="../value[@n='value_component_Y']" att1="state" v1="hidden"/>
+          <dependencies value="Not" node="../value[@n='function_component_Y']" att1="state" v1="hidden"/>
+          <dependencies value="ByValue" node="../value[@n='value_component_Y']" att1="state" v1="normal"/>
+          <dependencies value="ByFunction" node="../value[@n='value_component_Y']" att1="state" v1="hidden"/>
+          <dependencies value="ByValue" node="../value[@n='function_component_Y']" att1="state" v1="hidden"/>
+          <dependencies value="ByFunction" node="../value[@n='function_component_Y']" att1="state" v1="normal"/>
+        </value>
+        <value n="function_component_Y" pn="Function Y (x,y,z,t)" v="2*x" help="Component" state="hidden"/>
+        <value n="value_component_Y" wn="ACCELERATION _Y" pn="Value Y" v="0.0" units="m/s^2" unit_magnitude="Acceleration" help="Component" show_in_window="1"/>
+        <value n="selector_component_Z" pn="Component Z" v="ByValue" values="ByFunction,ByValue,Not" dict="ByFunction,By function,ByValue,By value,Not,Not set" state="[CheckDimension 3D]" help="Component" show_in_window="1">
+          <dependencies value="Not" node="../value[@n='value_component_Z']" att1="state" v1="hidden"/>
+          <dependencies value="Not" node="../value[@n='function_component_Z']" att1="state" v1="hidden"/>
+          <dependencies value="ByValue" node="../value[@n='value_component_Z']" att1="state" v1="normal"/>
+          <dependencies value="ByFunction" node="../value[@n='value_component_Z']" att1="state" v1="hidden"/>
+          <dependencies value="ByValue" node="../value[@n='function_component_Z']" att1="state" v1="hidden"/>
+          <dependencies value="ByFunction" node="../value[@n='function_component_Z']" att1="state" v1="normal"/>
+        </value>
+        <value n="function_component_Z" pn="Function Z (x,y,z,t)" v="2*x" help="Component" state="[CheckDimension 3D]"/>
+        <value n="value_component_Z" wn="ACCELERATION _Z" pn="Value Z" v="0.0" units="m/s^2" unit_magnitude="Acceleration" help="Component" state="[CheckDimension 3D]" show_in_window="1"/>
+        <value n="Interval" pn="Time interval" v="Initial" values="[getIntervals]" help="Acceleration" state="hidden"/>
+      </condition>
+      <condition n="PRESSURE" pn="Pressure" ov="point,line,surface" ovm="" icon="shells16" help="Pressure" state="[CheckNodalConditionStateStructural]" update_proc="[OkNewCondition]" check="UpdateTree">
+        <value n="constrained" pn="Imposed" v="true" values="true,false" help="Imposed" state="[ConditionParameterState]" show_in_window="1"/>
+        <value n="ByFunction" pn="by function -&gt; f(x,y,z,t)" v="No" values="Yes,No" actualize_tree="1" state="[ConditionParameterState]" show_in_window="1" cal_state="normal">
+          <dependencies value="No" node="../value[@n='value']" att1="state" v1="normal"/>
+          <dependencies value="Yes" node="../value[@n='value']" att1="state" v1="hidden"/>
+          <dependencies value="No" node="../value[@n='function_value']" att1="state" v1="hidden"/>
+          <dependencies value="Yes" node="../value[@n='function_value']" att1="state" v1="normal"/>
+        </value>
+        <value n="function_value" pn="Function" v="" help="Value" state="hidden" show_in_window="1" cal_state="normal"/>
+        <value n="value" pn="Value" v="0.0" units="Pa" unit_magnitude="P" help="Value" string_is="double" state="[ConditionParameterState]" show_in_window="1" cal_state="normal"/>
+        <value n="Interval" pn="Time interval" v="Initial" values="[getIntervals]" help="Pressure" state="hidden"/>
+      </condition>
+      <condition n="ROTATION" pn="Rotation" ov="point,line,surface" ovm="" icon="shells16" help="Rotation" state="[CheckNodalConditionStateStructural]" update_proc="[OkNewCondition]" check="UpdateTree">
+        <value n="selector_component_X" pn="Component X" v="ByValue" values="ByFunction,ByValue,Not" dict="ByFunction,By function,ByValue,By value,Not,Not set" state="[ConditionParameterState]" help="Component" show_in_window="1" cal_state="normal">
+          <dependencies value="Not" node="../value[@n='value_component_X']" att1="state" v1="hidden"/>
+          <dependencies value="Not" node="../value[@n='function_component_X']" att1="state" v1="hidden"/>
+          <dependencies value="ByValue" node="../value[@n='value_component_X']" att1="state" v1="normal"/>
+          <dependencies value="ByFunction" node="../value[@n='value_component_X']" att1="state" v1="hidden"/>
+          <dependencies value="ByValue" node="../value[@n='function_component_X']" att1="state" v1="hidden"/>
+          <dependencies value="ByFunction" node="../value[@n='function_component_X']" att1="state" v1="normal"/>
+        </value>
+        <value n="function_component_X" pn="Function X (x,y,z,t)" v="2*x" help="Component" state="hidden"/>
+        <value n="value_component_X" wn="ROTATION _X" pn="Value X" v="0.0" units="rad" unit_magnitude="Angle" help="Component" show_in_window="1"/>
+        <value n="selector_component_Y" pn="Component Y" v="ByValue" values="ByFunction,ByValue,Not" dict="ByFunction,By function,ByValue,By value,Not,Not set" state="[ConditionParameterState]" help="Component" show_in_window="1" cal_state="normal">
+          <dependencies value="Not" node="../value[@n='value_component_Y']" att1="state" v1="hidden"/>
+          <dependencies value="Not" node="../value[@n='function_component_Y']" att1="state" v1="hidden"/>
+          <dependencies value="ByValue" node="../value[@n='value_component_Y']" att1="state" v1="normal"/>
+          <dependencies value="ByFunction" node="../value[@n='value_component_Y']" att1="state" v1="hidden"/>
+          <dependencies value="ByValue" node="../value[@n='function_component_Y']" att1="state" v1="hidden"/>
+          <dependencies value="ByFunction" node="../value[@n='function_component_Y']" att1="state" v1="normal"/>
+        </value>
+        <value n="function_component_Y" pn="Function Y (x,y,z,t)" v="2*x" help="Component" state="hidden"/>
+        <value n="value_component_Y" wn="ROTATION _Y" pn="Value Y" v="0.0" units="rad" unit_magnitude="Angle" help="Component" show_in_window="1"/>
+        <value n="selector_component_Z" pn="Component Z" v="ByValue" values="ByFunction,ByValue,Not" dict="ByFunction,By function,ByValue,By value,Not,Not set" state="[CheckDimension 3D]" help="Component" show_in_window="1">
+          <dependencies value="Not" node="../value[@n='value_component_Z']" att1="state" v1="hidden"/>
+          <dependencies value="Not" node="../value[@n='function_component_Z']" att1="state" v1="hidden"/>
+          <dependencies value="ByValue" node="../value[@n='value_component_Z']" att1="state" v1="normal"/>
+          <dependencies value="ByFunction" node="../value[@n='value_component_Z']" att1="state" v1="hidden"/>
+          <dependencies value="ByValue" node="../value[@n='function_component_Z']" att1="state" v1="hidden"/>
+          <dependencies value="ByFunction" node="../value[@n='function_component_Z']" att1="state" v1="normal"/>
+        </value>
+        <value n="function_component_Z" pn="Function Z (x,y,z,t)" v="2*x" help="Component" state="[CheckDimension 3D]"/>
+        <value n="value_component_Z" wn="ROTATION _Z" pn="Value Z" v="0.0" units="rad" unit_magnitude="Angle" help="Component" state="[CheckDimension 3D]" show_in_window="1"/>
+        <value n="Interval" pn="Time interval" v="Initial" values="[getIntervals]" help="Rotation" state="hidden"/>
+      </condition>
+      <condition n="ANGULAR_VELOCITY" pn="Angular Velocity" ov="point,line,surface" ovm="" icon="shells16" help="Angular Velocity" state="[CheckNodalConditionStateStructural]" update_proc="[OkNewCondition]" check="UpdateTree">
+        <value n="selector_component_X" pn="Component X" v="ByValue" values="ByFunction,ByValue,Not" dict="ByFunction,By function,ByValue,By value,Not,Not set" state="[ConditionParameterState]" help="Component" show_in_window="1" cal_state="normal">
+          <dependencies value="Not" node="../value[@n='value_component_X']" att1="state" v1="hidden"/>
+          <dependencies value="Not" node="../value[@n='function_component_X']" att1="state" v1="hidden"/>
+          <dependencies value="ByValue" node="../value[@n='value_component_X']" att1="state" v1="normal"/>
+          <dependencies value="ByFunction" node="../value[@n='value_component_X']" att1="state" v1="hidden"/>
+          <dependencies value="ByValue" node="../value[@n='function_component_X']" att1="state" v1="hidden"/>
+          <dependencies value="ByFunction" node="../value[@n='function_component_X']" att1="state" v1="normal"/>
+        </value>
+        <value n="function_component_X" pn="Function X (x,y,z,t)" v="2*x" help="Component" state="hidden"/>
+        <value n="value_component_X" wn="ANGULAR_VELOCITY _X" pn="Value X" v="0.0" units="rad/s" unit_magnitude="Angle/T" help="Component" show_in_window="1"/>
+        <value n="selector_component_Y" pn="Component Y" v="ByValue" values="ByFunction,ByValue,Not" dict="ByFunction,By function,ByValue,By value,Not,Not set" state="[ConditionParameterState]" help="Component" show_in_window="1" cal_state="normal">
+          <dependencies value="Not" node="../value[@n='value_component_Y']" att1="state" v1="hidden"/>
+          <dependencies value="Not" node="../value[@n='function_component_Y']" att1="state" v1="hidden"/>
+          <dependencies value="ByValue" node="../value[@n='value_component_Y']" att1="state" v1="normal"/>
+          <dependencies value="ByFunction" node="../value[@n='value_component_Y']" att1="state" v1="hidden"/>
+          <dependencies value="ByValue" node="../value[@n='function_component_Y']" att1="state" v1="hidden"/>
+          <dependencies value="ByFunction" node="../value[@n='function_component_Y']" att1="state" v1="normal"/>
+        </value>
+        <value n="function_component_Y" pn="Function Y (x,y,z,t)" v="2*x" help="Component" state="hidden"/>
+        <value n="value_component_Y" wn="ANGULAR_VELOCITY _Y" pn="Value Y" v="0.0" units="rad/s" unit_magnitude="Angle/T" help="Component" show_in_window="1"/>
+        <value n="selector_component_Z" pn="Component Z" v="ByValue" values="ByFunction,ByValue,Not" dict="ByFunction,By function,ByValue,By value,Not,Not set" state="[CheckDimension 3D]" help="Component" show_in_window="1">
+          <dependencies value="Not" node="../value[@n='value_component_Z']" att1="state" v1="hidden"/>
+          <dependencies value="Not" node="../value[@n='function_component_Z']" att1="state" v1="hidden"/>
+          <dependencies value="ByValue" node="../value[@n='value_component_Z']" att1="state" v1="normal"/>
+          <dependencies value="ByFunction" node="../value[@n='value_component_Z']" att1="state" v1="hidden"/>
+          <dependencies value="ByValue" node="../value[@n='function_component_Z']" att1="state" v1="hidden"/>
+          <dependencies value="ByFunction" node="../value[@n='function_component_Z']" att1="state" v1="normal"/>
+        </value>
+        <value n="function_component_Z" pn="Function Z (x,y,z,t)" v="2*x" help="Component" state="[CheckDimension 3D]"/>
+        <value n="value_component_Z" wn="ANGULAR_VELOCITY _Z" pn="Value Z" v="0.0" units="rad/s" unit_magnitude="Angle/T" help="Component" state="[CheckDimension 3D]" show_in_window="1"/>
+        <value n="Interval" pn="Time interval" v="Initial" values="[getIntervals]" help="Angular Velocity" state="hidden"/>
+      </condition>
+      <condition n="ANGULAR_ACCELERATION" pn="Angular Acceleration" ov="point,line,surface" ovm="" icon="shells16" help="Angular Acceleration" state="[CheckNodalConditionStateStructural]" update_proc="[OkNewCondition]" check="UpdateTree">
+        <value n="selector_component_X" pn="Component X" v="ByValue" values="ByFunction,ByValue,Not" dict="ByFunction,By function,ByValue,By value,Not,Not set" state="[ConditionParameterState]" help="Component" show_in_window="1" cal_state="normal">
+          <dependencies value="Not" node="../value[@n='value_component_X']" att1="state" v1="hidden"/>
+          <dependencies value="Not" node="../value[@n='function_component_X']" att1="state" v1="hidden"/>
+          <dependencies value="ByValue" node="../value[@n='value_component_X']" att1="state" v1="normal"/>
+          <dependencies value="ByFunction" node="../value[@n='value_component_X']" att1="state" v1="hidden"/>
+          <dependencies value="ByValue" node="../value[@n='function_component_X']" att1="state" v1="hidden"/>
+          <dependencies value="ByFunction" node="../value[@n='function_component_X']" att1="state" v1="normal"/>
+        </value>
+        <value n="function_component_X" pn="Function X (x,y,z,t)" v="2*x" help="Component" state="hidden"/>
+        <value n="value_component_X" wn="ANGULAR_ACCELERATION _X" pn="Value X" v="0.0" units="rad/s^2" unit_magnitude="Angle/T^2" help="Component" show_in_window="1"/>
+        <value n="selector_component_Y" pn="Component Y" v="ByValue" values="ByFunction,ByValue,Not" dict="ByFunction,By function,ByValue,By value,Not,Not set" state="[ConditionParameterState]" help="Component" show_in_window="1" cal_state="normal">
+          <dependencies value="Not" node="../value[@n='value_component_Y']" att1="state" v1="hidden"/>
+          <dependencies value="Not" node="../value[@n='function_component_Y']" att1="state" v1="hidden"/>
+          <dependencies value="ByValue" node="../value[@n='value_component_Y']" att1="state" v1="normal"/>
+          <dependencies value="ByFunction" node="../value[@n='value_component_Y']" att1="state" v1="hidden"/>
+          <dependencies value="ByValue" node="../value[@n='function_component_Y']" att1="state" v1="hidden"/>
+          <dependencies value="ByFunction" node="../value[@n='function_component_Y']" att1="state" v1="normal"/>
+        </value>
+        <value n="function_component_Y" pn="Function Y (x,y,z,t)" v="2*x" help="Component" state="hidden"/>
+        <value n="value_component_Y" wn="ANGULAR_ACCELERATION _Y" pn="Value Y" v="0.0" units="rad/s^2" unit_magnitude="Angle/T^2" help="Component" show_in_window="1"/>
+        <value n="selector_component_Z" pn="Component Z" v="ByValue" values="ByFunction,ByValue,Not" dict="ByFunction,By function,ByValue,By value,Not,Not set" state="[CheckDimension 3D]" help="Component" show_in_window="1">
+          <dependencies value="Not" node="../value[@n='value_component_Z']" att1="state" v1="hidden"/>
+          <dependencies value="Not" node="../value[@n='function_component_Z']" att1="state" v1="hidden"/>
+          <dependencies value="ByValue" node="../value[@n='value_component_Z']" att1="state" v1="normal"/>
+          <dependencies value="ByFunction" node="../value[@n='value_component_Z']" att1="state" v1="hidden"/>
+          <dependencies value="ByValue" node="../value[@n='function_component_Z']" att1="state" v1="hidden"/>
+          <dependencies value="ByFunction" node="../value[@n='function_component_Z']" att1="state" v1="normal"/>
+        </value>
+        <value n="function_component_Z" pn="Function Z (x,y,z,t)" v="2*x" help="Component" state="[CheckDimension 3D]"/>
+        <value n="value_component_Z" wn="ANGULAR_ACCELERATION _Z" pn="Value Z" v="0.0" units="rad/s^2" unit_magnitude="Angle/T^2" help="Component" state="[CheckDimension 3D]" show_in_window="1"/>
+        <value n="Interval" pn="Time interval" v="Initial" values="[getIntervals]" help="Angular Acceleration" state="hidden"/>
+      </condition>
+    </container>
+    <container n="Boundary Conditions" pn="Boundary conditions" un="STNodalConditions" icon="nodal" open_window="0" tree_state="open">
+      <condition n="DISPLACEMENT" pn="Displacement" ov="point,line,surface" ovm="" icon="shells16" help="Displacement" state="[CheckNodalConditionStateStructural]" update_proc="[OkNewCondition]" check="UpdateTree" tree_state="open">
+        <value n="selector_component_X" pn="Component X" v="ByValue" values="ByFunction,ByValue,Not" dict="ByFunction,By function,ByValue,By value,Not,Not set" state="[ConditionParameterState]" help="Component" show_in_window="1" cal_state="normal">
+          <dependencies value="Not" node="../value[@n='value_component_X']" att1="state" v1="hidden"/>
+          <dependencies value="Not" node="../value[@n='function_component_X']" att1="state" v1="hidden"/>
+          <dependencies value="ByValue" node="../value[@n='value_component_X']" att1="state" v1="normal"/>
+          <dependencies value="ByFunction" node="../value[@n='value_component_X']" att1="state" v1="hidden"/>
+          <dependencies value="ByValue" node="../value[@n='function_component_X']" att1="state" v1="hidden"/>
+          <dependencies value="ByFunction" node="../value[@n='function_component_X']" att1="state" v1="normal"/>
+        </value>
+        <value n="function_component_X" pn="Function X (x,y,z,t)" v="2*x" help="Component" state="hidden"/>
+        <value n="value_component_X" wn="DISPLACEMENT _X" pn="Value X" v="0.0" units="m" unit_magnitude="L" help="Component" show_in_window="1" state="normal"/>
+        <value n="selector_component_Y" pn="Component Y" v="ByValue" values="ByFunction,ByValue,Not" dict="ByFunction,By function,ByValue,By value,Not,Not set" state="[ConditionParameterState]" help="Component" show_in_window="1" cal_state="normal">
+          <dependencies value="Not" node="../value[@n='value_component_Y']" att1="state" v1="hidden"/>
+          <dependencies value="Not" node="../value[@n='function_component_Y']" att1="state" v1="hidden"/>
+          <dependencies value="ByValue" node="../value[@n='value_component_Y']" att1="state" v1="normal"/>
+          <dependencies value="ByFunction" node="../value[@n='value_component_Y']" att1="state" v1="hidden"/>
+          <dependencies value="ByValue" node="../value[@n='function_component_Y']" att1="state" v1="hidden"/>
+          <dependencies value="ByFunction" node="../value[@n='function_component_Y']" att1="state" v1="normal"/>
+        </value>
+        <value n="function_component_Y" pn="Function Y (x,y,z,t)" v="2*x" help="Component" state="hidden"/>
+        <value n="value_component_Y" wn="DISPLACEMENT _Y" pn="Value Y" v="0.0" units="m" unit_magnitude="L" help="Component" show_in_window="1" state="normal"/>
+        <value n="selector_component_Z" pn="Component Z" v="ByValue" values="ByFunction,ByValue,Not" dict="ByFunction,By function,ByValue,By value,Not,Not set" state="[CheckDimension 3D]" help="Component" show_in_window="1">
+          <dependencies value="Not" node="../value[@n='value_component_Z']" att1="state" v1="hidden"/>
+          <dependencies value="Not" node="../value[@n='function_component_Z']" att1="state" v1="hidden"/>
+          <dependencies value="ByValue" node="../value[@n='value_component_Z']" att1="state" v1="normal"/>
+          <dependencies value="ByFunction" node="../value[@n='value_component_Z']" att1="state" v1="hidden"/>
+          <dependencies value="ByValue" node="../value[@n='function_component_Z']" att1="state" v1="hidden"/>
+          <dependencies value="ByFunction" node="../value[@n='function_component_Z']" att1="state" v1="normal"/>
+        </value>
+        <value n="function_component_Z" pn="Function Z (x,y,z,t)" v="2*x" help="Component" state="[CheckDimension 3D]"/>
+        <value n="value_component_Z" wn="DISPLACEMENT _Z" pn="Value Z" v="0.0" units="m" unit_magnitude="L" help="Component" state="[CheckDimension 3D]" show_in_window="1"/>
+        <value n="Interval" pn="Time interval" v="Total" values="[getIntervals]" help="Displacement" state="normal"/>
+        <group n="DC_BC//Total" ov="point" tree_state="close">
+          <value n="selector_component_X" pn="Component X" values="ByFunction,ByValue,Not" dict="ByFunction,By function,ByValue,By value,Not,Not set" state="[ConditionParameterState]" help="Component" show_in_window="1" cal_state="normal" v="ByValue" tree_state="close"/>
+          <value n="function_component_X" pn="Function X (x,y,z,t)" help="Component" state="hidden" v="2*x"/>
+          <value n="value_component_X" wn="DISPLACEMENT _X" pn="Value X" unit_magnitude="L" help="Component" show_in_window="1" state="normal" v="0.0" units="m" tree_state="close"/>
+          <value n="selector_component_Y" pn="Component Y" values="ByFunction,ByValue,Not" dict="ByFunction,By function,ByValue,By value,Not,Not set" state="[ConditionParameterState]" help="Component" show_in_window="1" cal_state="normal" v="ByValue" tree_state="close"/>
+          <value n="function_component_Y" pn="Function Y (x,y,z,t)" help="Component" state="hidden" v="2*x"/>
+          <value n="value_component_Y" wn="DISPLACEMENT _Y" pn="Value Y" unit_magnitude="L" help="Component" show_in_window="1" state="normal" v="0.0" units="m" tree_state="close"/>
+          <value n="selector_component_Z" pn="Component Z" values="ByFunction,ByValue,Not" dict="ByFunction,By function,ByValue,By value,Not,Not set" state="[CheckDimension 3D]" help="Component" show_in_window="1" v="ByValue"/>
+          <value n="function_component_Z" pn="Function Z (x,y,z,t)" help="Component" state="[CheckDimension 3D]" v="2*x"/>
+          <value n="value_component_Z" wn="DISPLACEMENT _Z" pn="Value Z" unit_magnitude="L" help="Component" state="[CheckDimension 3D]" show_in_window="1" v="0.0" units="m"/>
+          <value n="Interval" pn="Time interval" values="[getIntervals]" help="Displacement" state="normal" v="Total" tree_state="close"/>
+        </group>
+      </condition>
+      <condition n="VELOCITY" pn="Velocity" ov="point,line,surface" ovm="" icon="shells16" help="Velocity" state="[CheckNodalConditionStateStructural]" update_proc="[OkNewCondition]" check="UpdateTree" tree_state="close">
+        <value n="selector_component_X" pn="Component X" v="ByValue" values="ByFunction,ByValue,Not" dict="ByFunction,By function,ByValue,By value,Not,Not set" state="[ConditionParameterState]" help="Component" show_in_window="1" cal_state="normal">
+          <dependencies value="Not" node="../value[@n='value_component_X']" att1="state" v1="hidden"/>
+          <dependencies value="Not" node="../value[@n='function_component_X']" att1="state" v1="hidden"/>
+          <dependencies value="ByValue" node="../value[@n='value_component_X']" att1="state" v1="normal"/>
+          <dependencies value="ByFunction" node="../value[@n='value_component_X']" att1="state" v1="hidden"/>
+          <dependencies value="ByValue" node="../value[@n='function_component_X']" att1="state" v1="hidden"/>
+          <dependencies value="ByFunction" node="../value[@n='function_component_X']" att1="state" v1="normal"/>
+        </value>
+        <value n="function_component_X" pn="Function X (x,y,z,t)" v="2*x" help="Component" state="hidden"/>
+        <value n="value_component_X" wn="VELOCITY _X" pn="Value X" v="0.0" units="m/s" unit_magnitude="Velocity" help="Component" show_in_window="1"/>
+        <value n="selector_component_Y" pn="Component Y" v="ByValue" values="ByFunction,ByValue,Not" dict="ByFunction,By function,ByValue,By value,Not,Not set" state="[ConditionParameterState]" help="Component" show_in_window="1" cal_state="normal">
+          <dependencies value="Not" node="../value[@n='value_component_Y']" att1="state" v1="hidden"/>
+          <dependencies value="Not" node="../value[@n='function_component_Y']" att1="state" v1="hidden"/>
+          <dependencies value="ByValue" node="../value[@n='value_component_Y']" att1="state" v1="normal"/>
+          <dependencies value="ByFunction" node="../value[@n='value_component_Y']" att1="state" v1="hidden"/>
+          <dependencies value="ByValue" node="../value[@n='function_component_Y']" att1="state" v1="hidden"/>
+          <dependencies value="ByFunction" node="../value[@n='function_component_Y']" att1="state" v1="normal"/>
+        </value>
+        <value n="function_component_Y" pn="Function Y (x,y,z,t)" v="2*x" help="Component" state="hidden"/>
+        <value n="value_component_Y" wn="VELOCITY _Y" pn="Value Y" v="0.0" units="m/s" unit_magnitude="Velocity" help="Component" show_in_window="1"/>
+        <value n="selector_component_Z" pn="Component Z" v="ByValue" values="ByFunction,ByValue,Not" dict="ByFunction,By function,ByValue,By value,Not,Not set" state="[CheckDimension 3D]" help="Component" show_in_window="1">
+          <dependencies value="Not" node="../value[@n='value_component_Z']" att1="state" v1="hidden"/>
+          <dependencies value="Not" node="../value[@n='function_component_Z']" att1="state" v1="hidden"/>
+          <dependencies value="ByValue" node="../value[@n='value_component_Z']" att1="state" v1="normal"/>
+          <dependencies value="ByFunction" node="../value[@n='value_component_Z']" att1="state" v1="hidden"/>
+          <dependencies value="ByValue" node="../value[@n='function_component_Z']" att1="state" v1="hidden"/>
+          <dependencies value="ByFunction" node="../value[@n='function_component_Z']" att1="state" v1="normal"/>
+        </value>
+        <value n="function_component_Z" pn="Function Z (x,y,z,t)" v="2*x" help="Component" state="[CheckDimension 3D]"/>
+        <value n="value_component_Z" wn="VELOCITY _Z" pn="Value Z" v="0.0" units="m/s" unit_magnitude="Velocity" help="Component" state="[CheckDimension 3D]" show_in_window="1"/>
+        <value n="Interval" pn="Time interval" v="Total" values="[getIntervals]" help="Velocity" state="normal"/>
+      </condition>
+      <condition n="ACCELERATION" pn="Acceleration" ov="point,line,surface" ovm="" icon="shells16" help="Acceleration" state="[CheckNodalConditionStateStructural]" update_proc="[OkNewCondition]" check="UpdateTree" tree_state="close">
+        <value n="selector_component_X" pn="Component X" v="ByValue" values="ByFunction,ByValue,Not" dict="ByFunction,By function,ByValue,By value,Not,Not set" state="[ConditionParameterState]" help="Component" show_in_window="1" cal_state="normal">
+          <dependencies value="Not" node="../value[@n='value_component_X']" att1="state" v1="hidden"/>
+          <dependencies value="Not" node="../value[@n='function_component_X']" att1="state" v1="hidden"/>
+          <dependencies value="ByValue" node="../value[@n='value_component_X']" att1="state" v1="normal"/>
+          <dependencies value="ByFunction" node="../value[@n='value_component_X']" att1="state" v1="hidden"/>
+          <dependencies value="ByValue" node="../value[@n='function_component_X']" att1="state" v1="hidden"/>
+          <dependencies value="ByFunction" node="../value[@n='function_component_X']" att1="state" v1="normal"/>
+        </value>
+        <value n="function_component_X" pn="Function X (x,y,z,t)" v="2*x" help="Component" state="hidden"/>
+        <value n="value_component_X" wn="ACCELERATION _X" pn="Value X" v="0.0" units="m/s^2" unit_magnitude="Acceleration" help="Component" show_in_window="1"/>
+        <value n="selector_component_Y" pn="Component Y" v="ByValue" values="ByFunction,ByValue,Not" dict="ByFunction,By function,ByValue,By value,Not,Not set" state="[ConditionParameterState]" help="Component" show_in_window="1" cal_state="normal">
+          <dependencies value="Not" node="../value[@n='value_component_Y']" att1="state" v1="hidden"/>
+          <dependencies value="Not" node="../value[@n='function_component_Y']" att1="state" v1="hidden"/>
+          <dependencies value="ByValue" node="../value[@n='value_component_Y']" att1="state" v1="normal"/>
+          <dependencies value="ByFunction" node="../value[@n='value_component_Y']" att1="state" v1="hidden"/>
+          <dependencies value="ByValue" node="../value[@n='function_component_Y']" att1="state" v1="hidden"/>
+          <dependencies value="ByFunction" node="../value[@n='function_component_Y']" att1="state" v1="normal"/>
+        </value>
+        <value n="function_component_Y" pn="Function Y (x,y,z,t)" v="2*x" help="Component" state="hidden"/>
+        <value n="value_component_Y" wn="ACCELERATION _Y" pn="Value Y" v="0.0" units="m/s^2" unit_magnitude="Acceleration" help="Component" show_in_window="1"/>
+        <value n="selector_component_Z" pn="Component Z" v="ByValue" values="ByFunction,ByValue,Not" dict="ByFunction,By function,ByValue,By value,Not,Not set" state="[CheckDimension 3D]" help="Component" show_in_window="1">
+          <dependencies value="Not" node="../value[@n='value_component_Z']" att1="state" v1="hidden"/>
+          <dependencies value="Not" node="../value[@n='function_component_Z']" att1="state" v1="hidden"/>
+          <dependencies value="ByValue" node="../value[@n='value_component_Z']" att1="state" v1="normal"/>
+          <dependencies value="ByFunction" node="../value[@n='value_component_Z']" att1="state" v1="hidden"/>
+          <dependencies value="ByValue" node="../value[@n='function_component_Z']" att1="state" v1="hidden"/>
+          <dependencies value="ByFunction" node="../value[@n='function_component_Z']" att1="state" v1="normal"/>
+        </value>
+        <value n="function_component_Z" pn="Function Z (x,y,z,t)" v="2*x" help="Component" state="[CheckDimension 3D]"/>
+        <value n="value_component_Z" wn="ACCELERATION _Z" pn="Value Z" v="0.0" units="m/s^2" unit_magnitude="Acceleration" help="Component" state="[CheckDimension 3D]" show_in_window="1"/>
+        <value n="Interval" pn="Time interval" v="Total" values="[getIntervals]" help="Acceleration" state="normal"/>
+      </condition>
+      <condition n="PRESSURE" pn="Pressure" ov="point,line,surface" ovm="" icon="shells16" help="Pressure" state="[CheckNodalConditionStateStructural]" update_proc="[OkNewCondition]" check="UpdateTree">
+        <value n="constrained" pn="Imposed" v="true" values="true,false" help="Imposed" state="[ConditionParameterState]" show_in_window="1"/>
+        <value n="ByFunction" pn="by function -&gt; f(x,y,z,t)" v="No" values="Yes,No" actualize_tree="1" state="[ConditionParameterState]" show_in_window="1" cal_state="normal">
+          <dependencies value="No" node="../value[@n='value']" att1="state" v1="normal"/>
+          <dependencies value="Yes" node="../value[@n='value']" att1="state" v1="hidden"/>
+          <dependencies value="No" node="../value[@n='function_value']" att1="state" v1="hidden"/>
+          <dependencies value="Yes" node="../value[@n='function_value']" att1="state" v1="normal"/>
+        </value>
+        <value n="function_value" pn="Function" v="" help="Value" state="hidden" show_in_window="1" cal_state="normal"/>
+        <value n="value" pn="Value" v="0.0" units="Pa" unit_magnitude="P" help="Value" string_is="double" state="[ConditionParameterState]" show_in_window="1" cal_state="normal"/>
+        <value n="Interval" pn="Time interval" v="Total" values="[getIntervals]" help="Pressure" state="normal"/>
+      </condition>
+      <condition n="CONTACT" pn="Contact master" ov="[CheckGeometry 2]" ovm="" icon="shells16" help="Contact master" state="[CheckNodalConditionStateStructural]" update_proc="[OkNewCondition]" check="UpdateTree" tree_state="close">
+        <value n="pair" pn="Pair key" v="0" values="0,1,2,3,4,5,6,7,8,9" dict="0,0,1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9" state="[ConditionParameterState]" help="Pair key" show_in_window="1"/>
+        <value n="Interval" pn="Time interval" v="Total" values="[getIntervals]" help="Contact master" state="normal"/>
+      </condition>
+      <condition n="CONTACT_SLAVE" pn="Contact slave" ov="[CheckGeometry 2]" ovm="" icon="shells16" help="Contact slave" state="[CheckNodalConditionStateStructural]" update_proc="[OkNewCondition]" check="UpdateTree" tree_state="close">
+        <value n="pair" pn="Pair key" v="0" values="0,1,2,3,4,5,6,7,8,9" dict="0,0,1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9" state="[ConditionParameterState]" help="Pair key" show_in_window="1"/>
+      </condition>
+      <condition n="ROTATION" pn="Rotation" ov="point,line,surface" ovm="" icon="shells16" help="Rotation" state="[CheckNodalConditionStateStructural]" update_proc="[OkNewCondition]" check="UpdateTree">
+        <value n="selector_component_X" pn="Component X" v="ByValue" values="ByFunction,ByValue,Not" dict="ByFunction,By function,ByValue,By value,Not,Not set" state="[ConditionParameterState]" help="Component" show_in_window="1" cal_state="normal">
+          <dependencies value="Not" node="../value[@n='value_component_X']" att1="state" v1="hidden"/>
+          <dependencies value="Not" node="../value[@n='function_component_X']" att1="state" v1="hidden"/>
+          <dependencies value="ByValue" node="../value[@n='value_component_X']" att1="state" v1="normal"/>
+          <dependencies value="ByFunction" node="../value[@n='value_component_X']" att1="state" v1="hidden"/>
+          <dependencies value="ByValue" node="../value[@n='function_component_X']" att1="state" v1="hidden"/>
+          <dependencies value="ByFunction" node="../value[@n='function_component_X']" att1="state" v1="normal"/>
+        </value>
+        <value n="function_component_X" pn="Function X (x,y,z,t)" v="2*x" help="Component" state="hidden"/>
+        <value n="value_component_X" wn="ROTATION _X" pn="Value X" v="0.0" units="rad" unit_magnitude="Angle" help="Component" show_in_window="1"/>
+        <value n="selector_component_Y" pn="Component Y" v="ByValue" values="ByFunction,ByValue,Not" dict="ByFunction,By function,ByValue,By value,Not,Not set" state="[ConditionParameterState]" help="Component" show_in_window="1" cal_state="normal">
+          <dependencies value="Not" node="../value[@n='value_component_Y']" att1="state" v1="hidden"/>
+          <dependencies value="Not" node="../value[@n='function_component_Y']" att1="state" v1="hidden"/>
+          <dependencies value="ByValue" node="../value[@n='value_component_Y']" att1="state" v1="normal"/>
+          <dependencies value="ByFunction" node="../value[@n='value_component_Y']" att1="state" v1="hidden"/>
+          <dependencies value="ByValue" node="../value[@n='function_component_Y']" att1="state" v1="hidden"/>
+          <dependencies value="ByFunction" node="../value[@n='function_component_Y']" att1="state" v1="normal"/>
+        </value>
+        <value n="function_component_Y" pn="Function Y (x,y,z,t)" v="2*x" help="Component" state="hidden"/>
+        <value n="value_component_Y" wn="ROTATION _Y" pn="Value Y" v="0.0" units="rad" unit_magnitude="Angle" help="Component" show_in_window="1"/>
+        <value n="selector_component_Z" pn="Component Z" v="ByValue" values="ByFunction,ByValue,Not" dict="ByFunction,By function,ByValue,By value,Not,Not set" state="[CheckDimension 3D]" help="Component" show_in_window="1">
+          <dependencies value="Not" node="../value[@n='value_component_Z']" att1="state" v1="hidden"/>
+          <dependencies value="Not" node="../value[@n='function_component_Z']" att1="state" v1="hidden"/>
+          <dependencies value="ByValue" node="../value[@n='value_component_Z']" att1="state" v1="normal"/>
+          <dependencies value="ByFunction" node="../value[@n='value_component_Z']" att1="state" v1="hidden"/>
+          <dependencies value="ByValue" node="../value[@n='function_component_Z']" att1="state" v1="hidden"/>
+          <dependencies value="ByFunction" node="../value[@n='function_component_Z']" att1="state" v1="normal"/>
+        </value>
+        <value n="function_component_Z" pn="Function Z (x,y,z,t)" v="2*x" help="Component" state="[CheckDimension 3D]"/>
+        <value n="value_component_Z" wn="ROTATION _Z" pn="Value Z" v="0.0" units="rad" unit_magnitude="Angle" help="Component" state="[CheckDimension 3D]" show_in_window="1"/>
+        <value n="Interval" pn="Time interval" v="Total" values="[getIntervals]" help="Rotation" state="normal"/>
+      </condition>
+      <condition n="ANGULAR_VELOCITY" pn="Angular Velocity" ov="point,line,surface" ovm="" icon="shells16" help="Angular Velocity" state="[CheckNodalConditionStateStructural]" update_proc="[OkNewCondition]" check="UpdateTree">
+        <value n="selector_component_X" pn="Component X" v="ByValue" values="ByFunction,ByValue,Not" dict="ByFunction,By function,ByValue,By value,Not,Not set" state="[ConditionParameterState]" help="Component" show_in_window="1" cal_state="normal">
+          <dependencies value="Not" node="../value[@n='value_component_X']" att1="state" v1="hidden"/>
+          <dependencies value="Not" node="../value[@n='function_component_X']" att1="state" v1="hidden"/>
+          <dependencies value="ByValue" node="../value[@n='value_component_X']" att1="state" v1="normal"/>
+          <dependencies value="ByFunction" node="../value[@n='value_component_X']" att1="state" v1="hidden"/>
+          <dependencies value="ByValue" node="../value[@n='function_component_X']" att1="state" v1="hidden"/>
+          <dependencies value="ByFunction" node="../value[@n='function_component_X']" att1="state" v1="normal"/>
+        </value>
+        <value n="function_component_X" pn="Function X (x,y,z,t)" v="2*x" help="Component" state="hidden"/>
+        <value n="value_component_X" wn="ANGULAR_VELOCITY _X" pn="Value X" v="0.0" units="rad/s" unit_magnitude="Angle/T" help="Component" show_in_window="1"/>
+        <value n="selector_component_Y" pn="Component Y" v="ByValue" values="ByFunction,ByValue,Not" dict="ByFunction,By function,ByValue,By value,Not,Not set" state="[ConditionParameterState]" help="Component" show_in_window="1" cal_state="normal">
+          <dependencies value="Not" node="../value[@n='value_component_Y']" att1="state" v1="hidden"/>
+          <dependencies value="Not" node="../value[@n='function_component_Y']" att1="state" v1="hidden"/>
+          <dependencies value="ByValue" node="../value[@n='value_component_Y']" att1="state" v1="normal"/>
+          <dependencies value="ByFunction" node="../value[@n='value_component_Y']" att1="state" v1="hidden"/>
+          <dependencies value="ByValue" node="../value[@n='function_component_Y']" att1="state" v1="hidden"/>
+          <dependencies value="ByFunction" node="../value[@n='function_component_Y']" att1="state" v1="normal"/>
+        </value>
+        <value n="function_component_Y" pn="Function Y (x,y,z,t)" v="2*x" help="Component" state="hidden"/>
+        <value n="value_component_Y" wn="ANGULAR_VELOCITY _Y" pn="Value Y" v="0.0" units="rad/s" unit_magnitude="Angle/T" help="Component" show_in_window="1"/>
+        <value n="selector_component_Z" pn="Component Z" v="ByValue" values="ByFunction,ByValue,Not" dict="ByFunction,By function,ByValue,By value,Not,Not set" state="[CheckDimension 3D]" help="Component" show_in_window="1">
+          <dependencies value="Not" node="../value[@n='value_component_Z']" att1="state" v1="hidden"/>
+          <dependencies value="Not" node="../value[@n='function_component_Z']" att1="state" v1="hidden"/>
+          <dependencies value="ByValue" node="../value[@n='value_component_Z']" att1="state" v1="normal"/>
+          <dependencies value="ByFunction" node="../value[@n='value_component_Z']" att1="state" v1="hidden"/>
+          <dependencies value="ByValue" node="../value[@n='function_component_Z']" att1="state" v1="hidden"/>
+          <dependencies value="ByFunction" node="../value[@n='function_component_Z']" att1="state" v1="normal"/>
+        </value>
+        <value n="function_component_Z" pn="Function Z (x,y,z,t)" v="2*x" help="Component" state="[CheckDimension 3D]"/>
+        <value n="value_component_Z" wn="ANGULAR_VELOCITY _Z" pn="Value Z" v="0.0" units="rad/s" unit_magnitude="Angle/T" help="Component" state="[CheckDimension 3D]" show_in_window="1"/>
+        <value n="Interval" pn="Time interval" v="Total" values="[getIntervals]" help="Angular Velocity" state="normal"/>
+      </condition>
+      <condition n="ANGULAR_ACCELERATION" pn="Angular Acceleration" ov="point,line,surface" ovm="" icon="shells16" help="Angular Acceleration" state="[CheckNodalConditionStateStructural]" update_proc="[OkNewCondition]" check="UpdateTree">
+        <value n="selector_component_X" pn="Component X" v="ByValue" values="ByFunction,ByValue,Not" dict="ByFunction,By function,ByValue,By value,Not,Not set" state="[ConditionParameterState]" help="Component" show_in_window="1" cal_state="normal">
+          <dependencies value="Not" node="../value[@n='value_component_X']" att1="state" v1="hidden"/>
+          <dependencies value="Not" node="../value[@n='function_component_X']" att1="state" v1="hidden"/>
+          <dependencies value="ByValue" node="../value[@n='value_component_X']" att1="state" v1="normal"/>
+          <dependencies value="ByFunction" node="../value[@n='value_component_X']" att1="state" v1="hidden"/>
+          <dependencies value="ByValue" node="../value[@n='function_component_X']" att1="state" v1="hidden"/>
+          <dependencies value="ByFunction" node="../value[@n='function_component_X']" att1="state" v1="normal"/>
+        </value>
+        <value n="function_component_X" pn="Function X (x,y,z,t)" v="2*x" help="Component" state="hidden"/>
+        <value n="value_component_X" wn="ANGULAR_ACCELERATION _X" pn="Value X" v="0.0" units="rad/s^2" unit_magnitude="Angle/T^2" help="Component" show_in_window="1"/>
+        <value n="selector_component_Y" pn="Component Y" v="ByValue" values="ByFunction,ByValue,Not" dict="ByFunction,By function,ByValue,By value,Not,Not set" state="[ConditionParameterState]" help="Component" show_in_window="1" cal_state="normal">
+          <dependencies value="Not" node="../value[@n='value_component_Y']" att1="state" v1="hidden"/>
+          <dependencies value="Not" node="../value[@n='function_component_Y']" att1="state" v1="hidden"/>
+          <dependencies value="ByValue" node="../value[@n='value_component_Y']" att1="state" v1="normal"/>
+          <dependencies value="ByFunction" node="../value[@n='value_component_Y']" att1="state" v1="hidden"/>
+          <dependencies value="ByValue" node="../value[@n='function_component_Y']" att1="state" v1="hidden"/>
+          <dependencies value="ByFunction" node="../value[@n='function_component_Y']" att1="state" v1="normal"/>
+        </value>
+        <value n="function_component_Y" pn="Function Y (x,y,z,t)" v="2*x" help="Component" state="hidden"/>
+        <value n="value_component_Y" wn="ANGULAR_ACCELERATION _Y" pn="Value Y" v="0.0" units="rad/s^2" unit_magnitude="Angle/T^2" help="Component" show_in_window="1"/>
+        <value n="selector_component_Z" pn="Component Z" v="ByValue" values="ByFunction,ByValue,Not" dict="ByFunction,By function,ByValue,By value,Not,Not set" state="[CheckDimension 3D]" help="Component" show_in_window="1">
+          <dependencies value="Not" node="../value[@n='value_component_Z']" att1="state" v1="hidden"/>
+          <dependencies value="Not" node="../value[@n='function_component_Z']" att1="state" v1="hidden"/>
+          <dependencies value="ByValue" node="../value[@n='value_component_Z']" att1="state" v1="normal"/>
+          <dependencies value="ByFunction" node="../value[@n='value_component_Z']" att1="state" v1="hidden"/>
+          <dependencies value="ByValue" node="../value[@n='function_component_Z']" att1="state" v1="hidden"/>
+          <dependencies value="ByFunction" node="../value[@n='function_component_Z']" att1="state" v1="normal"/>
+        </value>
+        <value n="function_component_Z" pn="Function Z (x,y,z,t)" v="2*x" help="Component" state="[CheckDimension 3D]"/>
+        <value n="value_component_Z" wn="ANGULAR_ACCELERATION _Z" pn="Value Z" v="0.0" units="rad/s^2" unit_magnitude="Angle/T^2" help="Component" state="[CheckDimension 3D]" show_in_window="1"/>
+        <value n="Interval" pn="Time interval" v="Total" values="[getIntervals]" help="Angular Acceleration" state="normal"/>
+      </condition>
+      <condition n="CONDENSED_DOF_LIST_2D" pn="Hinge" ov="line" ovm="" icon="shells16" help="Hinge" state="[CheckNodalConditionStateStructural]" update_proc="[OkNewCondition]" check="UpdateTree">
+        <value n="FirstDisplacementX" pn="X First node displacement" v="false" values="true,false" help="First node displacement" state="[ConditionParameterState]" show_in_window="1"/>
+        <value n="FirstDisplacementY" pn="Y First node displacement" v="false" values="true,false" help="First node displacement" state="[ConditionParameterState]" show_in_window="1"/>
+        <value n="FirstDisplacementZ" pn="Z First node displacement" v="" values="true,false" help="First node displacement" state="[CheckDimension 3D]" show_in_window="1"/>
+        <value n="FirstMomentZ" pn="Z First node moment" v="false" values="true,false" help="Z First node moment" state="[ConditionParameterState]" show_in_window="1"/>
+        <value n="SecondDisplacementX" pn="X Second node displacement" v="false" values="true,false" help="Second node displacement" state="[ConditionParameterState]" show_in_window="1"/>
+        <value n="SecondDisplacementY" pn="Y Second node displacement" v="false" values="true,false" help="Second node displacement" state="[ConditionParameterState]" show_in_window="1"/>
+        <value n="SecondDisplacementZ" pn="Z Second node displacement" v="" values="true,false" help="Second node displacement" state="[CheckDimension 3D]" show_in_window="1"/>
+        <value n="SecondMomentZ" pn="Z Second node moment" v="false" values="true,false" help="Z Second node moment" state="[ConditionParameterState]" show_in_window="1"/>
+      </condition>
+      <condition n="CONDENSED_DOF_LIST" pn="Hinge" ov="line" ovm="" icon="shells16" help="Hinge" state="[CheckNodalConditionStateStructural]" update_proc="[OkNewCondition]" check="UpdateTree">
+        <value n="FirstDisplacementX" pn="X First node displacement" v="false" values="true,false" help="First node displacement" state="[ConditionParameterState]" show_in_window="1"/>
+        <value n="FirstDisplacementY" pn="Y First node displacement" v="false" values="true,false" help="First node displacement" state="[ConditionParameterState]" show_in_window="1"/>
+        <value n="FirstDisplacementZ" pn="Z First node displacement" v="false" values="true,false" help="First node displacement" state="[CheckDimension 3D]" show_in_window="1"/>
+        <value n="FirstMomentX" pn="X First node moment" v="false" values="true,false" help="First node moment" state="[ConditionParameterState]" show_in_window="1"/>
+        <value n="FirstMomentY" pn="Y First node moment" v="false" values="true,false" help="First node moment" state="[ConditionParameterState]" show_in_window="1"/>
+        <value n="FirstMomentZ" pn="Z First node moment" v="false" values="true,false" help="First node moment" state="[CheckDimension 3D]" show_in_window="1"/>
+        <value n="SecondDisplacementX" pn="X Second node displacement" v="false" values="true,false" help="Second node displacement" state="[ConditionParameterState]" show_in_window="1"/>
+        <value n="SecondDisplacementY" pn="Y Second node displacement" v="false" values="true,false" help="Second node displacement" state="[ConditionParameterState]" show_in_window="1"/>
+        <value n="SecondDisplacementZ" pn="Z Second node displacement" v="false" values="true,false" help="Second node displacement" state="[CheckDimension 3D]" show_in_window="1"/>
+        <value n="SecondMomentX" pn="X Second node moment" v="false" values="true,false" help="Second node moment" state="[ConditionParameterState]" show_in_window="1"/>
+        <value n="SecondMomentY" pn="Y Second node moment" v="false" values="true,false" help="Second node moment" state="[ConditionParameterState]" show_in_window="1"/>
+        <value n="SecondMomentZ" pn="Z Second node moment" v="false" values="true,false" help="Second node moment" state="[CheckDimension 3D]" show_in_window="1"/>
+      </condition>
+    </container>
+    <container n="Loads" pn="Loads" un="STLoads" icon="loads" open_window="0" state="[HideIfUniqueName STSoluType eigen_value]" tree_state="open">
+      <condition n="SelfWeight3D" pn="Self weight" ov="line,surface,volume" ovm="" icon="shells16" help="Self weight application by means of the AssignVectorByDirectionProcess in the core" state="[ConditionState]" update_proc="[OkNewCondition]" check="DirectorVectorNonZero direction">
+        <value n="constrained" pn="Constrained" v="false" values="true,false" help="Constrained" state="[ConditionParameterState]" show_in_window="1"/>
+        <value n="ByFunction" pn="by function -&gt; f(x,y,z,t)" v="No" values="Yes,No" actualize_tree="1" state="[ConditionParameterState]" show_in_window="1" cal_state="normal">
+          <dependencies value="No" node="../value[@n='modulus']" att1="state" v1="normal"/>
+          <dependencies value="Yes" node="../value[@n='modulus']" att1="state" v1="hidden"/>
+          <dependencies value="No" node="../value[@n='function_modulus']" att1="state" v1="hidden"/>
+          <dependencies value="Yes" node="../value[@n='function_modulus']" att1="state" v1="normal"/>
+        </value>
+        <value n="function_modulus" pn="Function" v="" help="Value" state="hidden" show_in_window="1" cal_state="normal"/>
+        <value n="modulus" pn="Modulus" v="9.81" units="m/s^2" unit_magnitude="Acceleration" help="Value" string_is="double" state="[ConditionParameterState]" show_in_window="1" cal_state="normal"/>
+        <value n="value_direction_X" wn="SelfWeight3D _X" pn="Value X" v="0.0" help="Direction" show_in_window="1"/>
+        <value n="value_direction_Y" wn="SelfWeight3D _Y" pn="Value Y" v="0.0" help="Direction" show_in_window="1"/>
+        <value n="value_direction_Z" wn="SelfWeight3D _Z" pn="Value Z" v="-1.0" help="Direction" state="[CheckDimension 3D]" show_in_window="1"/>
+        <value n="Interval" pn="Time interval" v="Total" values="[getIntervals]" help="Self weight application by means of the AssignVectorByDirectionProcess in the core" state="normal"/>
+      </condition>
+      <condition n="SelfWeight2D" pn="Self weight" ov="line,surface" ovm="" icon="shells16" help="Self weight application by means of the AssignVectorByDirectionProcess in the core" state="[ConditionState]" update_proc="[OkNewCondition]" check="DirectorVectorNonZero direction" tree_state="close">
+        <value n="constrained" pn="Constrained" v="false" values="true,false" help="Constrained" state="[ConditionParameterState]" show_in_window="1"/>
+        <value n="ByFunction" pn="by function -&gt; f(x,y,z,t)" v="No" values="Yes,No" actualize_tree="1" state="[ConditionParameterState]" show_in_window="1" cal_state="normal">
+          <dependencies value="No" node="../value[@n='modulus']" att1="state" v1="normal"/>
+          <dependencies value="Yes" node="../value[@n='modulus']" att1="state" v1="hidden"/>
+          <dependencies value="No" node="../value[@n='function_modulus']" att1="state" v1="hidden"/>
+          <dependencies value="Yes" node="../value[@n='function_modulus']" att1="state" v1="normal"/>
+        </value>
+        <value n="function_modulus" pn="Function" v="" help="Value" state="hidden" show_in_window="1" cal_state="normal"/>
+        <value n="modulus" pn="Modulus" v="9.81" units="m/s^2" unit_magnitude="Acceleration" help="Value" string_is="double" state="[ConditionParameterState]" show_in_window="1" cal_state="normal"/>
+        <value n="value_direction_X" wn="SelfWeight2D _X" pn="Value X" v="0.0" help="Direction" show_in_window="1"/>
+        <value n="value_direction_Y" wn="SelfWeight2D _Y" pn="Value Y" v="-1.0" help="Direction" show_in_window="1"/>
+        <value n="value_direction_Z" wn="SelfWeight2D _Z" pn="Value Z" v="0.0" help="Direction" state="[CheckDimension 3D]" show_in_window="1"/>
+        <value n="Interval" pn="Time interval" v="Total" values="[getIntervals]" help="Self weight application by means of the AssignVectorByDirectionProcess in the core" state="normal"/>
+      </condition>
+      <condition n="SelfWeight2Da" pn="Self weight" ov="line,surface" ovm="" icon="shells16" help="Self weight application by means of the AssignVectorByDirectionProcess in the core" state="[ConditionState]" update_proc="[OkNewCondition]" check="DirectorVectorNonZero direction">
+        <value n="constrained" pn="Constrained" v="false" values="true,false" help="Constrained" state="[ConditionParameterState]" show_in_window="1"/>
+        <value n="ByFunction" pn="by function -&gt; f(x,y,z,t)" v="No" values="Yes,No" actualize_tree="1" state="[ConditionParameterState]" show_in_window="1" cal_state="normal">
+          <dependencies value="No" node="../value[@n='modulus']" att1="state" v1="normal"/>
+          <dependencies value="Yes" node="../value[@n='modulus']" att1="state" v1="hidden"/>
+          <dependencies value="No" node="../value[@n='function_modulus']" att1="state" v1="hidden"/>
+          <dependencies value="Yes" node="../value[@n='function_modulus']" att1="state" v1="normal"/>
+        </value>
+        <value n="function_modulus" pn="Function" v="" help="Value" state="hidden" show_in_window="1" cal_state="normal"/>
+        <value n="modulus" pn="Modulus" v="9.81" units="m/s^2" unit_magnitude="Acceleration" help="Value" string_is="double" state="[ConditionParameterState]" show_in_window="1" cal_state="normal"/>
+        <value n="value_direction_X" wn="SelfWeight2Da _X" pn="Value X" v="0.0" help="Direction" show_in_window="1"/>
+        <value n="value_direction_Y" wn="SelfWeight2Da _Y" pn="Value Y" v="-1.0" help="Direction" show_in_window="1"/>
+        <value n="value_direction_Z" wn="SelfWeight2Da _Z" pn="Value Z" v="0.0" help="Direction" state="[CheckDimension 3D]" show_in_window="1"/>
+        <value n="Interval" pn="Time interval" v="Total" values="[getIntervals]" help="Self weight application by means of the AssignVectorByDirectionProcess in the core" state="normal"/>
+      </condition>
+      <condition n="PointLoad2D" pn="Load on points" ov="point" ovm="" icon="shells16" help="Point load application by means of the AssignVectorByDirectionToConditionProcess in the core" state="[ConditionState]" update_proc="[OkNewCondition]" check="DirectorVectorNonZero direction" tree_state="active,open">
+        <value n="ByFunction" pn="by function -&gt; f(x,y,z,t)" v="No" values="Yes,No" actualize_tree="1" state="[ConditionParameterState]" show_in_window="1" cal_state="normal">
+          <dependencies value="No" node="../value[@n='modulus']" att1="state" v1="normal"/>
+          <dependencies value="Yes" node="../value[@n='modulus']" att1="state" v1="hidden"/>
+          <dependencies value="No" node="../value[@n='function_modulus']" att1="state" v1="hidden"/>
+          <dependencies value="Yes" node="../value[@n='function_modulus']" att1="state" v1="normal"/>
+        </value>
+        <value n="function_modulus" pn="Function" v="" help="Modulus" state="hidden" show_in_window="1" cal_state="normal"/>
+        <value n="modulus" pn="Modulus" v="1.0" units="N" unit_magnitude="F" help="Modulus" string_is="double" state="[ConditionParameterState]" show_in_window="1" cal_state="normal"/>
+        <value n="value_direction_X" wn="PointLoad2D _X" pn="Value X" v="0.0" help="Direction" show_in_window="1" state=""/>
+        <value n="value_direction_Y" wn="PointLoad2D _Y" pn="Value Y" v="0.0" help="Direction" show_in_window="1" state=""/>
+        <value n="value_direction_Z" wn="PointLoad2D _Z" pn="Value Z" v="0.0" help="Direction" state="[CheckDimension 3D]" show_in_window="1"/>
+        <value n="Interval" pn="Time interval" v="Total" values="[getIntervals]" help="Point load application by means of the AssignVectorByDirectionToConditionProcess in the core" state="normal"/>
+        <group n="End_Load//Total" ov="point" tree_state="close">
+          <value n="ByFunction" pn="by function -&gt; f(x,y,z,t)" values="Yes,No" actualize_tree="1" state="[ConditionParameterState]" show_in_window="1" cal_state="normal" v="No" tree_state="close"/>
+          <value n="function_modulus" pn="Function" help="Modulus" state="hidden" show_in_window="1" cal_state="normal" v=""/>
+          <value n="modulus" pn="Modulus" unit_magnitude="F" help="Modulus" string_is="double" state="[ConditionParameterState]" show_in_window="1" cal_state="normal" v="10000" units="N" tree_state="close"/>
+          <value n="value_direction_X" wn="PointLoad2D _X" pn="Value X" help="Direction" show_in_window="1" state="" v="0.0" tree_state="close"/>
+          <value n="value_direction_Y" wn="PointLoad2D _Y" pn="Value Y" help="Direction" show_in_window="1" state="" v="-1" tree_state="close"/>
+          <value n="value_direction_Z" wn="PointLoad2D _Z" pn="Value Z" help="Direction" state="[CheckDimension 3D]" show_in_window="1" v="0.0"/>
+          <value n="Interval" pn="Time interval" values="[getIntervals]" help="Point load application by means of the AssignVectorByDirectionToConditionProcess in the core" state="normal" v="Total" tree_state="close"/>
+        </group>
+      </condition>
+      <condition n="PointLoad2DAxisym" pn="Load on points" ov="point" ovm="" icon="shells16" help="Point load application by means of the AssignVectorByDirectionToConditionProcess in the core" state="[ConditionState]" update_proc="[OkNewCondition]" check="DirectorVectorNonZero direction">
+        <value n="ByFunction" pn="by function -&gt; f(x,y,z,t)" v="No" values="Yes,No" actualize_tree="1" state="[ConditionParameterState]" show_in_window="1" cal_state="normal">
+          <dependencies value="No" node="../value[@n='modulus']" att1="state" v1="normal"/>
+          <dependencies value="Yes" node="../value[@n='modulus']" att1="state" v1="hidden"/>
+          <dependencies value="No" node="../value[@n='function_modulus']" att1="state" v1="hidden"/>
+          <dependencies value="Yes" node="../value[@n='function_modulus']" att1="state" v1="normal"/>
+        </value>
+        <value n="function_modulus" pn="Function" v="" help="Modulus" state="hidden" show_in_window="1" cal_state="normal"/>
+        <value n="modulus" pn="Modulus" v="1.0" units="N/m" unit_magnitude="F/L" help="Modulus" string_is="double" state="[ConditionParameterState]" show_in_window="1" cal_state="normal"/>
+        <value n="value_direction_X" wn="PointLoad2DAxisym _X" pn="Value X" v="0.0" help="Direction" show_in_window="1"/>
+        <value n="value_direction_Y" wn="PointLoad2DAxisym _Y" pn="Value Y" v="0.0" help="Direction" show_in_window="1"/>
+        <value n="value_direction_Z" wn="PointLoad2DAxisym _Z" pn="Value Z" v="0.0" help="Direction" state="[CheckDimension 3D]" show_in_window="1"/>
+        <value n="Interval" pn="Time interval" v="Total" values="[getIntervals]" help="Point load application by means of the AssignVectorByDirectionToConditionProcess in the core" state="normal"/>
+      </condition>
+      <condition n="PointLoad3D" pn="Load on points" ov="point" ovm="" icon="shells16" help="Load on points, load vector referred to global axes" state="[ConditionState]" update_proc="[OkNewCondition]" check="DirectorVectorNonZero direction">
+        <value n="ByFunction" pn="by function -&gt; f(x,y,z,t)" v="No" values="Yes,No" actualize_tree="1" state="[ConditionParameterState]" show_in_window="1" cal_state="normal">
+          <dependencies value="No" node="../value[@n='modulus']" att1="state" v1="normal"/>
+          <dependencies value="Yes" node="../value[@n='modulus']" att1="state" v1="hidden"/>
+          <dependencies value="No" node="../value[@n='function_modulus']" att1="state" v1="hidden"/>
+          <dependencies value="Yes" node="../value[@n='function_modulus']" att1="state" v1="normal"/>
+        </value>
+        <value n="function_modulus" pn="Function" v="" help="Modulus" state="hidden" show_in_window="1" cal_state="normal"/>
+        <value n="modulus" pn="Modulus" v="1.0" units="N" unit_magnitude="F" help="Modulus" string_is="double" state="[ConditionParameterState]" show_in_window="1" cal_state="normal"/>
+        <value n="value_direction_X" wn="PointLoad3D _X" pn="Value X" v="0.0" help="Direction" show_in_window="1"/>
+        <value n="value_direction_Y" wn="PointLoad3D _Y" pn="Value Y" v="0.0" help="Direction" show_in_window="1"/>
+        <value n="value_direction_Z" wn="PointLoad3D _Z" pn="Value Z" v="0.0" help="Direction" state="[CheckDimension 3D]" show_in_window="1"/>
+        <value n="Interval" pn="Time interval" v="Total" values="[getIntervals]" help="Load on points, load vector referred to global axes" state="normal"/>
+      </condition>
+      <condition n="PointMoment3D" pn="Moment on points" ov="point" ovm="" icon="shells16" help="Moment on points, load vector referred to local axes" state="[ConditionState]" update_proc="[OkNewCondition]" check="DirectorVectorNonZero direction">
+        <value n="ByFunction" pn="by function -&gt; f(x,y,z,t)" v="No" values="Yes,No" actualize_tree="1" state="[ConditionParameterState]" show_in_window="1" cal_state="normal">
+          <dependencies value="No" node="../value[@n='modulus']" att1="state" v1="normal"/>
+          <dependencies value="Yes" node="../value[@n='modulus']" att1="state" v1="hidden"/>
+          <dependencies value="No" node="../value[@n='function_modulus']" att1="state" v1="hidden"/>
+          <dependencies value="Yes" node="../value[@n='function_modulus']" att1="state" v1="normal"/>
+        </value>
+        <value n="function_modulus" pn="Function" v="" help="Modulus" state="hidden" show_in_window="1" cal_state="normal"/>
+        <value n="modulus" pn="Modulus" v="1.0" units="N*m" unit_magnitude="F*L" help="Modulus" string_is="double" state="[ConditionParameterState]" show_in_window="1" cal_state="normal"/>
+        <value n="value_direction_X" wn="PointMoment3D _X" pn="Value X" v="0.0" help="Direction" show_in_window="1"/>
+        <value n="value_direction_Y" wn="PointMoment3D _Y" pn="Value Y" v="0.0" help="Direction" show_in_window="1"/>
+        <value n="value_direction_Z" wn="PointMoment3D _Z" pn="Value Z" v="0.0" help="Direction" state="[CheckDimension 3D]" show_in_window="1"/>
+        <value n="Interval" pn="Time interval" v="Total" values="[getIntervals]" help="Moment on points, load vector referred to local axes" state="normal"/>
+      </condition>
+      <condition n="LineLoad2D" pn="Load on lines" ov="line" ovm="" icon="shells16" help="Load on lines, load vector referred to global axes" state="[ConditionState]" update_proc="[OkNewCondition]" check="DirectorVectorNonZero direction" tree_state="close">
+        <value n="ByFunction" pn="by function -&gt; f(x,y,z,t)" v="No" values="Yes,No" actualize_tree="1" state="[ConditionParameterState]" show_in_window="1" cal_state="normal">
+          <dependencies value="No" node="../value[@n='modulus']" att1="state" v1="normal"/>
+          <dependencies value="Yes" node="../value[@n='modulus']" att1="state" v1="hidden"/>
+          <dependencies value="No" node="../value[@n='function_modulus']" att1="state" v1="hidden"/>
+          <dependencies value="Yes" node="../value[@n='function_modulus']" att1="state" v1="normal"/>
+        </value>
+        <value n="function_modulus" pn="Function" v="" help="Modulus" state="hidden" show_in_window="1" cal_state="normal"/>
+        <value n="modulus" pn="Modulus" v="1.0" units="N/m" unit_magnitude="F/L" help="Modulus" string_is="double" state="[ConditionParameterState]" show_in_window="1" cal_state="normal"/>
+        <value n="value_direction_X" wn="LineLoad2D _X" pn="Value X" v="0.0" help="Direction" show_in_window="1"/>
+        <value n="value_direction_Y" wn="LineLoad2D _Y" pn="Value Y" v="0.0" help="Direction" show_in_window="1"/>
+        <value n="value_direction_Z" wn="LineLoad2D _Z" pn="Value Z" v="0.0" help="Direction" state="[CheckDimension 3D]" show_in_window="1"/>
+        <value n="Interval" pn="Time interval" v="Total" values="[getIntervals]" help="Load on lines, load vector referred to global axes" state="normal"/>
+      </condition>
+      <condition n="LineLoad2DAxisym" pn="Load on lines" ov="line" ovm="" icon="shells16" help="Load on lines, load vector referred to global axes" state="[ConditionState]" update_proc="[OkNewCondition]" check="DirectorVectorNonZero direction">
+        <value n="ByFunction" pn="by function -&gt; f(x,y,z,t)" v="No" values="Yes,No" actualize_tree="1" state="[ConditionParameterState]" show_in_window="1" cal_state="normal">
+          <dependencies value="No" node="../value[@n='modulus']" att1="state" v1="normal"/>
+          <dependencies value="Yes" node="../value[@n='modulus']" att1="state" v1="hidden"/>
+          <dependencies value="No" node="../value[@n='function_modulus']" att1="state" v1="hidden"/>
+          <dependencies value="Yes" node="../value[@n='function_modulus']" att1="state" v1="normal"/>
+        </value>
+        <value n="function_modulus" pn="Function" v="" help="Modulus" state="hidden" show_in_window="1" cal_state="normal"/>
+        <value n="modulus" pn="Modulus" v="1.0" units="N/m" unit_magnitude="F/L" help="Modulus" string_is="double" state="[ConditionParameterState]" show_in_window="1" cal_state="normal"/>
+        <value n="value_direction_X" wn="LineLoad2DAxisym _X" pn="Value X" v="0.0" help="Direction" show_in_window="1"/>
+        <value n="value_direction_Y" wn="LineLoad2DAxisym _Y" pn="Value Y" v="0.0" help="Direction" show_in_window="1"/>
+        <value n="value_direction_Z" wn="LineLoad2DAxisym _Z" pn="Value Z" v="0.0" help="Direction" state="[CheckDimension 3D]" show_in_window="1"/>
+        <value n="Interval" pn="Time interval" v="Total" values="[getIntervals]" help="Load on lines, load vector referred to global axes" state="normal"/>
+      </condition>
+      <condition n="SurfaceLoad3D" pn="Load on surfaces" ov="surface" ovm="" icon="shells16" help="Load on surfaces, load vector referred to global axes" state="[ConditionState]" update_proc="[OkNewCondition]" check="DirectorVectorNonZero direction">
+        <value n="ByFunction" pn="by function -&gt; f(x,y,z,t)" v="No" values="Yes,No" actualize_tree="1" state="[ConditionParameterState]" show_in_window="1" cal_state="normal">
+          <dependencies value="No" node="../value[@n='modulus']" att1="state" v1="normal"/>
+          <dependencies value="Yes" node="../value[@n='modulus']" att1="state" v1="hidden"/>
+          <dependencies value="No" node="../value[@n='function_modulus']" att1="state" v1="hidden"/>
+          <dependencies value="Yes" node="../value[@n='function_modulus']" att1="state" v1="normal"/>
+        </value>
+        <value n="function_modulus" pn="Function" v="" help="Modulus" state="hidden" show_in_window="1" cal_state="normal"/>
+        <value n="modulus" pn="Modulus" v="1.0" units="N/m^2" unit_magnitude="F/L^2" help="Modulus" string_is="double" state="[ConditionParameterState]" show_in_window="1" cal_state="normal"/>
+        <value n="value_direction_X" wn="SurfaceLoad3D _X" pn="Value X" v="0.0" help="Direction" show_in_window="1"/>
+        <value n="value_direction_Y" wn="SurfaceLoad3D _Y" pn="Value Y" v="0.0" help="Direction" show_in_window="1"/>
+        <value n="value_direction_Z" wn="SurfaceLoad3D _Z" pn="Value Z" v="0.0" help="Direction" state="[CheckDimension 3D]" show_in_window="1"/>
+        <value n="Interval" pn="Time interval" v="Total" values="[getIntervals]" help="Load on surfaces, load vector referred to global axes" state="normal"/>
+      </condition>
+      <condition n="LinePressure2D" pn="Pressure on lines" ov="line" ovm="" icon="shells16" help="Normal pressure on lines, oriented pointing against the line outer normal" state="[ConditionState]" update_proc="[OkNewCondition]" check="UpdateTree" tree_state="close">
+        <value n="value" pn="Value" v="0.0" units="Pa" unit_magnitude="P" help="Value" string_is="double" state="[ConditionParameterState]" show_in_window="1"/>
+        <value n="Interval" pn="Time interval" v="Total" values="[getIntervals]" help="Normal pressure on lines, oriented pointing against the line outer normal" state="normal"/>
+      </condition>
+      <condition n="LinePressure2DAxisym" pn="Pressure on lines" ov="line" ovm="" icon="shells16" help="Normal pressure on lines, oriented pointing against the line outer normal" state="[ConditionState]" update_proc="[OkNewCondition]" check="UpdateTree">
+        <value n="value" pn="Value" v="0.0" units="Pa" unit_magnitude="P" help="Value" string_is="double" state="[ConditionParameterState]" show_in_window="1"/>
+        <value n="Interval" pn="Time interval" v="Total" values="[getIntervals]" help="Normal pressure on lines, oriented pointing against the line outer normal" state="normal"/>
+      </condition>
+      <condition n="SurfacePressure3D" pn="Pressure on surfaces" ov="surface" ovm="" icon="shells16" help="Normal Pressure on surfaces, oriented pointing against the surface outer normal" state="[ConditionState]" update_proc="[OkNewCondition]" check="UpdateTree">
+        <value n="ByFunction" pn="by function -&gt; f(x,y,z,t)" v="No" values="Yes,No" actualize_tree="1" state="[ConditionParameterState]" show_in_window="1" cal_state="normal">
+          <dependencies value="No" node="../value[@n='value']" att1="state" v1="normal"/>
+          <dependencies value="Yes" node="../value[@n='value']" att1="state" v1="hidden"/>
+          <dependencies value="No" node="../value[@n='function_value']" att1="state" v1="hidden"/>
+          <dependencies value="Yes" node="../value[@n='function_value']" att1="state" v1="normal"/>
+        </value>
+        <value n="function_value" pn="Function" v="" help="Value" state="hidden" show_in_window="1" cal_state="normal"/>
+        <value n="value" pn="Value" v="0.0" units="Pa" unit_magnitude="P" help="Value" string_is="double" state="[ConditionParameterState]" show_in_window="1" cal_state="normal"/>
+        <value n="Interval" pn="Time interval" v="Total" values="[getIntervals]" help="Normal Pressure on surfaces, oriented pointing against the surface outer normal" state="normal"/>
+      </condition>
+    </container>
+    <include n="Processes" active="0" path="apps/Structural/xml/Processes.spd"/>
+    <container n="SolStrat" pn="Solution" un="STStratSection" help="Solution Strategy" icon="solution" open_window="0" tree_state="close">
+      <container n="TimeParameters" pn="Time parameters" un="STTimeParameters" icon="time3" help="Problem time parameters" open_window="0" state="[checkStateByUniqueName STSoluType {Quasi-static Dynamic}]">
+        <value n="StartTime" pn="Start time" v="0.0" help=""/>
+        <value n="EndTime" pn="End time" v="1.0" help=""/>
+        <container n="TimeStep" pn="Time Steps" icon="time1">
+          <blockdata n="delta_time_interval" pn="delta time interval" name="Delta time interval 1" sequence="1" can_delete_last_item="0" icon="time2" editable_name="unique" sequence_type="non_void_disabled">
+            <value n="StartTime" pn="Start time" v="0.0"/>
+            <value n="DeltaTime" pn="Delta time" v="0.1"/>
+          </blockdata>
+        </container>
+      </container>
+      <container n="StratParams" pn="Strategy parameters" un="STStratParams" icon="groupsTreeNew.gif" open_window="0" state="[HideIfUniqueName STSoluType eigen_value]">
+        <value n="echo_level" pn="Echo level" state="[SolStratParamState]" v="0" help="Echo level" values="0,1,2,3" dict="0,0,1,1,2,2,3,3"/>
+        <value n="rayleigh_alpha" pn="Rayleigh alpha" state="[SolStratParamState]" v="0.0" help="Rayleigh alpha"/>
+        <value n="rayleigh_beta" pn="Rayleigh beta" state="[SolStratParamState]" v="0.0" help="Rayleigh beta"/>
+        <value n="line_search" pn="Line search" state="[SolStratParamState]" v="No" help="Switch on/off line search" values="Yes,No"/>
+        <value n="convergence_criterion" pn="Convergence criterion" state="[SolStratParamState]" v="residual_criterion" help="These are the available convergence criteria for the nonlinear iteration" actualize_tree="1" values="residual_criterion,displacement_criterion,and_criterion,or_criterion" dict="residual_criterion,Residual criterion,displacement_criterion,Displacement criterion,and_criterion,And criterion,or_criterion,Or criterion"/>
+        <value n="displacement_relative_tolerance" pn="Displacement relative tolerance" state="[SolStratParamState]" v="1e-4" help="Relative displacement tolerance employed in the nonlinear iteration"/>
+        <value n="displacement_absolute_tolerance" pn="Displacement absolute tolerance" state="[SolStratParamState]" v="1e-9" help="Absolute displacement tolerance employed in the nonlinear iteration"/>
+        <value n="residual_relative_tolerance" pn="Residual relative tolerance" state="[SolStratParamState]" v="1e-4" help="Relative residual tolerance employed in the nonlinear iteration"/>
+        <value n="residual_absolute_tolerance" pn="Residual absolute tolerance" state="[SolStratParamState]" v="1e-9" help="Absolute residual tolerance employed in the nonlinear iteration"/>
+        <value n="max_iteration" pn="Maximum iterations" state="[SolStratParamState]" v="10" help="This number will break the iterative loop when reached"/>
+        <value n="use_old_stiffness_in_first_iteration" pn="Use old stiffness in 1st iteration" state="[HideIfUniqueName STAnalysisType linear]" v="No" help="Use old stiffness in 1st iteration" values="Yes,No"/>
+      </container>
+      <container n="ParallelType" pn="Parallel configuration" un="Parallelization" help="Parallel type" icon="parallel" open_window="1">
+        <value n="ParallelSolutionType" pn="Parallelization" un="ParallelType" v="OpenMP" values="OpenMP,MPI" help="Parallelization type" actualize="1"/>
+        <value n="MPINumberOfProcessors" pn="Number of nodes" v="1" help="Number of processors" state="[getStateFromXPathValue {string(../value[@n='ParallelSolutionType']/@v)} MPI]"/>
+        <value n="OpenMPNumberOfThreads" pn="Number of processors" v="1" help="Number of threads" state="[getStateFromXPathValue {string(../value[@n='ParallelSolutionType']/@v)} OpenMP]"/>
+      </container>
+      <container n="ContactParameters" pn="Contact parameters" un="STContactParams" icon="contact">
+        <value n="contact_type" pn="Contact type" v="FrictionlessComponents" values="FrictionlessComponents,Frictional" dict="FrictionlessComponents,Frictionless,Frictional,Frictional"/>
+      </container>
+      <container help="Linear Solver" n="linear_solver_settings" pn="Linear Solver" un="STimplicitlinear_solver_settings" state="[SolverEntryState]" solstratname="implicit" open_window="0" icon="solver">
+        <value n="Solver" pn="Solver" v="" values="[GetSolversValues]" dict="[GetSolvers]" actualize="1" update_proc="UpdateTree"/>
+        <value n="max_iteration" pn="Max iterations" state="[SolverParamState]" v="1000"/>
+        <value n="tolerance" pn="Tolerance" state="[SolverParamState]" v="1e-6"/>
+        <value n="preconditioner_type" pn="Preconditioner type" state="[SolverParamState]" v="None" values="[GetSolverParameterValues]" dict="[GetSolverParameterDict]"/>
+        <value n="scaling" pn="Scaling" state="[SolverParamState]" v="No" values="Yes,No"/>
+        <value n="max_levels" pn="Max. levels" state="[SolverParamState]" v="3"/>
+        <value n="symmetric" pn="Symmetric" state="[SolverParamState]" v="No" values="Yes,No"/>
+        <value n="reform_preconditioner_at_each_step" pn="Reform preconditioner at each step" state="[SolverParamState]" v="Yes" values="Yes,No"/>
+        <value n="overlap_level" pn="Overlap level" state="[SolverParamState]" v="1"/>
+        <value n="gmres_krylov_space_dimension" pn="Krylov space dimension" state="[SolverParamState]" v="100"/>
+        <value n="provide_coordinates" pn="Provide coordinates" state="[SolverParamState]" v="No" values="Yes,No"/>
+        <value n="smoother_type" pn="Smoother type" state="[SolverParamState]" v="ilu0" values="[GetSolverParameterValues]" dict="[GetSolverParameterDict]"/>
+        <value n="krylov_type" pn="Krylov type" state="[SolverParamState]" v="lgmres" values="[GetSolverParameterValues]" dict="[GetSolverParameterDict]"/>
+        <value n="coarsening_type" pn="Coarsening type" state="[SolverParamState]" v="aggregation" values="[GetSolverParameterValues]" dict="[GetSolverParameterDict]"/>
+        <value n="use_block_matrices_if_possible" pn="Use block matrices if possible" state="[SolverParamState]" v="No" values="Yes,No"/>
+        <value n="number_of_eigenvalues" pn="Number of eigenvalues" state="[SolverParamState]" v="5"/>
+        <value n="echo_level" pn="Echo level" state="[SolverParamState]" v="1" values="[GetSolverParameterValues]" dict="[GetSolverParameterDict]"/>
+      </container>
+      <container help="Eigen Solver" n="eigensolver_settings" pn="Eigen Solver" un="STimpliciteigensolver_settings" state="[SolverEntryState]" solstratname="implicit" open_window="0" icon="solver">
+        <value n="Solver" pn="Solver" v="" values="[GetSolversValues]" dict="[GetSolvers]" actualize="1" update_proc="UpdateTree"/>
+        <value n="max_iteration" pn="Max iterations" state="[SolverParamState]" v="1000"/>
+        <value n="tolerance" pn="Tolerance" state="[SolverParamState]" v="1e-6"/>
+        <value n="preconditioner_type" pn="Preconditioner type" state="[SolverParamState]" v="None" values="[GetSolverParameterValues]" dict="[GetSolverParameterDict]"/>
+        <value n="scaling" pn="Scaling" state="[SolverParamState]" v="No" values="Yes,No"/>
+        <value n="max_levels" pn="Max. levels" state="[SolverParamState]" v="3"/>
+        <value n="symmetric" pn="Symmetric" state="[SolverParamState]" v="No" values="Yes,No"/>
+        <value n="reform_preconditioner_at_each_step" pn="Reform preconditioner at each step" state="[SolverParamState]" v="Yes" values="Yes,No"/>
+        <value n="overlap_level" pn="Overlap level" state="[SolverParamState]" v="1"/>
+        <value n="gmres_krylov_space_dimension" pn="Krylov space dimension" state="[SolverParamState]" v="100"/>
+        <value n="provide_coordinates" pn="Provide coordinates" state="[SolverParamState]" v="No" values="Yes,No"/>
+        <value n="smoother_type" pn="Smoother type" state="[SolverParamState]" v="ilu0" values="[GetSolverParameterValues]" dict="[GetSolverParameterDict]"/>
+        <value n="krylov_type" pn="Krylov type" state="[SolverParamState]" v="lgmres" values="[GetSolverParameterValues]" dict="[GetSolverParameterDict]"/>
+        <value n="coarsening_type" pn="Coarsening type" state="[SolverParamState]" v="aggregation" values="[GetSolverParameterValues]" dict="[GetSolverParameterDict]"/>
+        <value n="use_block_matrices_if_possible" pn="Use block matrices if possible" state="[SolverParamState]" v="No" values="Yes,No"/>
+        <value n="number_of_eigenvalues" pn="Number of eigenvalues" state="[SolverParamState]" v="5"/>
+        <value n="echo_level" pn="Echo level" state="[SolverParamState]" v="1" values="[GetSolverParameterValues]" dict="[GetSolverParameterDict]"/>
+      </container>
+      <container help="Eigen Solver" n="eigensolver_settings" pn="Eigen Solver" un="STEigeneigensolver_settings" state="[SolverEntryState]" solstratname="Eigen" open_window="0" icon="solver">
+        <value n="Solver" pn="Solver" v="" values="[GetSolversValues]" dict="[GetSolvers]" actualize="1" update_proc="UpdateTree"/>
+        <value n="max_iteration" pn="Max iterations" state="[SolverParamState]" v="1000"/>
+        <value n="tolerance" pn="Tolerance" state="[SolverParamState]" v="1e-6"/>
+        <value n="preconditioner_type" pn="Preconditioner type" state="[SolverParamState]" v="None" values="[GetSolverParameterValues]" dict="[GetSolverParameterDict]"/>
+        <value n="scaling" pn="Scaling" state="[SolverParamState]" v="No" values="Yes,No"/>
+        <value n="max_levels" pn="Max. levels" state="[SolverParamState]" v="3"/>
+        <value n="symmetric" pn="Symmetric" state="[SolverParamState]" v="No" values="Yes,No"/>
+        <value n="reform_preconditioner_at_each_step" pn="Reform preconditioner at each step" state="[SolverParamState]" v="Yes" values="Yes,No"/>
+        <value n="overlap_level" pn="Overlap level" state="[SolverParamState]" v="1"/>
+        <value n="gmres_krylov_space_dimension" pn="Krylov space dimension" state="[SolverParamState]" v="100"/>
+        <value n="provide_coordinates" pn="Provide coordinates" state="[SolverParamState]" v="No" values="Yes,No"/>
+        <value n="smoother_type" pn="Smoother type" state="[SolverParamState]" v="ilu0" values="[GetSolverParameterValues]" dict="[GetSolverParameterDict]"/>
+        <value n="krylov_type" pn="Krylov type" state="[SolverParamState]" v="lgmres" values="[GetSolverParameterValues]" dict="[GetSolverParameterDict]"/>
+        <value n="coarsening_type" pn="Coarsening type" state="[SolverParamState]" v="aggregation" values="[GetSolverParameterValues]" dict="[GetSolverParameterDict]"/>
+        <value n="use_block_matrices_if_possible" pn="Use block matrices if possible" state="[SolverParamState]" v="No" values="Yes,No"/>
+        <value n="number_of_eigenvalues" pn="Number of eigenvalues" state="[SolverParamState]" v="5"/>
+        <value n="echo_level" pn="Echo level" state="[SolverParamState]" v="1" values="[GetSolverParameterValues]" dict="[GetSolverParameterDict]"/>
+      </container>
+      <container help="Linear Solver" n="linear_solver_settings" pn="Linear Solver" un="STstaticlinear_solver_settings" state="[SolverEntryState]" solstratname="static" open_window="0" icon="solver">
+        <value n="Solver" pn="Solver" v="" values="[GetSolversValues]" dict="[GetSolvers]" actualize="1" update_proc="UpdateTree"/>
+        <value n="max_iteration" pn="Max iterations" state="[SolverParamState]" v="1000"/>
+        <value n="tolerance" pn="Tolerance" state="[SolverParamState]" v="1e-6"/>
+        <value n="preconditioner_type" pn="Preconditioner type" state="[SolverParamState]" v="None" values="[GetSolverParameterValues]" dict="[GetSolverParameterDict]"/>
+        <value n="scaling" pn="Scaling" state="[SolverParamState]" v="No" values="Yes,No"/>
+        <value n="max_levels" pn="Max. levels" state="[SolverParamState]" v="3"/>
+        <value n="symmetric" pn="Symmetric" state="[SolverParamState]" v="No" values="Yes,No"/>
+        <value n="reform_preconditioner_at_each_step" pn="Reform preconditioner at each step" state="[SolverParamState]" v="Yes" values="Yes,No"/>
+        <value n="overlap_level" pn="Overlap level" state="[SolverParamState]" v="1"/>
+        <value n="gmres_krylov_space_dimension" pn="Krylov space dimension" state="[SolverParamState]" v="100"/>
+        <value n="provide_coordinates" pn="Provide coordinates" state="[SolverParamState]" v="No" values="Yes,No"/>
+        <value n="smoother_type" pn="Smoother type" state="[SolverParamState]" v="ilu0" values="[GetSolverParameterValues]" dict="[GetSolverParameterDict]"/>
+        <value n="krylov_type" pn="Krylov type" state="[SolverParamState]" v="lgmres" values="[GetSolverParameterValues]" dict="[GetSolverParameterDict]"/>
+        <value n="coarsening_type" pn="Coarsening type" state="[SolverParamState]" v="aggregation" values="[GetSolverParameterValues]" dict="[GetSolverParameterDict]"/>
+        <value n="use_block_matrices_if_possible" pn="Use block matrices if possible" state="[SolverParamState]" v="No" values="Yes,No"/>
+        <value n="number_of_eigenvalues" pn="Number of eigenvalues" state="[SolverParamState]" v="5"/>
+        <value n="echo_level" pn="Echo level" state="[SolverParamState]" v="1" values="[GetSolverParameterValues]" dict="[GetSolverParameterDict]"/>
+      </container>
+    </container>
+    <container n="Results" pn="Results" un="STResults" state="normal" open="1" open_window="0" icon="results" tree_state="close">
+      <container n="OnElement" pn="On element" un="ElementResults" icon="triangle" help="Activate the results you want to see in the elements" state="[ActiveIfAnyPartState]" open_window="0">
+        <value n="GREEN_LAGRANGE_STRAIN_TENSOR" pn="Green-Lagrange strain tensor" state="[ElementOutputState]" v="No" values="Yes,No"/>
+        <value n="CAUCHY_STRESS_TENSOR" pn="Cauchy stress tensor" state="[ElementOutputState]" v="No" values="Yes,No"/>
+        <value n="VON_MISES_STRESS" pn="Von Mises stress value" state="[ElementOutputState]" v="Yes" values="Yes,No"/>
+        <value n="ALMANSI_STRAIN_TENSOR" pn="Almansi Strain Tensor" state="[ElementOutputState]" v="No" values="Yes,No"/>
+        <value n="PK2_STRESS_TENSOR" pn="PK2 Stress Tensor" state="[ElementOutputState]" v="No" values="Yes,No"/>
+        <value n="VOLUMETRIC_STRAIN" pn="Volumetric strain" state="[ElementOutputState]" v="Yes" values="Yes,No"/>
+        <value n="CAUCHY_STRESS_VECTOR" pn="Cauchy stress tensor" state="[ElementOutputState]" v="Yes" values="Yes,No"/>
+        <value n="PK2_STRESS_VECTOR" pn="PK2 Stress Tensor" state="[ElementOutputState]" v="No" values="Yes,No"/>
+        <value n="FORCE" pn="Force" state="[ElementOutputState]" v="No" values="Yes,No"/>
+        <value n="MOMENT" pn="Moment" state="[ElementOutputState]" v="No" values="Yes,No"/>
+      </container>
+      <container n="OnNodes" pn="On nodes" un="NodalResults" icon="point3d" help="Activate the results you want to see in the nodes" open_window="1">
+        <value n="PARTITION_INDEX" pn="Partition index" v="Yes" values="Yes,No" help="" state="[checkStateByUniqueName ParallelType MPI]"/>
+        <value n="DISPLACEMENT" pn="Displacement" v="Yes" values="Yes,No" state="[CheckNodalConditionStateStructural DISPLACEMENT]"/>
+        <value n="REACTION" pn="Reaction" v="Yes" values="Yes,No" state="[CheckNodalConditionOutputState DISPLACEMENT]"/>
+        <value n="VOLUMETRIC_STRAIN" pn="Volumetric strain" v="Yes" values="Yes,No" state="[CheckNodalConditionStateStructural VOLUMETRIC_STRAIN]"/>
+        <value n="REACTION_STRAIN" pn="Reaction strain" v="Yes" values="Yes,No" state="[CheckNodalConditionOutputState VOLUMETRIC_STRAIN]"/>
+        <value n="VELOCITY" pn="Velocity" v="Yes" values="Yes,No" state="[CheckNodalConditionStateStructural VELOCITY]"/>
+        <value n="ACCELERATION" pn="Acceleration" v="Yes" values="Yes,No" state="[CheckNodalConditionStateStructural ACCELERATION]"/>
+        <value n="PRESSURE" pn="Pressure" v="Yes" values="Yes,No" state="[CheckNodalConditionStateStructural PRESSURE]"/>
+        <value n="ROTATION" pn="Rotation" v="Yes" values="Yes,No" state="[CheckNodalConditionStateStructural ROTATION]"/>
+        <value n="REACTION_MOMENT" pn="Moment reaction" v="Yes" values="Yes,No" state="[CheckNodalConditionOutputState ROTATION]"/>
+        <value n="ANGULAR_VELOCITY" pn="Angular Velocity" v="Yes" values="Yes,No" state="[CheckNodalConditionStateStructural ANGULAR_VELOCITY]"/>
+        <value n="ANGULAR_ACCELERATION" pn="Angular Acceleration" v="Yes" values="Yes,No" state="[CheckNodalConditionStateStructural ANGULAR_ACCELERATION]"/>
+      </container>
+      <container n="GiDOutput" pn="GiD-Output" un="GiDOutput" state="normal" open="1" open_window="0" icon="results">
+        <value n="EnableGiDOutput" pn="Enable output" v="Yes" values="Yes,No" un="EnableGiDOutput" help="Writing output for GiD or not">
+          <dependencies value="No" node="../container" att1="state" v1="hidden"/>
+          <dependencies value="Yes" node="../container" att1="state" v1="normal"/>
+        </value>
+        <container n="GiDOptions" pn="Options" un="GiDOptions" help="GiD postprocess options" open_window="1" icon="options">
+          <value n="FolderName" pn="Folder name" v="gid_output" help="This folder will be created to store the GiD results"/>
+          <value n="FileLabel" pn="File Label" v="step" values="time,step" dict="time,Time,step,Step" help=""/>
+          <value n="OutputControlType" pn="Units used for output frequency" v="step" values="time,step" dict="time,Time (s),step,Steps" help="" update_proc="spdAux::RequestRefresh">
+            <dependencies node="../value" actualize="1"/>
+          </value>
+          <value n="OutputDeltaTime" pn="Time between outputs (s)" v="1.0" help="Output will be printed in intervals of this time" state="[getStateFromXPathValue {string(../value[@n='OutputControlType']/@v)} time]"/>
+          <value n="OutputDeltaStep" pn="Time steps between outputs" v="1" help="Output will be printed in intervals of this number of steps" state="[getStateFromXPathValue {string(../value[@n='OutputControlType']/@v)} step]"/>
+          <value n="BodyOutput" pn="Body output" v="Yes" values="Yes,No" help="The interior of the volume is printed"/>
+          <value n="NodeOutput" pn="Node output" v="No" values="Yes,No" help="The nodes are printed as a separate layer"/>
+          <value n="SkinOutput" pn="Skin output" v="No" values="Yes,No" help=""/>
+          <value n="GiDPostMode" pn="Result format" v="GiD_PostBinary" values="GiD_PostBinary,GiD_PostAscii,GiD_PostAsciiZipped" dict="GiD_PostBinary,Binary,GiD_PostAscii,Ascii,GiD_PostAsciiZipped,Ascii zipped" help="GiD result file format"/>
+          <value n="GiDWriteMeshFlag" pn="Write deformed mesh" v="WriteDeformed" values="WriteDeformed,WriteUndeformed" dict="WriteDeformed,Write deformed,WriteUndeformed, Write undeformed" help="Write the GiD deformed or undeformed mesh"/>
+          <value n="GiDWriteConditionsFlag" pn="Write conditions" v="WriteConditions" values="WriteConditions,WriteElementsOnly,WriteConditionsOnly" dict="WriteConditions,Write conditions,WriteElementsOnly,Write elements only,WriteConditionsOnly,Write conditions only" help="Write the conditions or only element to the GiD result file"/>
+          <value n="GiDMultiFileFlag" pn="Result file" v="SingleFile" values="SingleFile,MultipleFiles" dict="SingleFile,Single,MultipleFiles,Multiple" help="Write one GiD result file or multiple files"/>
+          <value n="EchoLevel" pn="Verbosity of terminal output" v="1" values="0,1,2,3" help="Verbosity on screen output during process. \n0 -&gt; Low verbosity \n3 -&gt; High verbosity"/>
+          <value n="print_prestress" pn="Print prestress" values="true,false" v="true" state="[checkStateByUniqueName STSoluType formfinding]"/>
+          <value n="print_mdpa" pn="Print modelpart" values="true,false" v="true" state="[checkStateByUniqueName STSoluType formfinding]"/>
+        </container>
+        <container n="CutPlanes" pn="Cut planes" un="CutPlanes" icon="cut" state="normal" open_window="0">
+          <blockdata n="CutPlane" name="CutPlane" editable_name="unique" sequence="1" can_delete_last_item="1" icon="slice">
+            <value n="point" pn="Point" fieldtype="vector" dimensions="3" format="%.6g" v="0.0,0.0,0.0" pick_point="1"/>
+            <value n="normal" pn="Normal" fieldtype="vector" dimensions="3" format="%.6g" v="0.0,0.0,0.0" pick_point="0"/>
+          </blockdata>
+        </container>
+      </container>
+      <container n="VtkOutput" pn="Vtk-Output" un="VtkOutput" state="normal" open="1" open_window="0" icon="results">
+        <value n="EnableVtkOutput" pn="Enable output" v="Yes" values="Yes,No" un="EnableVtkOutput" help="Writing output for Vtk or not"/>
+        <container n="VtkOptions" pn="Options" un="VtkOptions" help="Vtk postprocess options" open_window="1" icon="options" state="[checkStateByUniqueName EnableVtkOutput Yes]">
+          <value n="VtkFileFormat" pn="Result format" v="ascii" values="ascii,binary" dict="ascii,Ascii,binary,Binary" help="Vtk result file format"/>
+          <value n="OutputControlType" pn="Units used for output frequency" v="step" values="time,step" dict="time,Time (s),step,Steps" help="" update_proc="spdAux::RequestRefresh">
+            <dependencies node="../value" actualize="1"/>
+          </value>
+          <value n="OutputDeltaTime" pn="Time between outputs (s)" v="1.0" help="Output will be printed in intervals of this time" state="[getStateFromXPathValue {string(../value[@n='OutputControlType']/@v)} time]"/>
+          <value n="OutputDeltaStep" pn="Time steps between outputs" v="1" help="Output will be printed in intervals of this number of steps" state="[getStateFromXPathValue {string(../value[@n='OutputControlType']/@v)} step]"/>
+        </container>
+      </container>
+    </container>
+    <condition n="GenericModelParts" pn="Add SubModelPart" un="GenericSubmodelPart" ov="point,line,surface,volume" icon="generic" tree_state="close">
+      <value n="WriteNodes" pn="Write nodes" v="True" values="True,False" state="disabled"/>
+      <value n="WriteElements" pn="Write elements" v="False" values="True,False" state="[ShowInWriteMode Entitites]"/>
+      <value n="WriteConditions" pn="Write conditions" v="True" values="True,False" state="[ShowInWriteMode Entitites]"/>
+    </condition>
+    <container n="materials" pn="Materials" un="STMaterials" icon="material16" help="Materials database (2D)" open_window="0" tree_state="close">
+      <blockdata n="material" name="Steel" sequence="1" editable_name="unique" icon="material16" help="Material definition" morebutton="0">
+        <value n="DENSITY" pn="Density" v="7850" units="kg/m^3" unit_magnitude="M/L^3" help="Density of the material" string_is="double" state="" show_in_window="1"/>
+        <value n="YOUNG_MODULUS" pn="Young Modulus" v="206.9e9" units="N/m^2" unit_magnitude="F/L^2" help="Elastic modulus of the material" string_is="double" state="" show_in_window="1"/>
+        <value n="POISSON_RATIO" pn="Poisson Ratio" v="0.29" help="Poisson coefficient of the material" string_is="double" state="" show_in_window="1"/>
+        <value n="YIELD_STRESS" pn="Yield stress" v="5.5e6" units="Pa" unit_magnitude="P" help="Yield stress" string_is="double" state="" show_in_window="1"/>
+        <value n="REFERENCE_HARDENING_MODULUS" pn="Kinematic hardening modulus" v="1.0" help="Kinematic hardening modulus" string_is="double" state="" show_in_window="1"/>
+        <value n="ISOTROPIC_HARDENING_MODULUS" pn="Isotropic hardening modulus" v="0.12924" help="Isotropic hardening modulus" string_is="double" state="" show_in_window="1"/>
+        <value n="INFINITY_HARDENING_MODULUS" pn="Saturation hardening modulus" v="0.0" help="Saturation hardening modulus" string_is="double" state="" show_in_window="1"/>
+        <value n="HARDENING_EXPONENT" pn="Hardening exponent" v="1.0" help="Hardening exponent" string_is="double" state="" show_in_window="1"/>
+      </blockdata>
+      <blockdata n="material" name="Aluminium" sequence="1" editable_name="unique" icon="material16" help="Material definition" morebutton="0">
+        <value n="DENSITY" pn="Density" v="2650" units="kg/m^3" unit_magnitude="M/L^3" help="Mass density of the material" string_is="double" state="" show_in_window="1"/>
+        <value n="YOUNG_MODULUS" pn="Young Modulus" v="69e9" units="N/m^2" unit_magnitude="F/L^2" help="Elastic modulus of the material" string_is="double" state="" show_in_window="1"/>
+        <value n="POISSON_RATIO" pn="Poisson Ratio" v="0.22" help="Poisson coefficient of the material" string_is="double" state="" show_in_window="1"/>
+      </blockdata>
+    </container>
+  </container>
+  <appLink n="FluidLauncher" public="1" pn="Fluid" active="0" appid="FluidLauncher" prefix="FLL"/>
+  <appLink n="Fluid" public="0" pn="Fluid" active="0" appid="Fluid" prefix="FL"/>
+  <appLink n="CompressibleFluid" public="0" pn="Compressible Fluid" active="0" appid="CompressibleFluid" prefix="CF"/>
+  <appLink n="FreeSurface" public="0" pn="FreeSurface" active="0" appid="FreeSurface" prefix="FS"/>
+  <appLink n="EmbeddedFluid" public="0" pn="Embedded fluid" active="0" appid="EmbeddedFluid" prefix="EMBFL"/>
+  <appLink n="PotentialFluid" public="0" pn="Potential fluid" active="0" appid="PotentialFluid" prefix="PTFL"/>
+  <appLink n="Buoyancy" public="0" pn="Buoyancy" active="0" appid="Buoyancy" prefix="Buoyancy_"/>
+  <appLink n="ConjugateHeatTransfer" public="0" pn="Conjugate heat transfer" active="0" appid="ConjugateHeatTransfer" prefix="CHT"/>
+  <appLink n="FSI" public="1" pn="FSI" active="0" appid="FSI" prefix="FSI"/>
+  <appLink n="Dam" public="1" pn="Dam" active="0" appid="Dam" prefix="Dam"/>
+  <appLink n="PfemLauncher" public="1" pn="Pfem" active="0" appid="PfemLauncher" prefix="PFEMLauncher_"/>
+  <appLink n="PfemFluid" public="0" pn="Pfem Fluid" active="0" appid="PfemFluid" prefix="PFEMFLUID_"/>
+  <appLink n="PfemThermic" public="0" pn="Pfem Thermic" active="0" appid="PfemThermic" prefix="PFEMTHERMIC_"/>
+  <appLink n="PfemMelting" public="0" pn="Pfem Melting" active="0" appid="PfemMelting" prefix="PFEMMELTING_"/>
+  <appLink n="StenosisWizard" public="1" pn="Stenosis Wizard" active="0" appid="StenosisWizard" prefix="StenosisWizard" is_tool="1"/>
+  <appLink n="Stent" public="1" pn="Stent" active="0" appid="Stent" prefix="Stent" is_tool="1"/>
+  <appLink n="DEMLauncher" public="1" pn="DEM" active="0" appid="DEMLauncher" prefix="DEMLauncher"/>
+  <appLink n="DEM" public="0" pn="DEM" active="0" appid="DEM" prefix="DEM"/>
+  <appLink n="FluidDEM" public="0" pn="Fluid-DEM" active="0" appid="FluidDEM" prefix="FluidDEM"/>
+  <appLink n="MPM" public="1" pn="MPM" active="0" appid="MPM" prefix="MPM"/>
+  <appLink n="DEMPFEM" public="0" pn="DEM+PFEM" active="0" appid="DEMPFEM" prefix="DEMPFEM"/>
+  <appLink n="CDEM" public="0" pn="Cohesive DEM" active="0" appid="CDEM" prefix="CDEM"/>
+  <appLink n="ShallowWater" public="1" pn="Shallow water" active="0" appid="ShallowWater" prefix="SW"/>
+  <appLink n="MdpaGenerator" public="1" pn="Mdpa Generator" active="0" appid="MdpaGenerator" prefix="MDPAGen_" is_tool="1"/>
+  <appLink n="Examples" public="1" pn="Examples" active="0" appid="Examples" prefix="EXA_" is_tool="1"/>
+  <appLink n="GeoMechanics" public="1" pn="GeoMechanics" active="0" appid="GeoMechanics" prefix="GEOM_"/>
+  <blockdata n="units" pn="Units" icon="units" open_window="0" tree_state="close">
+    <value n="units_mesh" pn="Mesh units" unit_mesh_definition="1"/>
+    <value n="units_system" pn="Units system" units_system_definition="1">
+      <dependencies node="//*[@unit_definition or @unit_mesh_definition='1']" att1="change_units_system" v1="{@v}"/>
+    </value>
+  </blockdata>
+  <procs>
+    <proc n="UpdateParts" args="args">
+			
+				return [spdAux::ProcUpdateParts $domNode $args]
+			
+		</proc>
+    <proc n="OkNewCondition" args="args">
+			
+				return [spdAux::ProcOkNewCondition $domNode $args]
+			
+		</proc>
+    <proc n="GetElementsDict" args="args">
+			
+				return [spdAux::ProcGetElementsDict $domNode $args]
+			
+		</proc>
+    <proc n="GetElementsValues" args="args">
+			
+				return [spdAux::ProcGetElementsValues $domNode $args]
+			
+		</proc>
+    <proc n="GetSolutionStrategies" args="args">
+			
+				return [spdAux::ProcGetSolutionStrategies $domNode $args]
+			
+		</proc>
+    <proc n="GetSchemes" args="args">
+			
+				return [spdAux::ProcGetSchemes $domNode $args]
+			
+		</proc>
+    <proc n="GetConstitutiveLaws" args="args">
+			
+				return [spdAux::ProcGetConstitutiveLaws $domNode $args]
+			
+		</proc>
+    <proc n="GetAllConstitutiveLaws" args="args">
+			
+				return [spdAux::ProcGetAllConstitutiveLaws $domNode $args]
+			
+		</proc>
+    <proc n="GetSolvers" args="args">
+			
+				return [spdAux::ProcGetSolvers $domNode $args]
+			
+		</proc>
+    <proc n="GetSolversValues" args="args">
+			
+				return [spdAux::ProcGetSolversValues $domNode $args]
+			
+		</proc>
+    <proc n="GetSolverParameterValues" args="args">
+			
+				return [spdAux::ProcGetSolverParameterValues $domNode $args]
+			
+		</proc>
+    <proc n="GetSolverParameterDict" args="args">
+			
+				return [spdAux::ProcGetSolverParameterDict $domNode $args]
+			
+		</proc>
+    <proc n="CheckNodalConditionState" args="args">
+			
+				return [spdAux::ProcCheckNodalConditionState $domNode $args]
+			
+		</proc>
+    <proc n="CheckNodalConditionOutputState" args="args">
+			
+				return [spdAux::ProcCheckNodalConditionOutputState $domNode $args]
+			
+		</proc>
+    <proc n="RefreshTree" args="args">
+			
+				spdAux::RequestRefresh
+			
+		</proc>
+    <proc n="checkStateByUniqueName" args="args">
+			
+				return [spdAux::ProccheckStateByUniqueName $domNode $args]
+			
+		</proc>
+    <proc n="SolverParamState" args="args">
+			
+				return [spdAux::ProcSolverParamState $domNode $args]
+			
+		</proc>
+    <proc n="PartParamValue" args="args">
+			
+				return [spdAux::ProcPartParamValue $domNode $args]
+			
+		</proc>
+    <proc n="GetParts" args="args">
+			
+				return [spdAux::ProcGetParts $domNode $args]
+			
+		</proc>
+    <proc n="PartParamState" args="args">
+			
+				return [spdAux::ProcPartParamState $domNode $args]
+			
+		</proc>
+    <proc n="SolverEntryState" args="args">
+			
+				return [spdAux::ProcSolverEntryState $domNode $args]
+			
+		</proc>
+    <proc n="CheckDimension" args="args">
+			
+				return [spdAux::ProcCheckDimension $domNode $args]
+			
+		</proc>
+    <proc n="getStateFromXPathValue" args="args">
+			
+				return [spdAux::ProcgetStateFromXPathValue $domNode $args]
+			
+		</proc>
+    <proc n="getStateFromXPathValueDisabled" args="args">
+			
+				return [spdAux::ProcgetStateFromXPathValueDisabled $domNode $args]
+			
+		</proc>
+    <proc n="get_materials_list_simple" args="args">
+			
+				return [spdAux::ProcGet_materials_list_simple $domNode {*}$args]
+			
+		</proc>
+    <proc n="give_materials_list" args="args">
+			
+				return [spdAux::ProcGetMaterialsList $domNode {*}$args]
+			
+		</proc>
+    <proc n="edit_database_list" args="args">
+			
+			if { $dict eq "" } {
+					foreach node [[$domNode parent] selectNodes value|container/value] {
+						dict set dict [$node @n] [get_domnode_attribute $node v]
+						dict set dict_units [$node @n] [get_domnode_attribute $node units]
+					}
+				}
+				spdAux::ProcEditDatabaseList $domNode $dict $dict_units $boundary_conds $args
+				#return [spdAux::ProcEdit_database_list $domNode {*}$args]
+			
+		</proc>
+    <proc n="CambioMat" args="args">
+			
+				return [spdAux::ProcCambioMat $domNode $args]
+			
+		</proc>
+    <proc n="ConditionState" args="args">
+			
+				return [spdAux::ProcConditionState $domNode $args]
+			
+		</proc>
+    <proc n="ConditionParameterState" args="args">
+			
+				return [spdAux::ProcConditionParameterState $domNode $args]
+			
+		</proc>
+    <proc n="SolStratParamState" args="args">
+			
+				return [spdAux::ProcSolStratParamState $domNode $args]
+			
+		</proc>
+    <proc n="SchemeParamState" args="args">
+			
+				return [spdAux::ProcSchemeParamState $domNode $args]
+			
+		</proc>
+    <proc n="ConstLawOutputState" args="args">
+			
+				return [spdAux::ProcConstLawOutputState $domNode $args]
+			
+		</proc>
+    <proc n="ElementOutputState" args="args">
+			
+				return [spdAux::ProcElementOutputState $domNode $args]
+			
+		</proc>
+    <proc n="ActiveIfAnyPartState" args="args">
+			
+				return [spdAux::ProcActiveIfAnyPartState $domNode $args]
+			
+		</proc>
+    <proc n="ActiveIfRestartAvailable" args="args">
+			
+				return [spdAux::ProcActiveIfRestartAvailable $domNode $args]
+			
+		</proc>
+    <proc n="DisableIfUniqueName" args="args">
+			
+				catch {[get_domnode_attribute $domNode dict]}
+				return [spdAux::ProcDisableIfUniqueName $domNode $args]
+			
+		</proc>
+    <proc n="HideIfUniqueName" args="args">
+			
+				catch {[get_domnode_attribute $domNode dict]}
+				return [spdAux::ProcHideIfUniqueName $domNode $args]
+			
+		</proc>
+    <proc n="CheckGeometry" args="args">
+			
+				return [spdAux::ProcCheckGeometry $domNode $args]
+			
+		</proc>
+    <proc n="UpdateTree" args="args">
+			
+				gid_groups_conds::actualize_conditions_window
+			
+		</proc>
+    <proc n="DirectorVectorNonZero" args="args">
+			
+				return [spdAux::ProcDirectorVectorNonZero $domNode $args]
+			
+		</proc>
+    <proc n="ShowInMode" args="args">
+			
+				return [spdAux::ProcShowInMode $domNode $args]
+			
+		</proc>
+    <proc n="ShowInWriteMode" args="args">
+			
+				return [spdAux::ProcShowInWriteMode $domNode $args]
+			
+		</proc>
+    <proc n="UpdateDictAndReturnState" args="args">
+			
+				set dict [spdAux::ProcGetConstitutiveLaws $domNode]
+				$domNode setAttribute dict $dict
+				set values [split [get_domnode_attribute $domNode values] ","]
+				set value [get_domnode_attribute $domNode v]
+				if {$value ni $values} {set value [lindex $values 0]; $domNode setAttribute v $value}
+				return "normal"
+			
+		</proc>
+    <proc n="getIntervals" args="args">
+			
+				return [spdAux::ProcGetIntervals $domNode $args]
+			
+		</proc>
+    <proc n="getTimeFunctions" args="args">
+			
+				set lista [::spdAux::getTimeFunctions]
+				if {[$domNode @v] eq "" || [$domNode @v] ni $lista} {
+					$domNode setAttribute v [lindex $lista 0]
+				}
+				set res [spdAux::ListToValues $lista]
+				return $res
+			
+		</proc>
+    <proc n="getFields" args="args">
+			
+				set lista [::spdAux::getFields]
+				if {[$domNode @v] eq "" || [$domNode @v] ni $lista} {
+					$domNode setAttribute v [lindex $lista 0]
+				}
+				set res [spdAux::ListToValues $lista]
+				return $res
+			
+		</proc>
+    <proc n="loads_function_time" args="load_name">
+			
+				return [spdAux::chk_loads_function_time $domNode $load_name]
+		
+		</proc>
+    <proc n="FileDict" args="args">
+			
+				return [spdAux::ProcFileDict $domNode $args]
+			
+		</proc>
+    <proc n="AddFile" args="args">
+			
+				if {[get_domnode_attribute $domNode v] eq "- Add new file"} {
+					spdAux::AddFile $domNode
+				}
+			
+		</proc>
+    <proc n="GetFilesValues" args="args">
+			
+				return [spdAux::ProcGetFilesValues $domNode]
+			
+		</proc>
+    <proc n="GetMaterialsList" args="args">
+			
+				spdAux::ProcGetMaterialsList $domNode {*}$args
+			
+		</proc>
+    <proc n="EditDatabaseList" args="args">
+			
+				if { $dict eq "" } {
+					foreach node [[$domNode parent] selectNodes value|container/value] {
+						dict set dict [$node @n] [get_domnode_attribute $node v]
+						dict set dict_units [$node @n] [get_domnode_attribute $node units]
+					}
+				}
+				spdAux::ProcEditDatabaseList $domNode $dict $dict_units $boundary_conds $args
+			
+		</proc>
+    <proc n="GetSolutionStrategiesStructural" args="args">
+	  
+	  return [Structural::xml::ProcGetSolutionStrategiesStructural $domNode $args]
+	  
+	</proc>
+    <proc n="CheckNodalConditionStateStructural" args="args">
+	  
+	  return [Structural::xml::ProcCheckNodalConditionStateStructural $domNode $args]
+	  
+	</proc>
+    <proc n="CheckGeometryStructural" args="args">
+		
+		return [Structural::xml::ProcCheckGeometryStructural $domNode $args]              
+		
+	</proc>
+    <proc n="GetElements" args="args">
+		
+		return [Structural::xml::ProcGetElementsStructural $domNode $args]              
+		
+	</proc>
+  </procs>
+  <container n="files" state="hidden"/>
+  <container n="interval_groups" state="hidden">
+    <interval_group parent="DC_BC" child="DC_BC//Initial"/>
+    <interval_group parent="DC_BC" child="DC_BC//Total"/>
+    <interval_group parent="End_Load" child="End_Load//Total"/>
+  </container>
+  <translations>
+    <translation pn="User defined"/>
+  </translations>
+  <blockdata n="Internal data" state="hidden">
+    <value n="lognoter_file" v=""/>
+    <value n="spd_file" v="/localdata/GiD files/cantilever_beam_paper.gid/cantilever_beam_paper.spd"/>
+  </blockdata>
+  <display_options frame_width="419" is_frame_open="1" view_conditions_search="0" conditions_search_values=""/>
+  <global_preferences>
+    <units>
+      <unit_magnitude_user_sel n="Density" values="kg/m^3"/>
+      <unit_magnitude_user_sel n="P" values="Pa"/>
+      <unit_magnitude_user_sel n="L" values="m"/>
+      <unit_magnitude_user_sel n="Area" values="m^2"/>
+      <unit_magnitude_user_sel n="L^4" values="m^4"/>
+      <unit_magnitude_user_sel n="Energy/L^2" values="J/m^2"/>
+      <unit_magnitude_user_sel n="F/L" values="N/m"/>
+      <unit_magnitude_user_sel n="time" values="time"/>
+      <unit_magnitude_user_sel n="F/L^2" values="N/m^2"/>
+      <unit_magnitude_user_sel n="Angle" values="rad"/>
+      <unit_magnitude_user_sel n="F" values="N"/>
+    </units>
+    <tree_preferences/>
+  </global_preferences>
+</Kratos_data>
+

@@ -11,7 +11,7 @@
         "model_part_name"                    : "Structure",
         "domain_size"                        : 2,
         "echo_level"                         : 0,
-        "analysis_type"                      : "linear",
+        "analysis_type"                      : "non_linear",
         "time_integration_method"         : "implicit",
 		"scheme_type"                     : "newmark",
         "move_mesh_flag" : true,

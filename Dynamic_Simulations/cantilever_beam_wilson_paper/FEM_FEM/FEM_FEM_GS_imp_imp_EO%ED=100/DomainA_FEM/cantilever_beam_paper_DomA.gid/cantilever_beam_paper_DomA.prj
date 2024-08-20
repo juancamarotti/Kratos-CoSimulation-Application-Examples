@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gid version="15.0">
+  <pre>
+    <layer_to_use name="Layer0"/>
+    <groups>
+      <group id="1" name="Shell" color="#608fbfff" allowed_types="#34" allowed_element_types="#7fe"/>
+      <group id="2" name="DC_BC" color="#0000ffff" allowed_types="#77" allowed_element_types="#7fe"/>
+      <group id="3" name="Load_BC" color="#ff00ffff" allowed_types="#72" allowed_element_types="#7fe"/>
+      <group id="4" name="Total" color="#00ffffff" parent_id="2" state="hidden"/>
+      <group id="5" name="Total" color="#a60021ff" parent_id="3" state="hidden"/>
+    </groups>
+    <entities_groups>
+      <entities_group name="lines">
+        <vector name="entity_ids" length="2" type="integer">2 4</vector>
+        <vector name="entity_num_groups" length="2" type="ushort">2 2</vector>
+        <vector name="entity_groups" length="4" type="ushort">3 5 2 4</vector>
+      </entities_group>
+      <entities_group name="surfaces">
+        <vector name="entity_ids" length="1" type="integer">1</vector>
+        <vector name="entity_num_groups" length="1" type="ushort">1</vector>
+        <vector name="entity_groups" length="1" type="ushort">1</vector>
+      </entities_group>
+      <entities_group name="nodes">
+        <vector name="entity_ids" length="361" type="integer">1:361</vector>
+        <vector name="entity_num_groups" length="361" type="ushort">3 3 1 1 3 1x7 3 1x4 3 1 1 3 1x4 3 1x5 3 1x6 3 1x11 3 1x8 3 1x289 3 3 1 3x9</vector>
+        <vector name="entity_groups" length="405" type="ushort">2 4 1 2 4 1x3 2 4 1x8 2 4 1x5 2 4 1x3 2 4 1x5 2 4 1x6 2 4 1x7 2 4 1x12 2 4 1x9 2 4 1x290 3 5 1 3 5 1 1 3 5 1 3 5 1 3 5 1 3 5 1 3 5 1 3 5 1 3 5 1 3 5 1 3 5 1</vector>
+      </entities_group>
+      <entities_group name="elements">
+        <vector name="entity_ids" length="320" type="integer">301:320 1:300</vector>
+        <vector name="entity_num_groups" length="320" type="ushort">2x20 1x300</vector>
+        <vector name="entity_groups" length="340" type="ushort">3 5 3 5 3 5 3 5 3 5 3 5 3 5 3 5 3 5 3 5 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 2 4 1x300</vector>
+      </entities_group>
+    </entities_groups>
+  </pre>
+</gid>

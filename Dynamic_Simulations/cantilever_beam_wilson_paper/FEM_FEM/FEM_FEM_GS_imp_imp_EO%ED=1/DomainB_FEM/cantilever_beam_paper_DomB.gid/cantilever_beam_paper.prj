@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gid version="15.0">
+  <pre>
+    <layer_to_use name="Layer0"/>
+    <groups>
+      <group id="1" name="Shell" color="#ffaaaaff" allowed_types="#34" allowed_element_types="#7fe"/>
+      <group id="2" name="DC_BC" color="#0000ffff" allowed_types="#77" allowed_element_types="#7fe"/>
+      <group id="3" name="Initial" color="#ff00ffff" parent_id="2" state="hidden"/>
+      <group id="4" name="Total" color="#00ffffff" parent_id="2" state="hidden"/>
+      <group id="5" name="End_Load" color="#a60021ff" allowed_types="#71" allowed_element_types="#7fe"/>
+      <group id="6" name="Total" color="#00ff00ff" parent_id="5" state="hidden"/>
+    </groups>
+    <entities_groups>
+      <entities_group name="points">
+        <vector name="entity_ids" length="1" type="integer">3</vector>
+        <vector name="entity_num_groups" length="1" type="ushort">2</vector>
+        <vector name="entity_groups" length="2" type="ushort">5 6</vector>
+      </entities_group>
+      <entities_group name="lines">
+        <vector name="entity_ids" length="1" type="integer">4</vector>
+        <vector name="entity_num_groups" length="1" type="ushort">3</vector>
+        <vector name="entity_groups" length="3" type="ushort">2 3 4</vector>
+      </entities_group>
+      <entities_group name="surfaces">
+        <vector name="entity_ids" length="1" type="integer">1</vector>
+        <vector name="entity_num_groups" length="1" type="ushort">1</vector>
+        <vector name="entity_groups" length="1" type="ushort">1</vector>
+      </entities_group>
+      <entities_group name="nodes">
+        <vector name="entity_ids" length="579" type="integer">1:579</vector>
+        <vector name="entity_num_groups" length="579" type="ushort">3 1x563 4 4 1 4 4 1 4x4 1 1 4x3</vector>
+        <vector name="entity_groups" length="614" type="ushort">5 6 1x564 2 3 4 1 2 3 4 1 1 2 3 4 1 2 3 4 1 1 2 3 4 1 2 3 4 1 2 3 4 1 2 3 4 1x3 2 3 4 1 2 3 4 1 2 3 4 1</vector>
+      </entities_group>
+      <entities_group name="elements">
+        <vector name="entity_ids" length="946" type="integer">937:946 1:936</vector>
+        <vector name="entity_num_groups" length="946" type="ushort">3x10 1x936</vector>
+        <vector name="entity_groups" length="966" type="ushort">2 3 4 2 3 4 2 3 4 2 3 4 2 3 4 2 3 4 2 3 4 2 3 4 2 3 4 2 3 4 1x936</vector>
+      </entities_group>
+    </entities_groups>
+  </pre>
+</gid>
