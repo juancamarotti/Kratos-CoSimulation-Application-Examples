@@ -2129,7 +2129,7 @@ Begin Nodes
 End Nodes
 
 
-Begin Elements SmallDisplacementElement2D4N// GUI group identifier: Shell
+Begin Elements TotalLagrangianElement2D4N// GUI group identifier: Shell
         1          0  2073  2074  2095  2094 
         2          0  2051  2052  2074  2073 
         3          0  2030  2031  2052  2051 

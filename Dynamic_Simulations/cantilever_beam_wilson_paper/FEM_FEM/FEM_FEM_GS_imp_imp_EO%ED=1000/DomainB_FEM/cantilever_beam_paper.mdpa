@@ -2213,7 +2213,7 @@ Begin Nodes
 End Nodes
 
 
-Begin Elements SmallDisplacementElement2D3N// GUI group identifier: Shell
+Begin Elements TotalLagrangianElement2D3N// GUI group identifier: Shell
         1          0   555   554   573 
         2          0   492   489   500 
         3          0   374   363   376 

@@ -22,10 +22,10 @@
         "convergence_criteria": [
       {
         "type": "relative_norm_previous_residual",
-        "solver": "fem_fem_domainB",
-        "data_name": "disp",
-        "abs_tolerance": 1e-6,
-        "rel_tolerance": 1e-6
+        "solver": "fem_fem_domainA",
+        "data_name": "load",
+        "abs_tolerance": 1e-4,
+        "rel_tolerance": 1e-4
       }
     ],
         "data_transfer_operators" : {
