@@ -1,0 +1,117 @@
+{
+    "problem_data" :
+    {
+        "start_time" : 0.0,
+        "end_time" : 1.0,
+        "echo_level" : 0,
+        "print_colors" : true,
+        "parallel_type" : "OpenMP"
+    },
+    "solver_settings" :
+    {
+        "type" : "coupled_solvers.gauss_seidel_strong",
+        "echo_level" : 3,
+        "num_coupling_iterations" : 10,
+        "convergence_accelerators" : [
+            {
+                "type"      : "mvqn",
+                "solver"    : "fem_fem_test_domainA",
+                "data_name" : "load"
+            }
+        ],
+        "convergence_criteria" : [
+        {
+		"type": "relative_norm_previous_residual",
+		"solver": "fem_fem_test_domainA",
+		"data_name": "load",
+		"abs_tolerance": 1e-6,
+		"rel_tolerance": 1e-6 
+    }
+        ],
+        "data_transfer_operators" : {
+            "mapper" : {
+                "type" : "kratos_mapping",
+					"mapper_settings" : {
+					"mapper_type": "radial_basis_function",
+                    "additional_polynomial_degree": 0,
+                    "is_origin_iga"             : true,
+                    "is_destination_iga"             : false,
+					"echo_level" : 4,
+                    "radial_basis_function_type" : "wendland_c2",
+                    "linear_solver_settings": {
+                        "solver_type": "skyline_lu_factorization"
+                    }
+				}
+            }
+        },
+        "coupling_sequence":
+        [
+            {
+                "name": "fem_fem_test_domainA",
+                "input_data_list"  : [],
+                "output_data_list" : []
+            },
+            {
+                "name": "fem_fem_test_domainB",
+                "input_data_list": [
+                    {
+                        "data"           : "disp",
+                        "from_solver"      : "fem_fem_test_domainA",
+                        "from_solver_data" : "disp",
+                        "data_transfer_operator" : "mapper"
+                    }
+                ],
+                "output_data_list": [
+                    {
+                        "data"           : "load",
+                        "to_solver"      : "fem_fem_test_domainA",
+                        "to_solver_data" : "load",
+                        "data_transfer_operator" : "mapper",
+                        "data_transfer_operator_options"  : ["swap_sign","use_transpose"]
+                    }
+                ]
+            }
+        ],
+        "solvers" :
+        {
+            "fem_fem_test_domainB":
+            {
+                "type" : "solver_wrappers.kratos.structural_mechanics_wrapper",
+                "solver_wrapper_settings" : {
+                    "input_file"  : "DomainB_FEM/ProjectParametersB"
+                },
+                "data" : {
+                    "disp" : {
+                        "model_part_name"   : "Structure.DISPLACEMENT_left_edge",
+                        "dimension" : 2,
+                        "variable_name" : "DISPLACEMENT"
+                    },
+                    "load" : {
+                        "model_part_name"   : "Structure.DISPLACEMENT_left_edge",
+                        "dimension" : 2,
+                        "variable_name" : "REACTION"
+                    }
+                }
+            },
+            "fem_fem_test_domainA" :
+            {
+                "type" : "solver_wrappers.kratos.structural_mechanics_wrapper",
+                "solver_wrapper_settings" : {
+                    "input_file"  : "DomainA_IGA/ProjectParametersA"
+                },
+                "data" : {
+                    "disp" : {
+                        "model_part_name"   : "IgaModelPart.Load_4",
+                        "dimension" : 2,
+                        "variable_name" : "DISPLACEMENT"
+                    },
+                    "load" : {
+                        "model_part_name"   : "IgaModelPart.Load_4",
+                        "dimension" : 2,
+                        "variable_name" : "POINT_LOAD"
+                    }
+                }
+            }
+        }
+    }
+}

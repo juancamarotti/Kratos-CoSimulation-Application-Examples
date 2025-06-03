@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gid version="15.0">
+  <pre>
+    <layer_to_use name="Layer0"/>
+    <groups>
+      <group id="1" name="plate" color="#ffaaaaff" allowed_types="#74" allowed_element_types="#7fe"/>
+      <group id="2" name="edges" color="#0000ffff"/>
+    </groups>
+    <entities_groups>
+      <entities_group name="lines">
+        <vector name="entity_ids" length="4" type="integer">1:4</vector>
+        <vector name="entity_num_groups" length="4" type="ushort">1x4</vector>
+        <vector name="entity_groups" length="4" type="ushort">2x4</vector>
+      </entities_group>
+      <entities_group name="surfaces">
+        <vector name="entity_ids" length="1" type="integer">1</vector>
+        <vector name="entity_num_groups" length="1" type="ushort">1</vector>
+        <vector name="entity_groups" length="1" type="ushort">1</vector>
+      </entities_group>
+      <entities_group name="nodes">
+        <vector name="entity_ids" length="482" type="integer">1:482</vector>
+        <vector name="entity_num_groups" length="482" type="ushort">2x3 1 1 2 2 1x3 2 2 1x5 2 2 1x6 2 2 1x8 2 2 1x13 2 2 1x12 2 2 1x14 2 2 1x14 2 2 1x16 2 2 1x18 2 2 1x20 2 2 1x23 2 2 1x25 2 2 1x27 2 2 1x26 2 2 1x29 2 2 1x32 2 2 1x32 2x4 1x3 2 2 1 1 2 2 1x3 2 2 1x4 2 2 1x6 2 2 1x7 2 2 1x6 2 2 1x7 2 2 1x6 2 2 1x6 2 2 1x6 2 2 1x5 2 2 1x5 2 2 1x5 2 2 1 1 2 2 1x3 2 2 1 2x5</vector>
+        <vector name="entity_groups" length="562" type="ushort">2 1 2 1 2 1x3 2 1 2 1x4 2 1 2 1x6 2 1 2 1x7 2 1 2 1x9 2 1 2 1x14 2 1 2 1x13 2 1 2 1x15 2 1 2 1x15 2 1 2 1x17 2 1 2 1x19 2 1 2 1x21 2 1 2 1x24 2 1 2 1x26 2 1 2 1x28 2 1 2 1x27 2 1 2 1x30 2 1 2 1x33 2 1 2 1x33 2 1 2 1 2 1 2 1x4 2 1 2 1x3 2 1 2 1x4 2 1 2 1x5 2 1 2 1x7 2 1 2 1x8 2 1 2 1x7 2 1 2 1x8 2 1 2 1x7 2 1 2 1x7 2 1 2 1x7 2 1 2 1x6 2 1 2 1x6 2 1 2 1x6 2 1 2 1x3 2 1 2 1x4 2 1 2 1 1 2 1 2 1 2 1 2 1 2 1</vector>
+      </entities_group>
+      <entities_group name="elements">
+        <vector name="entity_ids" length="882" type="integer">1:882</vector>
+        <vector name="entity_num_groups" length="882" type="ushort">1x882</vector>
+        <vector name="entity_groups" length="882" type="ushort">1x882</vector>
+      </entities_group>
+      <entities_group name="faces">
+        <vector name="entity_ids" length="77" type="integer">1:3 7 9 225 227 344 346 349 380 381 383 386 388 391 396 412 415 421 475 478 496 497 501 502 505 522 618 622 628 634 643 644 728 781 786 789:792 798 799 801:803 810 813 814 822 824 825 827:829 831 832 835 839:841 844 846 848 849 852 857 858 863 865 869 872 874 876 878 879 881</vector>
+        <vector name="entity_num_faces" length="77" type="uchar">2 1x35 2 1x5 2 1x34</vector>
+        <vector name="entity_faces" length="80" type="uchar">1 3 1 1 2 2 3x6 2 3 3 1 2 2 3x6 2 3 2 3 3 2x5 3 1 2 3 1x5 3 3 1x5 3 1x9 2 1 2 1 1 3 1x6 3 1x7</vector>
+        <vector name="face_num_groups" length="80" type="ushort">1x80</vector>
+        <vector name="face_groups" length="80" type="ushort">2x80</vector>
+      </entities_group>
+    </entities_groups>
+  </pre>
+</gid>
