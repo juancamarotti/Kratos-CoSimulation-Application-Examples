@@ -25,8 +25,8 @@
     "convergence_criterion": "residual_criterion",
     "displacement_relative_tolerance": 0.0001,
     "displacement_absolute_tolerance": 1E-09,
-     "residual_relative_tolerance"        : 1e-6,
-    "residual_absolute_tolerance"        : 1e-6,
+     "residual_relative_tolerance"        : 1e-4,
+    "residual_absolute_tolerance"        : 1e-4,
     "max_iteration": 100,
     "solver_type": "dynamic",
     "linear_solver_settings": {
