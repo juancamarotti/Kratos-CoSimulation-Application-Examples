@@ -1,0 +1,132 @@
+{
+    "modelers": [
+        {
+            "Parameters": {
+                "cad_model_part_name": "IgaBackgroundMeshModelPart",
+                "echo_level": 0,
+                "geometry_file_name": "geometry_background.cad.json",
+                "output_geometry_file_name": "laplacian_iga_kratos_0.georhino.json"
+            },
+            "modeler_name": "CadIoModeler"
+        },
+        {
+            "Parameters": {
+                "analysis_model_part_name": "IgaBackgroundMeshModelPart",
+                "cad_model_part_name": "IgaBackgroundMeshModelPart",
+                "echo_level": 1,
+                "physics_file_name": "physics.iga.json"
+            },
+            "modeler_name": "IgaModeler"
+        },
+        {
+            "Parameters": {
+                "echo_level": 0,
+                "physics_file_name": "refinements.iga.json"
+            },
+            "modeler_name": "RefinementModeler"
+        }
+    ],
+    "output_processes": {
+        "output_process_list": []
+    },
+    "problem_data": {
+        "echo_level": 2,
+        "end_time": 10.1,
+        "parallel_type": "OpenMP",
+        "problem_name": "plate_eigenvalue_analysis",
+        "start_time": 10.0
+    },
+    "processes": {
+        "additional_processes": [],
+        "constraints_process_list": [],
+        "dirichlet_process_list": [
+            {
+                "Parameters": {
+                    "entities": [
+                        "conditions"
+                    ],
+                    "help": "This process assigns a given value (vector) to the conditions belonging a certain submodelpart",
+                    "interval": [
+                        0,
+                        1e+30
+                    ],
+                    "local_axes": {},
+                    "model_part_name": "IgaBackgroundMeshModelPart.Support_1",
+                    "value": [
+                        0,
+                        0,
+                        0
+                    ],
+                    "variable_name": "DISPLACEMENT"
+                },
+                "kratos_module": "KratosMultiphysics",
+                "python_module": "assign_vector_variable_to_conditions_process"
+            }
+        ],
+        "neumann_process_list": []
+    },
+    "solver_settings": {
+        "analysis_type": "non_linear",
+        "auxiliary_dofs_list": [],
+        "auxiliary_reaction_list": [],
+        "auxiliary_variables_list": [],
+        "buffer_size": 2,
+        "builder_and_solver_settings": {
+            "advanced_settings": {
+                "block_builder": true,
+                "diagonal_values_for_dirichlet_dofs": "use_max_diagonal",
+                "echo_level": 1,
+                "name": "block_builder_and_solver",
+                "silent_warnings": false
+            },
+            "type": "block"
+        },
+        "clear_storage": false,
+        "compute_modal_decomposition": false,
+        "compute_reactions": true,
+        "computing_sub_model_part_name": "",
+        "convergence_criterion": "residual_criterion",
+        "displacement_absolute_tolerance": 1e-09,
+        "displacement_control": false,
+        "displacement_relative_tolerance": 0.0001,
+        "domain_size": 3,
+        "echo_level": 1,
+        "eigensolver_diagonal_values": {},
+        "eigensolver_settings": {
+            "echo_level": 1,
+            "max_iteration": 1000,
+            "normalize_eigenvectors": false,
+            "number_of_eigenvalues": 5,
+            "shift": 0.0,
+            "solver_type": "spectra_sym_g_eigs_shift"
+        },
+        "material_import_settings": {
+            "materials_filename": "materials.json"
+        },
+        "max_iteration": 10,
+        "model_import_settings": {
+            "input_type": "use_input_model_part"
+        },
+        "model_part_name": "IgaBackgroundMeshModelPart",
+        "move_mesh_flag": true,
+        "multi_point_constraints_used": true,
+        "pressure_dofs": false,
+        "reform_dofs_at_each_step": false,
+        "residual_absolute_tolerance": 1e-10,
+        "residual_relative_tolerance": 1e-08,
+        "rotation_dofs": false,
+        "scheme_type": "dynamic",
+        "solver_type": "eigen_value",
+        "solving_strategy_settings": {
+            "advanced_settings": {},
+            "type": "newton_raphson"
+        },
+        "strain_dofs": false,
+        "time_stepping": {
+            "time_step": 10.0
+        },
+        "use_old_stiffness_in_first_iteration": false,
+        "use_orthogonal_subscales": false,
+        "volumetric_strain_dofs": false
+    }
+}

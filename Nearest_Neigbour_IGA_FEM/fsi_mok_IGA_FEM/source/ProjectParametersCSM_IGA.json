@@ -4,7 +4,7 @@
     "echo_level": 0,
     "parallel_type": "OpenMP",
     "start_time": 0,
-    "end_time": 15.0
+    "end_time": 1.0
   },
   "solver_settings": {
     "model_part_name": "IgaModelPart",
@@ -30,7 +30,7 @@
     "max_iteration": 30,
     "solver_type": "dynamic",
     "linear_solver_settings": {
-      "solver_type": "LinearSolversApplication.sparse_qr"
+      "solver_type": "LinearSolversApplication.sparse_lu"
     },
     "time_integration_method": "implicit",
     "scheme_type": "newmark",

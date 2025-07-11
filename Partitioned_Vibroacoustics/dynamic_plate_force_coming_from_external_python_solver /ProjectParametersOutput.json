@@ -1,0 +1,181 @@
+{
+    "modelers": [
+        {
+            "Parameters": {
+                "cad_model_part_name": "IgaBackgroundMeshModelPart",
+                "echo_level": 0,
+                "geometry_file_name": "IGA_Structure/geometry_background.cad.json",
+                "output_geometry_file_name": "laplacian_iga_kratos_0.georhino.json"
+            },
+            "modeler_name": "CadIoModeler"
+        },
+        {
+            "Parameters": {
+                "analysis_model_part_name": "IgaBackgroundMeshModelPart",
+                "cad_model_part_name": "IgaBackgroundMeshModelPart",
+                "echo_level": 1,
+                "physics_file_name": "IGA_Structure/physics.iga.json"
+            },
+            "modeler_name": "IgaModeler"
+        },
+        {
+            "Parameters": {
+                "echo_level": 0,
+                "physics_file_name": "IGA_Structure/refinements.iga.json"
+            },
+            "modeler_name": "RefinementModeler"
+        }
+    ],
+    "output_processes": {
+        "output_process_list": [
+            {
+                "Parameters": {
+                    "file_label": "step",
+                    "integration_point_results": [],
+                    "model_part_name": "IgaBackgroundMeshModelPart",
+                    "nodal_results": [
+                        "DISPLACEMENT_X",
+                        "DISPLACEMENT_Y",
+                        "DISPLACEMENT_Z"
+                    ],
+                    "output_control_type": "time",
+                    "output_file_name": "harmonic_analysis.post.res",
+                    "output_frequency": 0.0
+                },
+                "kratos_module": "IgaApplication",
+                "python_module": "iga_output_process"
+            }
+        ]
+    },
+    "problem_data": {
+        "echo_level": 2,
+        "end_time": 30.0,
+        "parallel_type": "OpenMP",
+        "problem_name": "embedded_plate",
+        "start_time": 10.0
+    },
+    "processes": {
+        "additional_processes": [],
+        "constraints_process_list": [],
+        "dirichlet_process_list": [
+            {
+                "Parameters": {
+                    "entities": [
+                        "conditions"
+                    ],
+                    "help": "This process assigns a given value (vector) to the conditions belonging a certain submodelpart",
+                    "interval": [
+                        0,
+                        1e+30
+                    ],
+                    "local_axes": {},
+                    "model_part_name": "IgaBackgroundMeshModelPart.Support_1",
+                    "value": [
+                        0,
+                        0,
+                        0
+                    ],
+                    "variable_name": "DISPLACEMENT"
+                },
+                "kratos_module": "KratosMultiphysics",
+                "python_module": "assign_vector_variable_to_conditions_process"
+            }
+        ],
+        "list_other_processes": [
+            {
+                "Parameters": {
+                    "file_settings": {
+                        "file_access_mode": "read_only",
+                        "file_name": "IGA_Structure/eigen_results.h5"
+                    },
+                    "model_part_name": "IgaBackgroundMeshModelPart",
+                    "prefix": "/ModelData"
+                },
+                "help": "",
+                "kratos_module": "StructuralMechanicsApplication",
+                "process_name": "",
+                "python_module": "eigen_solution_input_process"
+            }
+        ],
+        "neumann_process_list": [
+            {
+                "Parameters": {
+                    "entity_name": "PointLoadCondition3D1N",
+                    "entity_type": "condition",
+                    "initialize_communicators": false,
+                    "kratos_application": "",
+                    "model_part_name": "IgaBackgroundMeshModelPart",
+                    "new_sub_model_part_name": "PLEASE_SPECIFY",
+                    "properties_id": 0,
+                    "sub_model_part_names": []
+                },
+                "kratos_module": "KratosMultiphysics.CoSimulationApplication.processes",
+                "python_module": "create_point_based_entites_process"
+            }
+        ]
+    },
+    "solver_settings": {
+        "analysis_type": "linear",
+        "auxiliary_dofs_list": [],
+        "auxiliary_reaction_list": [],
+        "auxiliary_variables_list": [],
+        "buffer_size": 2,
+        "builder_and_solver_settings": {
+            "advanced_settings": {
+                "block_builder": true,
+                "diagonal_values_for_dirichlet_dofs": "use_max_diagonal",
+                "echo_level": 1,
+                "name": "block_builder_and_solver",
+                "silent_warnings": false
+            },
+            "type": "block"
+        },
+        "clear_storage": false,
+        "compute_reactions": true,
+        "computing_sub_model_part_name": "",
+        "convergence_criterion": "residual_criterion",
+        "displacement_absolute_tolerance": 1e-10,
+        "displacement_control": false,
+        "displacement_relative_tolerance": 1e-08,
+        "domain_size": 3,
+        "echo_level": 1,
+        "harmonic_analysis_settings": {
+            "use_effective_material_damping": false
+        },
+        "linear_solver_settings": {
+            "max_iteration": 500,
+            "scaling": false,
+            "solver_type": "LinearSolversApplication.sparse_lu",
+            "tolerance": 1e-09,
+            "verbosity": 1
+        },
+        "material_import_settings": {
+            "materials_filename": "IGA_Structure/materials.json"
+        },
+        "max_iteration": 100,
+        "model_import_settings": {
+            "input_type": "use_input_model_part"
+        },
+        "model_part_name": "IgaBackgroundMeshModelPart",
+        "move_mesh_flag": true,
+        "multi_point_constraints_used": true,
+        "pressure_dofs": false,
+        "reform_dofs_at_each_step": false,
+        "residual_absolute_tolerance": 1e-10,
+        "residual_relative_tolerance": 1e-08,
+        "rotation_dofs": false,
+        "scheme_type": "dynamic",
+        "solver_type": "harmonic_analysis",
+        "solving_strategy_settings": {
+            "advanced_settings": {},
+            "type": "newton_raphson"
+        },
+        "strain_dofs": false,
+        "time_stepping": {
+            "time_step": 1.0
+        },
+        "use_old_stiffness_in_first_iteration": false,
+        "use_orthogonal_subscales": false,
+        "volumetric_strain_dofs": false
+    }
+}

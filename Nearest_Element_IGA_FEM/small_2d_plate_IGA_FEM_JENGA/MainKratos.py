@@ -8,7 +8,7 @@ from CoSimulationAnalysis to do modifications
 Check also "kratos/python_scripts/analysis_stage.py" for available methods that can be overridden
 """
 
-parameter_file_name = "cosim_iga_fem_small_2d_plate_nn_parameters.json"
+parameter_file_name = "cosim_iga_fem_small_2d_plate_nearest_element_parameters.json"
 with open(parameter_file_name,'r') as parameter_file:
     parameters = KM.Parameters(parameter_file.read())
     

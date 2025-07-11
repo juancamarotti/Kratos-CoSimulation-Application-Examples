@@ -24,19 +24,18 @@
                 "type"          : "relative_norm_previous_residual",
                 "solver"        : "structure",
                 "data_name"     : "load",
-                "abs_tolerance" : 1e-4,
-                "rel_tolerance" : 1e-4
+                "abs_tolerance" : 1e-6,
+                "rel_tolerance" : 1e-6
             }
         ],
         "data_transfer_operators" : {
             "mapper" : {
                 "type" : "kratos_mapping",
 					"mapper_settings" : {
-					    "mapper_type": "nearest_neighbor_iga",
+					    "mapper_type": "nearest_element",
                         "search_settings" : {
-                            "search_radius": 0.25
-                        },
-                        "is_origin_iga" : true
+                            // "search_radius": 0.25
+                        }
 				    }
             }
         },

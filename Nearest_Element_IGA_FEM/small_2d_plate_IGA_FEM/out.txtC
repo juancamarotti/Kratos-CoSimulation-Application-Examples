@@ -1,0 +1,414 @@
+ |  /           |                  
+ ' /   __| _` | __|  _ \   __|    
+ . \  |   (   | |   (   |\__ \  
+_|\_\_|  \__,_|\__|\___/ ____/
+           Multi-Physics 10.2."1"-mapping/nearest_element_iga-08955c7f67-Release-x86_64
+           Compiled for GNU/Linux and Python3.12 with GCC-13.3
+Compiled with threading support. Threading support with OpenMP.
+Maximum number of threads: 1.
+Importing    KratosIgaApplication 
+    KRATOS  _____ _____
+           |_   _/ ____|   /\
+             | || |  __   /  \
+             | || | |_ | / /\ \
+            _| || |__| |/ ____ \
+           |_____\_____/_/    \_\
+Initializing KratosIgaApplication...
+Importing    KratosCoSimulationApplication 
+    KRATOS  / ___|___/ ___|(_)_ __ ___  _   _| | __ _| |_(_) ___  _ __
+           | |   / _ \___ \| | '_ ` _ \| | | | |/ _` | __| |/ _ \| '_ \
+           | |__| (_) |__) | | | | | | | |_| | | (_| | |_| | (_) | | | |
+            \____\___/____/|_|_| |_| |_|\__,_|_|\__,_|\__|_|\___/|_| |_|
+Initializing KratosCoSimulationApplication...
+Importing    KratosStructuralMechanicsApplication 
+    KRATOS   ___|  |                   |                   |
+           \___ \  __|  __| |   |  __| __| |   |  __| _` | |
+                 | |   |    |   | (    |   |   | |   (   | |
+           _____/ \__|_|   \__,_|\___|\__|\__,_|_|  \__,_|_| MECHANICS
+Initializing KratosStructuralMechanicsApplication...
+Importing    KratosConstitutiveLawsApplication 
+Initializing KratosConstitutiveLawsApplication...
+[WARNING] DEPRECATION-Warning; MechanicalSolver: Using "block_builder", please move it to "builder_and_solver_settings" as "use_block_builder" 
+[WARNING] DEPRECATION-Warning; MechanicalSolver: Using "line_search", please move it to "solving_strategy_settings" as "type" 
+[WARNING] DEPRECATION-Warning; MechanicalSolver: Using deprecated builder and solver settings. Provide 'type' and 'advanced_settings' in the new system. 
+::[MechanicalSolver]:: : Construction finished 
+::[StaticMechanicalSolver]:: : Construction finished 
+::[MechanicalSolver]:: : Variables ADDED 
+[WARNING] DEPRECATION-Warning; MechanicalSolver: Using "line_search", please move it to "solving_strategy_settings" as "type" 
+::[MechanicalSolver]:: : Construction finished 
+::[StaticMechanicalSolver]:: : Construction finished 
+::[MechanicalSolver]:: : Variables ADDED 
+[WARNING] DEPRECATION-Warning; KratosModelerFactory: please use "KratosModelParametersFactory" instead. 
+::[KSM Simulation]:: : Modeler:  CadIoModeler
+  Setup Geometry Model started. 
+::[KSM Simulation]:: : Modeler:  CadIoModeler
+  Setup Geometry Model finished. 
+::[KSM Simulation]:: : Modeler:  RefinementModeler
+  Setup Geometry Model started. 
+::[KSM Simulation]:: : Modeler:  RefinementModeler
+  Setup Geometry Model finished. 
+::[KSM Simulation]:: : Modeler:  IgaModeler
+  Setup Geometry Model started. 
+::[KSM Simulation]:: : Modeler:  IgaModeler
+  Setup Geometry Model finished. 
+::[KSM Simulation]:: : Modeler:  CadIoModeler
+  Prepare Geometry Model started. 
+::[KSM Simulation]:: : Modeler:  CadIoModeler
+  Prepare Geometry Model finished. 
+::[KSM Simulation]:: : Modeler:  RefinementModeler
+  Prepare Geometry Model started. 
+::[KSM Simulation]:: : Modeler:  RefinementModeler
+  Prepare Geometry Model finished. 
+::[KSM Simulation]:: : Modeler:  IgaModeler
+  Prepare Geometry Model started. 
+::[KSM Simulation]:: : Modeler:  IgaModeler
+  Prepare Geometry Model finished. 
+::[KSM Simulation]:: : Modeler:  CadIoModeler
+  Setup ModelPart started. 
+::[KSM Simulation]:: : Modeler:  CadIoModeler
+  Setup ModelPart finished. 
+::[KSM Simulation]:: : Modeler:  RefinementModeler
+  Setup ModelPart started. 
+::[KSM Simulation]:: : Modeler:  RefinementModeler
+  Setup ModelPart finished. 
+::[KSM Simulation]:: : Modeler:  IgaModeler
+  Setup ModelPart started. 
+::[KSM Simulation]:: : Modeler:  IgaModeler
+  Setup ModelPart finished. 
+::[PythonSolver]::: Reading model part. 
+::[PythonSolver]::: Using already imported model part - no reading necessary. 
+ModelPart: -IgaModelPart- model part
+    Buffer Size : 1
+    Number of tables : 0
+    Number of sub model parts : 4
+    Current solution step index : 0
+    DOMAIN_SIZE : 1
+    OSS_SWITCH : 0
+    IS_RESTARTED : 0
+
+    Number of Geometries  : 5
+    Mesh 0 :
+        Number of Nodes       : 16
+        Number of Properties  : 0
+        Number of Elements    : 36
+        Number of Conditions  : 30
+        Number of Constraints : 0
+
+    -Load_4- model part
+        Number of tables : 0
+        Number of sub model parts : 0
+
+        Number of Geometries  : 0
+        Mesh 0 :
+            Number of Nodes       : 12
+            Number of Properties  : 0
+            Number of Elements    : 0
+            Number of Conditions  : 10
+            Number of Constraints : 0
+    -Point_Load_Sub_Model_Part- model part
+        Number of tables : 0
+        Number of sub model parts : 0
+
+        Number of Geometries  : 0
+        Mesh 0 :
+            Number of Nodes       : 12
+            Number of Properties  : 0
+            Number of Elements    : 0
+            Number of Conditions  : 10
+            Number of Constraints : 0
+    -StructuralAnalysis_2- model part
+        Number of tables : 0
+        Number of sub model parts : 0
+
+        Number of Geometries  : 0
+        Mesh 0 :
+            Number of Nodes       : 16
+            Number of Properties  : 0
+            Number of Elements    : 36
+            Number of Conditions  : 0
+            Number of Constraints : 0
+    -Support_3- model part
+        Number of tables : 0
+        Number of sub model parts : 0
+
+        Number of Geometries  : 0
+        Mesh 0 :
+            Number of Nodes       : 12
+            Number of Properties  : 0
+            Number of Elements    : 0
+            Number of Conditions  : 10
+            Number of Constraints : 0
+ 
+::[PythonSolver]:: : Finished reading model part. 
+Read materials: Started
+Read materials: No constitutive law defined for material ID: 3
+Read materials: Finished
+::[MechanicalSolver]:: : Constitutive law was successfully imported. 
+::[MechanicalSolver]::: ModelPart prepared for Solver. 
+::[MechanicalSolver]:: : DOF's ADDED 
+[WARNING] ModelPart: Property 0 does not exist!. Creating and adding new property. Please use CreateNewProperties() instead
+::[MechanicalSolver]:: : Initializing ... 
+::[Mechanical Solver]:: : CONVERGENCE CRITERION : residual_criterion 
+Importing    LinearSolversApplication 
+    Kratos  _     _                       ____        _
+           | |   (_)_ __   ___  __ _ _ __/ ___|  ___ | |_   _____ _ __ ___
+           | |   | | '_ \ / _ \/ _` | '__\___ \ / _ \| \ \ / / _ \ '__/ __|
+           | |___| | | | |  __/ (_| | |   ___) | (_) | |\ V /  __/ |  \__ \
+           |_____|_|_| |_|\___|\__,_|_|  |____/ \___/|_| \_/ \___|_|  |___/
+Initializing KratosLinearSolversApplication...
+Using Intel MKL version 2024.0.2 build 20240722
+MKL processor: Intel(R) Advanced Vector Extensions 2 (Intel(R) AVX-2) with support of Intel(R) Deep Learning Boost (Intel(R) DL Boost)
+Linear-Solver-Factory: Constructing a regular (non-complex) linear-solver 
+::[MechanicalSolver]:: : Finished initialization. 
+::[KSM Simulation]:: : Analysis -START-  
+[WARNING] [1;1mCouplingInterfaceData[0m: "DOMAIN_SIZE" (1) of ModelPart "IgaModelPart.Load_4" does not match dimension (2) 
+[WARNING] [1;1mCouplingInterfaceData[0m: "DOMAIN_SIZE" (1) of ModelPart "IgaModelPart.Load_4" does not match dimension (2) 
+::[PythonSolver]::: Reading model part. 
+SingleImportModelPart: Reading model part from file: "/home/camarotti/Simulations/Kratos-CoSimulation-Application-Examples/Nearest_Element_IGA_FEM/small_2d_plate_IGA_FEM/DomainB_FEM/fem_fem_test_domainB".mdpa
+ModelPartIO:   [Reading Nodes    : 861 nodes read]
+ModelPartIO:   [Reading Elements : 800 elements read] [Type: SmallDisplacementElement2D4N]
+ModelPartIO:   [Reading Conditions : 20 conditions read] [Type: SmallDisplacementLineLoadCondition2D2N]
+ModelPartIO:   [Total Lines Read : 3437]
+SingleImportModelPart: Finished reading model part from mdpa file.
+ModelPart: -Structure- model part
+    Buffer Size : 1
+    Number of tables : 0
+    Number of sub model parts : 3
+    Current solution step index : 0
+    DOMAIN_SIZE : 2
+    OSS_SWITCH : 0
+    IS_RESTARTED : 0
+
+    Number of Geometries  : 0
+    Mesh 0 :
+        Number of Nodes       : 861
+        Number of Properties  : 1
+        Number of Elements    : 800
+        Number of Conditions  : 20
+        Number of Constraints : 0
+
+    -DISPLACEMENT_left_edge- model part
+        Number of tables : 0
+        Number of sub model parts : 0
+
+        Number of Geometries  : 0
+        Mesh 0 :
+            Number of Nodes       : 21
+            Number of Properties  : 0
+            Number of Elements    : 0
+            Number of Conditions  : 0
+            Number of Constraints : 0
+    -LineLoad2D_right_edge- model part
+        Number of tables : 0
+        Number of sub model parts : 0
+
+        Number of Geometries  : 0
+        Mesh 0 :
+            Number of Nodes       : 21
+            Number of Properties  : 0
+            Number of Elements    : 0
+            Number of Conditions  : 20
+            Number of Constraints : 0
+    -Parts_plate- model part
+        Number of tables : 0
+        Number of sub model parts : 0
+
+        Number of Geometries  : 0
+        Mesh 0 :
+            Number of Nodes       : 861
+            Number of Properties  : 0
+            Number of Elements    : 800
+            Number of Conditions  : 0
+            Number of Constraints : 0
+ 
+::[PythonSolver]:: : Finished reading model part. 
+Read materials: Started
+Read materials: Finished
+::[MechanicalSolver]:: : Constitutive law was successfully imported. 
+::[MechanicalSolver]::: ModelPart prepared for Solver. 
+::[MechanicalSolver]:: : DOF's ADDED 
+[WARNING] VtkOutput: Modelpart "Structure" has both elements and conditions.
+Giving precedence to elements and writing only elements!
+::[MechanicalSolver]:: : Initializing ... 
+Linear-Solver-Factory: Constructing a regular (non-complex) linear-solver 
+::[MechanicalSolver]:: : Finished initialization. 
+::[KSM Simulation]:: : Analysis -START-  
+Importing    KratosMappingApplication 
+    KRATOS ______  ___                      _____
+           ___   |/  /_____ ___________________(_)_____________ _
+           __  /|_/ /_  __ `/__  __ \__  __ \_  /__  __ \_  __ `/
+           _  /  / / / /_/ /__  /_/ /_  /_/ /  / _  / / /  /_/ /
+           /_/  /_/  \__,_/ _  .___/_  .___//_/  /_/ /_/_\__, /
+                            /_/     /_/                 /____/
+Initializing KratosMappingApplication...
+[WARNING] [1;1mCoSimulationSolverWrapper[0m: your solver does not implement Check!!! 
+[WARNING] [1;1mCoSimulationSolverWrapper[0m: your solver does not implement Check!!! 
+[WARNING] [1;1mCoSimulationSolverWrapper[0m: your solver does not implement Check!!! 
+[WARNING] [1;1mConvergence Accelerator[0m: The convergence accelerators do not yet implement Check! 
+[1;1m[1;1m
+time=1.1 | step=1[0m[0m:  
+::[KSM Simulation]:: : STEP:  1 
+::[KSM Simulation]:: : TIME:  1.1 
+ResidualBasedNewtonRaphsonStrategy: Setup Dofs Time: 7.8894e-05 [s]
+ResidualBasedNewtonRaphsonStrategy: Setup System Time: 1.949e-06 [s]
+ResidualBasedNewtonRaphsonStrategy: System Matrix Resize Time: 0.000169641 [s]
+ResidualBasedNewtonRaphsonStrategy: System Construction Time: 0.000256409 [s]
+::[KSM Simulation]:: : STEP:  1 
+::[KSM Simulation]:: : TIME:  1.1 
+SolvingStrategy:  MESH MOVED 
+[1;1mGaussSeidelStrongCoupledSolver[0m: [1;36mCoupling iteration:[0m [1;1m1 / 20[0m 
+[1;1mGaussSeidelStrongCoupledSolver[0m: Start Synchronizing Input for solver "[1;34mfem_fem_test_domainA[0m" 
+[1;1mGaussSeidelStrongCoupledSolver[0m: End Synchronizing Input for solver "[1;34mfem_fem_test_domainA[0m" 
+ResidualBasedBlockBuilderAndSolver: Build time: 0.000543878 [s]
+[WARNING] ResidualBasedBlockBuilderAndSolver: ATTENTION! setting the RHS to zero!
+ResidualBasedBlockBuilderAndSolver: System solve time: 3.884e-06 [s]
+SolvingStrategy:  MESH MOVED 
+RESIDUAL CRITERION:  :: [ Obtained ratio = 0; Expected ratio = 0.0001; Absolute norm = 0; Expected norm =  1e-09]
+RESIDUAL CRITERION: Convergence is achieved
+ResidualBasedNewtonRaphsonStrategy: Convergence achieved after 1 / 100 iterations
+[1;1mGaussSeidelStrongCoupledSolver[0m: Start Synchronizing Output for solver "[1;34mfem_fem_test_domainA[0m" 
+[1;1mGaussSeidelStrongCoupledSolver[0m: End Synchronizing Output for solver "[1;34mfem_fem_test_domainA[0m" 
+[1;1mGaussSeidelStrongCoupledSolver[0m: Start Synchronizing Input for solver "[1;34mfem_fem_test_domainB[0m" 
+[1;1m  Data[0m: "[1;35mdisp[0m" | from solver: "[1;34mfem_fem_test_domainA[0m": "[1;35mdisp[0m" 
+[1;1m[1;1mKratosMappingDataTransferOperator[0m[0m: Creating Mapper:
+    Origin: ModelPart "IgaModelPart.Load_4" of solver "fem_fem_test_domainA"
+    Destination: ModelPart "Structure.DISPLACEMENT_left_edge" of solver "fem_fem_test_domainB" 
+rModelPartOrigin : -Load_4- model part
+    Number of tables : 0
+    Number of sub model parts : 0
+
+    Number of Geometries  : 0
+    Mesh 0 :
+        Number of Nodes       : 12
+        Number of Properties  : 0
+        Number of Elements    : 0
+        Number of Conditions  : 10
+        Number of Constraints : 0
+
+
+rModelPartDestination : -DISPLACEMENT_left_edge- model part
+    Number of tables : 0
+    Number of sub model parts : 0
+
+    Number of Geometries  : 0
+    Mesh 0 :
+        Number of Nodes       : 21
+        Number of Properties  : 0
+        Number of Elements    : 0
+        Number of Conditions  : 0
+        Number of Constraints : 0
+
+
+number_of_results : 1
+nurbs_surface : Geometry # 4611686019209981072: 2-dimensional geometry in 3D space
+    Working space dimension : 3
+    Local space dimension   : 2
+
+	Point 1	 :  (0, 0, 0)
+    Dofs :
+        Free DISPLACEMENT_X degree of freedom
+        Free DISPLACEMENT_Y degree of freedom
+        Free DISPLACEMENT_Z degree of freedom
+
+	Point 2	 :  (0.5, 0, 0)
+    Dofs :
+        Free DISPLACEMENT_X degree of freedom
+        Free DISPLACEMENT_Y degree of freedom
+        Free DISPLACEMENT_Z degree of freedom
+
+	Point 3	 :  (1.5, 0, 0)
+    Dofs :
+        Free DISPLACEMENT_X degree of freedom
+        Free DISPLACEMENT_Y degree of freedom
+        Free DISPLACEMENT_Z degree of freedom
+
+	Point 4	 :  (2, 0, 0)
+    Dofs :
+        Free DISPLACEMENT_X degree of freedom
+        Free DISPLACEMENT_Y degree of freedom
+        Free DISPLACEMENT_Z degree of freedom
+
+	Point 5	 :  (0, 0.25, 0)
+    Dofs :
+        Free DISPLACEMENT_X degree of freedom
+        Free DISPLACEMENT_Y degree of freedom
+        Free DISPLACEMENT_Z degree of freedom
+
+	Point 6	 :  (0.5, 0.25, 0)
+    Dofs :
+        Free DISPLACEMENT_X degree of freedom
+        Free DISPLACEMENT_Y degree of freedom
+        Free DISPLACEMENT_Z degree of freedom
+
+	Point 7	 :  (1.5, 0.25, 0)
+    Dofs :
+        Free DISPLACEMENT_X degree of freedom
+        Free DISPLACEMENT_Y degree of freedom
+        Free DISPLACEMENT_Z degree of freedom
+
+	Point 8	 :  (2, 0.25, 0)
+    Dofs :
+        Free DISPLACEMENT_X degree of freedom
+        Free DISPLACEMENT_Y degree of freedom
+        Free DISPLACEMENT_Z degree of freedom
+
+	Point 9	 :  (0, 0.75, 0)
+    Dofs :
+        Free DISPLACEMENT_X degree of freedom
+        Free DISPLACEMENT_Y degree of freedom
+        Free DISPLACEMENT_Z degree of freedom
+
+	Point 10	 :  (0.5, 0.75, 0)
+    Dofs :
+        Free DISPLACEMENT_X degree of freedom
+        Free DISPLACEMENT_Y degree of freedom
+        Free DISPLACEMENT_Z degree of freedom
+
+	Point 11	 :  (1.5, 0.75, 0)
+    Dofs :
+        Free DISPLACEMENT_X degree of freedom
+        Free DISPLACEMENT_Y degree of freedom
+        Free DISPLACEMENT_Z degree of freedom
+
+	Point 12	 :  (2, 0.75, 0)
+    Dofs :
+        Free DISPLACEMENT_X degree of freedom
+        Free DISPLACEMENT_Y degree of freedom
+        Free DISPLACEMENT_Z degree of freedom
+
+	Point 13	 :  (0, 1, 0)
+    Dofs :
+        Free DISPLACEMENT_X degree of freedom
+        Free DISPLACEMENT_Y degree of freedom
+        Free DISPLACEMENT_Z degree of freedom
+
+	Point 14	 :  (0.5, 1, 0)
+    Dofs :
+        Free DISPLACEMENT_X degree of freedom
+        Free DISPLACEMENT_Y degree of freedom
+        Free DISPLACEMENT_Z degree of freedom
+
+	Point 15	 :  (1.5, 1, 0)
+    Dofs :
+        Free DISPLACEMENT_X degree of freedom
+        Free DISPLACEMENT_Y degree of freedom
+        Free DISPLACEMENT_Z degree of freedom
+
+	Point 16	 :  (2, 1, 0)
+    Dofs :
+        Free DISPLACEMENT_X degree of freedom
+        Free DISPLACEMENT_Y degree of freedom
+        Free DISPLACEMENT_Z degree of freedom
+
+	Center	 :  (1, 0.5, 0)
+
+
+BuilderAndSolver: Clear Function called
+BuilderAndSolver: Clear Function called
+Deregistering KratosMultiphysics
+Deregistering ConstitutiveLawsApplication
+Deregistering LinearSolversApplication
+Deregistering IgaApplication
+Deregistering CoSimulationApplication
+Deregistering StructuralMechanicsApplication
+Deregistering MappingApplication
